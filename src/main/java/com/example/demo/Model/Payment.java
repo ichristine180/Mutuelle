@@ -6,8 +6,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.example.demo.Model.security.Users;
 
 @Entity
 @Table(name = "payment")
@@ -23,6 +26,9 @@ public class Payment {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "payment_code", nullable = false, unique = true)
 	private Invoice invoice;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "doneBy")
+	private Users doneBy;
 
 	public Long getPayment_id() {
 		return payment_id;
@@ -63,12 +69,5 @@ public class Payment {
 	public Payment() {
 	}
 
-	public Payment(Long Patient_id, Long Amount, String Status) {
-		super();
-		this.payment_id = payment_id;
-		this.amount = amount;
-		this.status = status;
-
-	}
-
+	
 }

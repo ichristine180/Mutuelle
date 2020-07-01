@@ -1,14 +1,18 @@
 package com.example.demo.Model;
 
 import javax.persistence.CascadeType;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.example.demo.Model.security.Users;
 
 @Entity
 @Table(name = "INVOICE")
@@ -29,6 +33,17 @@ public class Invoice {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "patient_Id")
 	private Patient patient;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "generatedBy")
+	private Users generatedBy;
+
+	public Users getGeneratedBy() {
+		return generatedBy;
+	}
+
+	public void setGeneratedBy(Users generatedBy) {
+		this.generatedBy = generatedBy;
+	}
 
 	public Long getInvoice_id() {
 		return invoice_id;
@@ -93,12 +108,5 @@ public class Invoice {
 	public Invoice() {
 	}
 
-	public Invoice(Long PaymentCode, Long Patient_Percentage, Long Rssb_Percentage, Long Total) {
-		super();
-		this.payment_code = payment_code;
-		this.patient_Percentage = patient_Percentage;
-		this.rssb_Percentage = rssb_Percentage;
-		this.total = total;
-
-	}
+	
 }
