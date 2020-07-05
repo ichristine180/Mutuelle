@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:fragment="common-header">
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Flora Users Manager App</title>
+<!-- Bootstrap Core CSS -->
+<link th:href="@{/css/bootstrap.css}" rel="stylesheet" />
+<!--  Morris Online -->
+
+<link rel="stylesheet"
+	th:href="@{//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css}" />
+<script
+	th:src="@{//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js}"></script>
+<link th:href="@{https://fonts.googleapis.com/css?family=Roboto}"
+	rel="stylesheet" />
+<script
+	th:src="@{//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js}"></script>
+<script
+	th:src="@{//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js}"></script>
+<!-- Website Font style -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" />
+
+<!-- Google Fonts -->
+<link href='https://fonts.googleapis.com/css?family=Passion+One'
+	rel='stylesheet' type='text/css' />
+<link href='https://fonts.googleapis.com/css?family=Oxygen'
+	rel='stylesheet' type='text/css' />
+
+<!--bootstrap date-time picker-->
+<link th:href="@{/css/bootstrap-datetimepicker.min.css}"
+	rel="stylesheet" />
+
+
+
+<!--data table-->
+<link th:href="@{/css/jquery.dataTable.min.css}" rel="stylesheet" />
+<link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet" />
+
+<!-- Custom CSS -->
+<!--<link href="css/scrolling-nav.css" rel="stylesheet" />-->
+<link th:href="@{/css/main.css}" rel="stylesheet" />
+<style>
+body {
+	padding-top: 70px;
+	padding-bottom: 30px;
+}
+</style>
+</head>
+<body>
+	<!-- Navigation -->
+	<div th:fragment="navbar">
+		<nav class="navbar navbar-inverse navbar-fixed-top"
+			th:style="'background:url(' + @{/images/umutwe.png} + ');'"
+			role="navigation" sec:authorize="hasRole('ROLE_ADMIN')">
+			<div class="container">
+				<div class="navbar-header page-scroll">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target=".navbar-ex1-collapse">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand page-scroll" th:href="@{/userFront}">Flora
+						Users</a>
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse  navbar-collapse navbar-ex1-collapse">
+					<ul class="nav navbar-nav">
+						<!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+						<li class="hidden"><a class="page-scroll" href="#page-top"></a>
+						</li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-haspopup="true"
+							aria-expanded="false">COURSES MANAGEMENT<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a th:href="@{/admin/schools}"><strong>Schools
+											Information</strong></a></li>
+								<li role="separator" class="divider"></li>
+								<li><a th:href="@{/admin/verification}"><strong>Students
+											Information</strong></a></li>
+								<li role="separator" class="divider"></li>
+								<li><a th:href="@{/admin/pcenters}"><strong>Private
+											Centers</strong></a></li>
+							</ul></li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-haspopup="true"
+							aria-expanded="false">LECTURERS MANAGEMENT<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a th:href="@{/admin/officers}"><strong>All
+											Officers</strong></a></li>
+								<li role="separator" class="divider"></li>
+								<li><a th:href="@{/admin/signup}"><strong>Add
+											Officer</strong></a></li>
+								<li role="separator" class="divider"></li>
+								<li><a th:href="@{/admin/newadmin}"><strong>Add
+											Administrator</strong></a></li>
+							</ul></li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-haspopup="true"
+							aria-expanded="false">STUDENTS MANAGEMENT <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a th:href="@{/admin/officers}"><strong>Marks
+											Publishing</strong></a></li>
+								<li role="separator" class="divider"></li>
+								<li><a th:href="@{/admin/editschools}"><strong>MASTER
+											DATA ISSUES</strong></a></li>
+								<li role="separator" class="divider"></li>
+								<li><a th:href="@{/admin/officers}"><strong>Special
+											Cases</strong></a></li>
+							</ul></li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-haspopup="true"
+							aria-expanded="false">MARKS MANAGEMENT<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a th:href="@{/admin/officers}"><strong>Marks
+											Publishing</strong></a></li>
+								<li role="separator" class="divider"></li>
+								<li><a th:href="@{/admin/editschools}"><strong>MASTER
+											DATA ISSUES</strong></a></li>
+								<li role="separator" class="divider"></li>
+								<li><a th:href="@{/admin/officers}"><strong>Special
+											Cases</strong></a></li>
+							</ul></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-haspopup="true"
+							aria-expanded="false">Me <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a th:href="@{/admin/user/profile}">Profile</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a th:href="@{/logout}">Logout</a></li>
+							</ul></li>
+					</ul>
+				</div>
+				<!-- /.navbar-collapse -->
+			</div>
+			<!-- /.container -->
+		</nav>
+		<nav class="navbar navbar-inverse navbar-fixed-top"
+			th:style="'background:url(' + @{/images/umutwe.png} + ');'"
+			role="navigation" sec:authorize="hasRole('ROLE_STUDENT')">
+			<div class="container">
+				<div class="navbar-header page-scroll">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target=".navbar-ex1-collapse">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand page-scroll" th:href="@{/userFront}">Flora
+						Users</a>
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse  navbar-collapse navbar-ex1-collapse">
+					<ul class="nav navbar-nav">
+						<!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+						<li class="hidden"><a class="page-scroll" href="#page-top"></a>
+						</li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-haspopup="true"
+							aria-expanded="false">MY COURSES <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a th:href="@{/validator/schools}">Schools
+										Information </a></li>
+								<li role="separator" class="divider"></li>
+								<li><a th:href="@{/validator/verification}">Students
+										Applications</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a th:href="@{/validator/privatecenters}">Private
+										Center(s)</a></li>
+							</ul></li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-haspopup="true"
+							aria-expanded="false">FINANCE INFORMATION<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a th:href="@{/admin/officers}">Marks Entry</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a th:href="@{/admin/officers}">Allocations</a></li>
+							</ul></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-haspopup="true"
+							aria-expanded="false">Me <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a th:href="@{/profile}">Profile</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a th:href="@{/logout}">Logout</a></li>
+							</ul></li>
+					</ul>
+				</div>
+				<!-- /.navbar-collapse -->
+			</div>
+		</nav>
+	</div>
+	<!-- Start of footer -->
+	<div th:fragment="footer" class="navbar-fixed-bottom"
+		style="background: #1e1e20">
+		<div class="container">
+			<div class="pull-right"
+				style="color: white; font-family: 'Roboto'; font-weight: light; font-size: 14px;">
+				Powered by &nbsp; <a href="#" target="_blank">Flora Apps</a>
+			</div>
+		</div>
+	</div>
+	<!-- End of footer -->
+	<div th:fragment="body-bottom-scripts">
+		<!-- jQuery -->
+		<script th:src="@{/js/jquery.js}"></script>
+
+		<!-- Bootstrap Core JavaScript -->
+		<script th:src="@{/js/bootstrap.min.js}"></script>
+
+		<script th:src="@{/js/jquery.easing.min.js}"></script>
+
+		<!--bootstrap date-time picker-->
+		<script th:src="@{/js/bootstrap-datetimepicker.min.js}"></script>
+
+		<script th:src='@{/js/bootstrapvalidator.min.js}'></script>
+		<!--bootbox-->
+		<script th:src="@{/js/bootbox.min.js}"></script>
+
+		<script th:src="@{/js/validator.js}"></script>
+
+		<!--data table-->
+		<script th:src="@{/js/jquery.dataTables.min.js}"></script>
+		<script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
+
+		<!--main js-->
+		<script th:src="@{/js/main.js}"></script>
+	</div>
+
+</body>
+</html>

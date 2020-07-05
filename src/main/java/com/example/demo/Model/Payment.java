@@ -7,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.example.demo.Model.security.Users;
@@ -23,9 +22,6 @@ public class Payment {
 	private Long amount;
 	private String status;
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "payment_code", nullable = false, unique = true)
-	private Invoice invoice;
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "doneBy")
 	private Users doneBy;
@@ -54,14 +50,6 @@ public class Payment {
 		this.status = status;
 	}
 
-	public Invoice getInvoice() {
-		return invoice;
-	}
-
-	public void setInvoice(Invoice invoice) {
-		this.invoice = invoice;
-	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -69,5 +57,4 @@ public class Payment {
 	public Payment() {
 	}
 
-	
 }

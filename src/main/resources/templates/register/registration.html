@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/header :: common-header" />
+<body roleId="page-top" data-spy="scroll"
+	data-target=".navbar-fixed-top">
+<head th:replace="common/header :: navbar" />
+<div class="container main">
+	<div class="row">
+		<div class="col-sm-8 col-sm-offset-2">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h2>Registration Form</h2>
+				</div>
+				<div class="panel-body">
+					<form class="form-horizontal form-label-left" id="reg_form"
+						method="POST" th:action="@{/register}">
+						<div class="item form-group">
+							<label class="control-label col-md-3 col-sm-6 col-xs-8"
+								for="name">First Name <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input class="form-control col-md-7 col-xs-12"
+									th:value="${user.firstName}" id="firstName" name="firstName"
+									data-validate-length-range="30" data-validate-words="1"
+									placeholder="First Name" required="required" type="text" />
+							</div>
+						</div>
+						<div class="item form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="name">Last Name <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input th:value="${user.lastName}" id="lastName" name="lastName"
+									roleId="lastName" class="form-control col-md-7 col-xs-12"
+									data-validate-length-range="30" data-validate-words="1"
+									placeholder="Last Name" required="required" type="text" />
+							</div>
+						
+						
+						</div>
+						<div class="item form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="email">Email <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="email" name="email" th:value="${user.email}"
+									id="email" roleId="email" placeholder="user Email"
+									required="required" class="form-control col-md-7 col-xs-12" />
+							</div>
+						</div>
+						<div class="item form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="email">Username <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" name="username" th:value="${user.username}"
+									id="username" roleId="usename" placeholder="Username"
+									required="required" class="form-control col-md-7 col-xs-12" />
+							</div>
+						</div>
+						
+						<div class="item form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="telephone">HealthFacility Name <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" required="required"
+									data-validate-length-range="10,10" th:value="${user.healthfaci}"
+									id="healthfacility" name="healthfacility" roleId="healthfacility" placeholder=""
+									class="form-control col-md-7 col-xs-12" />
+							</div>
+						</div>
+						
+						<div class="item form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="telephone">Role:<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<select th:field="*{user.roleName}" th:name="roleName" class="form-control col-md-7 col-xs-12" >
+									<option value="0">....</option>
+									<option th:each="role : ${roles}" th:value="${role.name}"
+										th:text="${role.name}"></option>
+								</select>
+							</div>
+						</div>
+						<div class="ln_solid"></div>
+						<div class="item form-group">
+							<div class="form-group">
+								<div class="col-md-6 col-md-offset-3">
+									<button id="send" type="submit" class="btn btn-success">Submit</button>
+									<a th:href="@{/userFront}" type="" class="btn btn-primary">Cancel</a>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+</div>
+<div th:replace="common/header :: footer" />
+<div th:replace="common/header :: body-bottom-scripts" />
+
+</body>
+</html>

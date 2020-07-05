@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/header :: common-header" />
+<!-- Website Font style -->
+<link rel="stylesheet" th:href="@{/css/login.css}" />
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Questrial" />
+<body>
+	<div class="container">
+		<div class="row" id="pwd-containers">
+			<br />
+			<div class="col-md-4"></div>
+			<div class="col-md-4">
+				<section class="login-form">
+					<form th:action="@{/index}" method="post" role="login">
+						<p align="center"
+							style="font-family: 'Questrial', sans-serif; font-weight: bold; font-size: 36px;">Flora
+							App</p>
+						<input type="email" name="username" required="required"
+							class="form-control input-lg" placeholder="Username" /> <input
+							type="password" class="form-control input-lg" id="password"
+							name="password" placeholder="Password" required="required" />
+						<button type="submit" class="btn btn-lg btn-primary btn-block">Sign
+							In</button>
+						<hr />
+						<p align="center">
+							Forgot Password? <a th:href="@{/forgot-password}">Reset It</a> <br />
+							Registration <a th:href="@{/register}">Register Here</a>
+						</p>
+					</form>
+					<div class="form-links">
+						Powered by &nbsp; <a href="#" target="_blank">Flora Apps</a>
+					</div>
+					<div class="row text-center">
+						<div th:if="${param.error}">
+							<i class="fa fa-warning" style="font-size: 16px; color: red"></i>Invalid
+							Credentials.
+						</div>
+						<div th:if="${param.logout}">You have been logged out.</div>
+					</div>
+				</section>
+			</div>
+			<div class="col-md-4"></div>
+		</div>
+	</div>
+</body>
+</html>

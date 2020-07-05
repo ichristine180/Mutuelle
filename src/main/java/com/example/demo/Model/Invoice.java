@@ -1,7 +1,5 @@
 package com.example.demo.Model;
 
-import javax.persistence.CascadeType;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -22,17 +20,17 @@ public class Invoice {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long invoice_id;
-	private Long payment_code;
 	private Long patient_Percentage;
 	private Long rssb_Percentage;
 	private Long total;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "invoice")
-	private Payment payment;
-
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "patient_Id")
 	private Patient patient;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "paymentCode")
+	private Payment payment;
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "generatedBy")
 	private Users generatedBy;
@@ -51,14 +49,6 @@ public class Invoice {
 
 	public void setInvoice_id(Long invoice_id) {
 		this.invoice_id = invoice_id;
-	}
-
-	public Long getPayment_code() {
-		return payment_code;
-	}
-
-	public void setPayment_code(Long payment_code) {
-		this.payment_code = payment_code;
 	}
 
 	public Long getPatient_Percentage() {
@@ -108,5 +98,4 @@ public class Invoice {
 	public Invoice() {
 	}
 
-	
 }
