@@ -48,20 +48,10 @@ public class UserService<BCryptPasswordEncoder> implements IUserService {
 	public Users createUser(Users user, Set<Erole> eroles) {
 		Users localUser = usersRepository.findByuserName(user.getUserName());
 
-		if (localUser != null) {
-			LOG.info("User with username {} already exist. Nothing will be done. ", user.getUserName());
-		} else {
-			String encryptedPassword = passwordEncoder.encode(user.getPassword());
-			user.setPassword(encryptedPassword);
-			for (Erole ur : eroles) {
-				roleRepository.save(ur.getRoles());
-			}
-
-			try {
-				localUser = usersRepository.save(user);
-			} catch (Exception e) {
-				System.out.println(e.getMessage() + " JSJS");
-			}
+		try {
+			localUser = usersRepository.save(user);
+		} catch (Exception e) {
+			System.out.println(e.getMessage() + " JSJS");
 		}
 		return localUser;
 	}
@@ -104,14 +94,13 @@ public class UserService<BCryptPasswordEncoder> implements IUserService {
 	@Override
 	public void enableUser(String username) {
 		Users user = findByUsername(username);
-		user.setEnabled(true);
+
 		usersRepository.save(user);
 	}
 
 	@Override
 	public void disableUser(String username) {
 		Users user = findByUsername(username);
-		user.setEnabled(false);
 		usersRepository.save(user);
 	}
 
