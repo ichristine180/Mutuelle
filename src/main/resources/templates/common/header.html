@@ -1,241 +1,186 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="common-header">
-
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="description" content="" />
-<meta name="author" content="" />
-<title>Flora Users Manager App</title>
-<!-- Bootstrap Core CSS -->
-<link th:href="@{/css/bootstrap.css}" rel="stylesheet" />
-<!--  Morris Online -->
+<title>E-Health Card</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport" />
+<link rel="stylesheet"
+	th:href="@{/bower_components/bootstrap/dist/css/bootstrap.min.css}" />
+<!-- Font Awesome -->
+<link rel="stylesheet"
+	th:href="@{/bower_components/font-awesome/css/font-awesome.min.css}" />
+<!-- Ionicons -->
+<link rel="stylesheet"
+	th:href="@{/bower_components/Ionicons/css/ionicons.min.css}" />
+<!-- Theme style -->
+<link rel="stylesheet" th:href="@{/dist/css/AdminLTE.min.css}" />
 
 <link rel="stylesheet"
-	th:href="@{//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css}" />
-<script
-	th:src="@{//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js}"></script>
-<link th:href="@{https://fonts.googleapis.com/css?family=Roboto}"
-	rel="stylesheet" />
-<script
-	th:src="@{//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js}"></script>
-<script
-	th:src="@{//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js}"></script>
-<!-- Website Font style -->
+	th:href="@{/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css}" />
+
+<link rel="stylesheet" th:href="@{/dist/css/skins/skin-blue.min.css}" />
+
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" />
-
-<!-- Google Fonts -->
-<link href='https://fonts.googleapis.com/css?family=Passion+One'
-	rel='stylesheet' type='text/css' />
-<link href='https://fonts.googleapis.com/css?family=Oxygen'
-	rel='stylesheet' type='text/css' />
-
-<!--bootstrap date-time picker-->
-<link th:href="@{/css/bootstrap-datetimepicker.min.css}"
-	rel="stylesheet" />
-
-
-
-<!--data table-->
-<link th:href="@{/css/jquery.dataTable.min.css}" rel="stylesheet" />
-<link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet" />
-
-<!-- Custom CSS -->
-<!--<link href="css/scrolling-nav.css" rel="stylesheet" />-->
-<link th:href="@{/css/main.css}" rel="stylesheet" />
+	th:href="@{/bower_components/bootstrap-daterangepicker/daterangepicker.css}" />
+<!-- bootstrap datepicker -->
+<!-- Select2 -->
+<link rel="stylesheet"
+	th:href="@{/bower_components/select2/dist/css/select2.min.css}" />
+<link rel="stylesheet"
+	th:href="@{/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css}" />
+<!-- Google Font -->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic" />
+<!-- Bootstrap time Picker -->
+<link rel="stylesheet"
+	th:href="@{/plugins/timepicker/bootstrap-timepicker.min.css}" />
 <style>
-body {
-	padding-top: 70px;
-	padding-bottom: 30px;
+.emsg {
+	color: red;
+}
+
+.hidden {
+	visibility: hidden;
 }
 </style>
 </head>
 <body>
-	<!-- Navigation -->
-	<div th:fragment="navbar">
-		<nav class="navbar navbar-inverse navbar-fixed-top"
-			th:style="'background:url(' + @{/images/umutwe.png} + ');'"
-			role="navigation" sec:authorize="hasRole('ROLE_ADMIN')">
+	<div class="wrapper">
+		<!-- Main Header -->
+		<header class="main-header" th:fragment="main-header">
+			<nav class="navbar navbar-static-top">
+				<div class="container">
+					<div class="navbar-header">
+						<a href="/" sec:authorize="hasRole('ROLE_ADMIN')"
+							class="navbar-brand"><b>E</b>HealthCard</a> <a href="/gdoctor"
+							sec:authorize="hasRole('ROLE_GENERAL_DOCTOR')"
+							class="navbar-brand"><b>E</b>HealthCard</a> <a href="/recptionist"
+							sec:authorize="hasRole('ROLE_RECEPTIONIST')"
+							class="navbar-brand"><b>E</b>HealthCard</a> 
+							 <a href="/labodoctor"
+							sec:authorize="hasRole('ROLE_LABORATORY_DOCTOR')"
+							class="navbar-brand"><b>E</b>HealthCard</a><a
+							sec:authorize="hasRole('ROLE_ADMIN')" href="/"
+							class="navbar-brand"><b>H</b>ome</a> <a
+							sec:authorize="hasRole('ROLE_GENERAL_DOCTOR')" href="/gdoctor"
+							class="navbar-brand"><b>H</b>ome</a> <a
+							sec:authorize="hasRole('ROLE_RECEPTIONIST')" href="/recptionist"
+							class="navbar-brand"><b>H</b>ome</a> <a
+							sec:authorize="hasRole('ROLE_LABORATORY_DOCTOR')"
+							href="/labodoctor" class="navbar-brand"><b>H</b>ome</a>
+
+						<button type="button" class="navbar-toggle collapsed"
+							data-toggle="collapse" data-target="#navbar-collapse">
+							<i class="fa fa-bars"></i>
+						</button>
+					</div>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse pull-left"
+						id="navbar-collapse">
+						<div sec:authorize="hasRole('ROLE_GENERAL_DOCTOR')">
+							<ul class="nav navbar-nav">
+								<li><a href="/consultation/report">Report</a></li>
+							</ul>
+						</div>
+						<div sec:authorize="hasRole('ROLE_ADMIN')">
+							<ul class="nav navbar-nav">
+								<li><a href="/listHospital">Hospitals</a></li>
+								<li><a href="/admin/report">Reports</a></li>
+							</ul>
+						</div>
+						<div sec:authorize="hasRole('ROLE_LABORATORY_DOCTOR')">
+							<ul class="nav navbar-nav">
+								<li><a href="/report/labo">Report</a></li>
+							</ul>
+						</div>
+						<div sec:authorize="hasRole('ROLE_RECEPTIONIST')">
+							<ul class="nav navbar-nav">
+								<li><a href="/reception/report">Report</a></li>
+							</ul>
+						</div>
+					</div>
+					<div sec:authorize="isAuthenticated()"
+						class="collapse navbar-collapse pull-right" id="navbar-collapse">
+						<ul class="nav navbar-nav">
+							<li><a href="/logout">Logout</a></li>
+						</ul>
+					</div>
+				</div>
+				<!-- /.container-fluid -->
+			</nav>
+		</header>
+		<!-- Main Footer -->
+		<footer class="main-footer" th:fragment="footer">
 			<div class="container">
-				<div class="navbar-header page-scroll">
-					<button type="button" class="navbar-toggle" data-toggle="collapse"
-						data-target=".navbar-ex1-collapse">
-						<span class="sr-only">Toggle navigation</span> <span
-							class="icon-bar"></span> <span class="icon-bar"></span> <span
-							class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand page-scroll" th:href="@{/userFront}">Flora
-						Users</a>
+				<div class="pull-right hidden-xs">
+					<b>Version</b> 1.0
 				</div>
-				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse  navbar-collapse navbar-ex1-collapse">
-					<ul class="nav navbar-nav">
-						<!-- Hidden li included to remove active class from about link when scrolled up past about section -->
-						<li class="hidden"><a class="page-scroll" href="#page-top"></a>
-						</li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-haspopup="true"
-							aria-expanded="false">COURSES MANAGEMENT<span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a th:href="@{/admin/schools}"><strong>Schools
-											Information</strong></a></li>
-								<li role="separator" class="divider"></li>
-								<li><a th:href="@{/admin/verification}"><strong>Students
-											Information</strong></a></li>
-								<li role="separator" class="divider"></li>
-								<li><a th:href="@{/admin/pcenters}"><strong>Private
-											Centers</strong></a></li>
-							</ul></li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-haspopup="true"
-							aria-expanded="false">LECTURERS MANAGEMENT<span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a th:href="@{/admin/officers}"><strong>All
-											Officers</strong></a></li>
-								<li role="separator" class="divider"></li>
-								<li><a th:href="@{/admin/signup}"><strong>Add
-											Officer</strong></a></li>
-								<li role="separator" class="divider"></li>
-								<li><a th:href="@{/admin/newadmin}"><strong>Add
-											Administrator</strong></a></li>
-							</ul></li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-haspopup="true"
-							aria-expanded="false">STUDENTS MANAGEMENT <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a th:href="@{/admin/officers}"><strong>Marks
-											Publishing</strong></a></li>
-								<li role="separator" class="divider"></li>
-								<li><a th:href="@{/admin/editschools}"><strong>MASTER
-											DATA ISSUES</strong></a></li>
-								<li role="separator" class="divider"></li>
-								<li><a th:href="@{/admin/officers}"><strong>Special
-											Cases</strong></a></li>
-							</ul></li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-haspopup="true"
-							aria-expanded="false">MARKS MANAGEMENT<span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a th:href="@{/admin/officers}"><strong>Marks
-											Publishing</strong></a></li>
-								<li role="separator" class="divider"></li>
-								<li><a th:href="@{/admin/editschools}"><strong>MASTER
-											DATA ISSUES</strong></a></li>
-								<li role="separator" class="divider"></li>
-								<li><a th:href="@{/admin/officers}"><strong>Special
-											Cases</strong></a></li>
-							</ul></li>
-					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-haspopup="true"
-							aria-expanded="false">Me <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a th:href="@{/admin/user/profile}">Profile</a></li>
-								<li role="separator" class="divider"></li>
-								<li><a th:href="@{/logout}">Logout</a></li>
-							</ul></li>
-					</ul>
-				</div>
-				<!-- /.navbar-collapse -->
+				<strong>Copyright &copy; 2018-2019 <a href="#">E-Health
+						Card</a>.
+				</strong> All rights reserved.
 			</div>
 			<!-- /.container -->
-		</nav>
-		<nav class="navbar navbar-inverse navbar-fixed-top"
-			th:style="'background:url(' + @{/images/umutwe.png} + ');'"
-			role="navigation" sec:authorize="hasRole('ROLE_STUDENT')">
-			<div class="container">
-				<div class="navbar-header page-scroll">
-					<button type="button" class="navbar-toggle" data-toggle="collapse"
-						data-target=".navbar-ex1-collapse">
-						<span class="sr-only">Toggle navigation</span> <span
-							class="icon-bar"></span> <span class="icon-bar"></span> <span
-							class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand page-scroll" th:href="@{/userFront}">Flora
-						Users</a>
-				</div>
-				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse  navbar-collapse navbar-ex1-collapse">
-					<ul class="nav navbar-nav">
-						<!-- Hidden li included to remove active class from about link when scrolled up past about section -->
-						<li class="hidden"><a class="page-scroll" href="#page-top"></a>
-						</li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-haspopup="true"
-							aria-expanded="false">MY COURSES <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a th:href="@{/validator/schools}">Schools
-										Information </a></li>
-								<li role="separator" class="divider"></li>
-								<li><a th:href="@{/validator/verification}">Students
-										Applications</a></li>
-								<li role="separator" class="divider"></li>
-								<li><a th:href="@{/validator/privatecenters}">Private
-										Center(s)</a></li>
-							</ul></li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-haspopup="true"
-							aria-expanded="false">FINANCE INFORMATION<span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a th:href="@{/admin/officers}">Marks Entry</a></li>
-								<li role="separator" class="divider"></li>
-								<li><a th:href="@{/admin/officers}">Allocations</a></li>
-							</ul></li>
-					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-haspopup="true"
-							aria-expanded="false">Me <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a th:href="@{/profile}">Profile</a></li>
-								<li role="separator" class="divider"></li>
-								<li><a th:href="@{/logout}">Logout</a></li>
-							</ul></li>
-					</ul>
-				</div>
-				<!-- /.navbar-collapse -->
-			</div>
-		</nav>
+		</footer>
+		<div class="control-sidebar-bg"></div>
 	</div>
-	<!-- Start of footer -->
-	<div th:fragment="footer" class="navbar-fixed-bottom"
-		style="background: #1e1e20">
-		<div class="container">
-			<div class="pull-right"
-				style="color: white; font-family: 'Roboto'; font-weight: light; font-size: 14px;">
-				Powered by &nbsp; <a href="#" target="_blank">Flora Apps</a>
-			</div>
-		</div>
-	</div>
-	<!-- End of footer -->
 	<div th:fragment="body-bottom-scripts">
-		<!-- jQuery -->
-		<script th:src="@{/js/jquery.js}"></script>
+		<script th:src="@{/bower_components/jquery/dist/jquery.min.js}"></script>
+		<!-- Select2 -->
+		<script
+			th:src="@{/bower_components/select2/dist/js/select2.full.min.js}"></script>
+		<script th:src="@{/bower_components/jquery/dist/jquery.min.js}"></script>
+		<!-- Bootstrap 3.3.7 -->
+		<script
+			th:src="@{/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
 
-		<!-- Bootstrap Core JavaScript -->
-		<script th:src="@{/js/bootstrap.min.js}"></script>
+		<!-- DataTables -->
+		<script
+			th:src="@{/bower_components/datatables.net/js/jquery.dataTables.min.js}"></script>
+		<script
+			th:src="@{/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
+		<!-- AdminLTE App -->
+		<script th:src="@{/dist/js/adminlte.min.js}"></script>
+		<script type="text/javascript" th:src="@{/js/jquery.validate.min.js}"></script>
 
-		<script th:src="@{/js/jquery.easing.min.js}"></script>
 
-		<!--bootstrap date-time picker-->
-		<script th:src="@{/js/bootstrap-datetimepicker.min.js}"></script>
+		<script sth:src="@{/plugins/input-mask/jquery.inputmask.js}"></script>
+		<script
+			sth:src="@{/plugins/input-mask/jquery.inputmask.date.extensions.js}"></script>
+		<script th:src="@{/plugins/input-mask/jquery.inputmask.extensions.js}"></script>
+		<!-- date-range-picker -->
+		<script sth:src="@{/bower_components/moment/min/moment.min.js}"></script>
+		<script
+			th:src="@{/bower_components/bootstrap-daterangepicker/daterangepicker.js}"></script>
+		<!-- bootstrap datepicker -->
+		<script
+			th:src="@{/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js}"></script>
+		<!-- bootstrap color picker -->
+		<script
+			th:src="@{/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js}"></script>
+		<!-- bootstrap time picker -->
+		<script th:src="@{/plugins/timepicker/bootstrap-timepicker.min.js}"></script>
+		<!-- SlimScroll -->
+		<script
+			th:src="@{/bower_components/jquery-slimscroll/jquery.slimscroll.min.js}"></script>
+		<!-- iCheck 1.0.1 -->
+		<script th:src="@{/plugins/iCheck/icheck.min.js}"></script>
+		<!-- FastClick -->
+		<script th:src="@{/bower_components/fastclick/lib/fastclick.js}"></script>
+		<!-- AdminLTE App -->
+		<script th:src="@{/dist/js/adminlte.min.js}"></script>
+		<!-- AdminLTE for demo purposes -->
+		<script th:src="@{/dist/js/demo.js}"></script>
 
-		<script th:src='@{/js/bootstrapvalidator.min.js}'></script>
-		<!--bootbox-->
-		<script th:src="@{/js/bootbox.min.js}"></script>
+		<script th:src="@{/plugins/input-mask/jquery.inputmask.js}"></script>
+		<script
+			th:src="@{/plugins/input-mask/jquery.inputmask.date.extensions.js}"></script>
+		<script th:src="@{/plugins/input-mask/jquery.inputmask.extensions.js}"></script>
 
-		<script th:src="@{/js/validator.js}"></script>
-
-		<!--data table-->
-		<script th:src="@{/js/jquery.dataTables.min.js}"></script>
-		<script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
-
-		<!--main js-->
-		<script th:src="@{/js/main.js}"></script>
+		<script src="/bower_components/moment/min/moment.min.js"></script>
 	</div>
-
 </body>
 </html>
