@@ -29,6 +29,6 @@ public interface IUserService {
 
 	void disableUser(String username);
 
-	void updatePassword(String updatedPassword, Long userId);
+	void updatePassword(String updatedPassword, String username);
 
 }

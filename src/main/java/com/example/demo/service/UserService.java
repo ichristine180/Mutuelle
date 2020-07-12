@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
+
 import java.util.List;
+
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -16,7 +18,7 @@ import com.example.demo.Repo.UsersRepository;
 
 @Service
 @Transactional
-public class UserService<BCryptPasswordEncoder> implements IUserService {
+public class UserService implements IUserService {
 
 	private static final Logger LOG = LoggerFactory.getLogger(IUserService.class);
 
@@ -26,8 +28,6 @@ public class UserService<BCryptPasswordEncoder> implements IUserService {
 	@Autowired
 	private RoleRepository roleRepository;
 
-	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
 
 	@Override
 	public void save(Users user) {
@@ -105,7 +105,11 @@ public class UserService<BCryptPasswordEncoder> implements IUserService {
 	}
 
 	@Override
-	public void updatePassword(String updatedPassword, Long userId) {
-		usersRepository.updatePassword(updatedPassword, userId);
+	public void updatePassword(String updatedPassword, String userName) {
+		usersRepository.updatePassword(updatedPassword, userName);
 	}
+
+
+	
+
 }

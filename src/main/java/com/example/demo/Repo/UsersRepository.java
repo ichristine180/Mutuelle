@@ -21,6 +21,6 @@ public interface UsersRepository extends CrudRepository<Users, Long> {
 	List<Users> findAll();
 
 	@Modifying
-	@Query("update User u set u.password = :password where u.id = :id")
-	void updatePassword(@Param("password") String password, @Param("id") Long id);
+	@Query("update Users u set u.password = :password where u.userName = :userName")
+	void updatePassword(@Param("password") String password, @Param("userName") String userName);
 }

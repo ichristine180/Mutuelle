@@ -1,5 +1,6 @@
 package com.example.demo.Model.security;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,6 +17,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.example.demo.Model.Health_facility;
 
 
@@ -24,7 +28,11 @@ import com.example.demo.Model.Health_facility;
 		@UniqueConstraint(columnNames = "userName"),
 		@UniqueConstraint(columnNames = "email")
 })
-public class Users {
+public class Users implements UserDetails {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long user_id;
@@ -98,6 +106,36 @@ public class Users {
 		return "Users [user_id=" + user_id + ", fName=" + fName + ", lName=" + lName + ", email=" + email
 				+ ", userName=" + userName + ", password=" + password + ", health_facility=" + health_facility
 				+ ", roles=" + roles + "]";
+	}
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
