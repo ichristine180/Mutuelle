@@ -25,7 +25,7 @@ public class Invoice {
 	private Long total;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "patient_Id")
+	@JoinColumn(name = "patientId")
 	private Patient patient;
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "paymentCode")
