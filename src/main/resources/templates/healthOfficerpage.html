@@ -8,16 +8,37 @@
 		<div class="content-wrapper"
 			sec:authorize="hasRole('ROLE_HEALTH')">
 			<div class="container">
+			
 				<!-- Content Header (Page header) -->
 				<section class="content-header">
 					<h1>
 						Dashboard <small>HEALTH CENTER Panel</small>
 					</h1>
 				</section>
-				</div>
-				</div>
 				
+    <div class="card-body login-card-body col-md-5" style="margin-right:auto;margin-left:auto;">
+      <p class="login-box-msg">Find Patient By Head of Family  National Id Number.</p>
 
+      <form action="recover-password.html" method="post">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="enter national Id Number"/>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-search"></span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary btn-block">Find Patient</button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+    </div>
+    <!-- /.login-card-body -->
+  </div>
+</div>
 		<!-- Main Footer -->
 
 		<footer th:replace="common/header :: footer"></footer>
