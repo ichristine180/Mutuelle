@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="common/header :: common-header"></head>
+<body class="hold-transition skin-blue fixed layout-top-nav">
+	<div class="wrapper">
+		<!-- Main Header -->
+		<header th:replace="common/header :: main-header"></header>
+		<div class="content-wrapper"
+			sec:authorize="hasRole('ROLE_HEALTH')">
+			<div class="container">
+			
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<h1>
+						Dashboard <small>HEALTH CENTER Panel</small>
+					</h1>
+				</section>
+				 <div class="card card-primary card-outline">
+          <div class="card-header">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Patient Identification</h3>
+
+        
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>User</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                      <th>Reason</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>183</td>
+                      <td>John Doe</td>
+                      <td>11-7-2014</td>
+                      <td><span class="tag tag-success">Approved</span></td>
+                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+       
+        
+          <div class="card-body">
+            <div class="col-md-8">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Record Medical Records And generate Personal invoices</h3>
+              </div>
+              
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Patient National Id</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" name="idnbr"/>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Exams</label>
+                    <select class="select2bs4" multiple="multiple" data-placeholder="Select a State"
+                          style="width: 100%;">
+                    <option>Alabama</option>
+                    <option>Alaska</option>
+                    <option>California</option>
+                    <option>Delaware</option>
+                    <option>Tennessee</option>
+                    <option>Texas</option>
+                    <option>Washington</option>
+                  </select>
+                  </div>
+                
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                   <a href="/healthcenter" class="btn btn-default float-right">Cancel</a>
+                </div>
+              </form>
+            </div>
+            </div>
+            
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.card -->
+      </div>
+      <!-- /.container-fluid -->
+  
+    <!-- /.content -->
+</div>
+		<!-- Main Footer -->
+</div>
+</div>
+
+		<footer th:replace="common/header :: footer"></footer>
+	</div>
+	<div th:replace="common/header :: body-bottom-scripts"></div>
+
+	
+</body>
+</html>

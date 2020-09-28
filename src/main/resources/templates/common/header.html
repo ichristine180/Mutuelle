@@ -7,7 +7,8 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge"/>
 
   <title>Mutuelle And RSSB</title>
-
+<link rel="stylesheet" th:href="@{/plugins/select2/css/select2.min.css}"/>
+  <link rel="stylesheet" th:href="@{/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css}"/>
   <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}"/>
   <!-- IonIcons -->
   <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>
@@ -66,10 +67,16 @@
 <!-- AdminLTE -->
 <script th:src="@{/dist/js/adminlte.js}"></script>
 
-<!-- OPTIONAL SCRIPTS -->
-<script th:src="@{/plugins/chart.js/Chart.min.js}"></script>
-
-<script th:src="@{/dist/js/pages/dashboard3.js}"></script>
+<script th:src="@{/plugins/select2/js/select2.full.min.js}"></script>
+<script>
+  $(function () {
+    
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+  })
+</script>
 </div>
 </body>
 </html>
