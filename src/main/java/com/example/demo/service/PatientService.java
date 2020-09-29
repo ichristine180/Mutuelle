@@ -35,8 +35,8 @@ public class PatientService implements IPatientService {
 	public List<Patient> findAll() {
 		try {
 			return pRepository.findAll();
-		} catch (Exception excep) {
-			throw excep;
+		} catch (Exception exc) {
+			throw exc;
 		}
 	}
 
