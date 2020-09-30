@@ -3,9 +3,12 @@ package com.example.demo.controller;
 
 
 import java.security.Principal;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import com.example.demo.Model.Patient;
 
 @Controller
 public class UserController {
@@ -29,7 +32,8 @@ public class UserController {
 
 	@GetMapping("/healthcenter")
 	public String gDoctor(Model model, Principal principal) {
-		
+		Patient patient = new Patient();
+		model.addAttribute("patient", patient);
 		return "healthOfficerpage";
 	}
 	@GetMapping("/login")

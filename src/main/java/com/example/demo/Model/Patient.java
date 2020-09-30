@@ -1,10 +1,16 @@
 package com.example.demo.Model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "patient")
@@ -14,6 +20,11 @@ public class Patient {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long patientId;
+	@Size(min = 16, max = 16, message = "Valid National Identification is 16 Digits")
+	@NotNull
+	@NotBlank(message = "required")
+	@Pattern(regexp = "[0-9]*", message = "invalid characters! use numbers only!")
+	@Column(name="idnb")
 	private String idnb;
 	private String names;
 	private String gender;
