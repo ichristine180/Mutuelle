@@ -1,0 +1,32 @@
+package com.example.demo.Model;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "patient")
+public class Patient {
+
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long patientId;
+	private String idnb;
+	private String names;
+	private String gender;
+	private String age;
+
+	public Patient() {
+	}
+
+	public Patient(String Names, String Gender, String Age) {
+		super();
+		this.names = names;
+		this.gender = gender;
+		this.age = age;
+
+	}
+}

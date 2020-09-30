@@ -1,0 +1,7 @@
+INDEX VERSION 1.4+C:\Users\FLORA\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+3512850532.index
+2189342882.index
+1209298496.index
+3449966913.index
+387246524.index
+3963665206.index

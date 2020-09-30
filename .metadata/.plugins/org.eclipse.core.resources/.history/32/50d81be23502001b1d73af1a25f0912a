@@ -1,0 +1,29 @@
+package com.example.demo.controller;
+
+import java.security.Principal;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.example.demo.Model.Patient;
+import com.example.demo.service.PatientService;
+
+@Controller
+public class OfficerController {
+	@PostMapping("/search/Patient/{idnb}")
+	public String searchPatient(Model model, String idnb Principal principal) {
+
+		if (idnb != null) {
+			Patient res = PatientService.findPatientByidnb(idnb);
+			// if the patient is found, we proceed with admission
+			if (res != null) {
+				boolean patientidnb = true;
+				model.addAttribute("patientidnb", patientidnb);
+				model.addAttribute("patient", res);
+				return "patientDetails";
+			}
+		}
+	}
+}

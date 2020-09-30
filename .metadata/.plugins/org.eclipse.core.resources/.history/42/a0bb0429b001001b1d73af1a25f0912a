@@ -1,0 +1,77 @@
+package com.example.demo.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.Model.Patient;
+import com.example.demo.Repo.PatientRepository;
+
+@Service(IPatientService.NAME)
+public class PatientService implements IPatientService {
+
+	@Autowired
+	private PatientRepository pRepository;
+
+
+	@Override
+	public Patient findPatientByIdentificationNb(String idnb) {
+		try {
+			Patient pateintPatient = pRepository.findByidnb(idnb);
+			if (pateintPatient != null) {
+				return pateintPatient;
+			} else {
+				System.out.println("there is no patient with that id number");
+				return null;
+			}
+
+		} catch (Exception e) {
+			throw e;
+		}
+
+	}
+
+	/*
+	 *
+	 * @see
+	 * rw.ehealth.service.patient.IPatientService#findPatientByPatientNumber(java.
+	 * lang.String)
+	 */
+	@Override
+	public Patient findPatientByPatientNumber(String patientNumber) {
+		try {
+			return pRepository.findByPatientNumber(patientNumber);
+		} catch (Exception ex) {
+			throw ex;
+		}
+	}
+
+	/**
+	 * @return
+	 */
+	@Override
+	public List<Patient> findpAll() {
+		try {
+			return pRepository.findAll();
+		} catch (Exception ex) {
+			throw ex;
+		}
+	}
+
+	@Override
+	public List<Patient> findAll() {
+		try {
+			return pRepository.findpAll();
+		} catch (Exception ex) {
+			throw ex;
+		}
+	}
+
+	@Override
+	public Patient findPatientByidnb(String idnb) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}}

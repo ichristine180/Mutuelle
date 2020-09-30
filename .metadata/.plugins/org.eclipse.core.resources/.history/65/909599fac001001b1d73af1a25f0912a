@@ -1,0 +1,22 @@
+package com.example.demo.controller;
+
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.example.demo.Model.Patient;
+
+@Controller
+public class OfficerController {
+	
+	@PostMapping("/search")
+	public String searchPatient() {
+		
+		@Override
+		List<Patient> findAll();
+		return "patientDetails";
+	}
+	
+
+}

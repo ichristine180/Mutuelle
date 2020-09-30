@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Employee register</title>
+</head>
+<body>
+<h1>Employees list</h1>
+<a href="/new">register new employee</a><br><br>
+<table border="2" cellpadding="10">
+<thead>
+            <tr>
+                <th>Employee Id</th>
+                <th>first name</th>
+                <th>last name</th>
+                <th>job tile</th>
+                <th>age</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <thbody>
+        <tr th:each ="emp: ${listEmployees} ">
+        <td th:text="${emp.id}"> Employee Id</td>
+        <td th:text="${emp.fname}"> first name</td>
+        <td th:text="${emp.lname}">last name</td>
+        <td th:text="${emp.jobtitle}">job title</td>
+        <td th:text="${emp.age}">age</td>
+        <td>
+                    <a th:href="@{edit/{id}(id=${emp.id})}">Edit</a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a th:href="@{delete/{id}(id=${emp.id})}">Delete</a>
+                </td>
+        
+        </tr>
+        
+   </thbody>
+
+
+
+
+</table>
+
+</body>
+</html>

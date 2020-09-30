@@ -1,0 +1,32 @@
+package com.example.demo.controller;
+
+import java.security.Principal;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.example.demo.Model.Patient;
+import com.example.demo.service.IPatientService;
+
+@Controller
+public class OfficerController {
+	@Autowired
+	private IPatientService PatientService;
+
+	@PostMapping("/search/Patient")
+	public String searchPatient(@PathVariable String idnb, Principal principal) {
+
+		if (idnb != null) {
+			Patient res = PatientService.findPatientByidnb(idnb);
+			// if the patient is found, we proceed with admission
+			if (res != null) {
+				boolean patientidnb = true;
+
+				return "patientDetails";
+			}
+		}
+		return idnb;
+	}
+}

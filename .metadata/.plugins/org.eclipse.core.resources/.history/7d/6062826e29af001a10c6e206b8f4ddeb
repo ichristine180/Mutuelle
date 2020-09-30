@@ -1,0 +1,62 @@
+package com.example.demo.Model;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "pages")
+public class Module {
+
+	/**
+	 * 
+	 */
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	private String mod_name;
+
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "mod_id", nullable = false)
+	private Student student;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getMod_name() {
+		return mod_name;
+	}
+
+	public void setMod_name(String mod_name) {
+		this.mod_name = mod_name;
+	}
+
+	public Student getStudent() {
+		return student;
+	}
+
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+
+	public Module() {
+	}
+
+	public Module(String mod_name, Student student) {
+		this.mod_name = mod_name;
+
+		this.student = student;
+	}
+}

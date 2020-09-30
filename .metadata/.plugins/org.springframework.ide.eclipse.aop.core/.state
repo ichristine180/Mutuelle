@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aop-reference-model>
+<aop-project name="Mycrud"/>
+<aop-project name="Mutuelle"/>
+<aop-project name="chris-users"/>
+<aop-project name="e-health-card"/>
+<aop-project name="student"/>
+<aop-project name="CRUDfrola-master"/>
+<aop-project name="SaleProduct"/>
+<aop-project name="final-project"/>
+<aop-project name="MyLogin"/>
+<aop-project name="Relate"/>
+<aop-project name="Myexercise"/>
+<aop-project name="MappingProject2"/>
+</aop-reference-model>
