@@ -19,7 +19,7 @@
           <div class="card-header">
           <div class="col-12">
             <div class="card">
-              <div class="card-header">
+              <div class="card-header bg-dark">
                 <h3 class="card-title">Patient Identification</h3>
 
         
@@ -33,6 +33,7 @@
                       <th>Age</th>
                       <th>Gender</th>
                       <th>National Id</th>
+                      <th>UBUDEHE</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -41,6 +42,7 @@
 											<td th:text="${patient.age}" />
 											<td th:text="${patient.gender}" />
 											<td th:text="${patient.idnb}" />
+											<td th:text="${patient.ubudehe}" />
 											
 										</tr>
 									</tbody>
@@ -50,24 +52,37 @@
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
+       </div>
        
         
+          <div class="card card-primary card-outline">
+          <div class="card-header">
+            <h3 class="card-title">
+              <i class="fas fa-add"></i>
+              Record Medical Acts And Generate Personal Invoice
+            </h3>
+          </div>
           <div class="card-body">
+            <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="custom-content-below-home-tab" data-toggle="pill" href="#custom-content-below-home" role="tab" aria-controls="custom-content-below-home" aria-selected="true">Record Exam</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="custom-content-below-profile-tab" data-toggle="pill" href="#custom-content-below-profile" role="tab" aria-controls="custom-content-below-profile" aria-selected="false">Record Medicine</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="custom-content-below-messages-tab" data-toggle="pill" href="#custom-content-below-messages" role="tab" aria-controls="custom-content-below-messages" aria-selected="false">Generate Personal Invoice</a>
+              </li>
+            </ul>
+            <div class="tab-content" id="custom-content-below-tabContent">
+              <div class="tab-pane fade show active" id="custom-content-below-home" role="tabpanel" aria-labelledby="custom-content-below-home-tab">
             <div class="col-md-8">
-            <!-- general form elements -->
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Record Medical Records And generate Personal invoices</h3>
-              </div>
               
               <!-- /.card-header -->
               <!-- form start -->
               <form role="form">
                 <div class="card-body">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Patient National Id</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" name="idnbr"/>
-                  </div>
+                    <input type="hidden" class="form-control" id="exampleInputEmail1" name="idnbr"/>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Exams</label>
                     <select class="select2bs4" multiple="multiple" data-placeholder="Select a State"
@@ -92,11 +107,59 @@
               </form>
             </div>
             </div>
-            
+              <div class="tab-pane fade" id="custom-content-below-profile" role="tabpanel" aria-labelledby="custom-content-below-profile-tab">
+                 <div class="col-md-8">
+              
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form">
+                <div class="card-body">
+                    <input type="hidden" class="form-control" id="exampleInputEmail1" name="idnbr"/>
+                     <div class="row">
+                    <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Medicine</label>
+                    <select class="select2bs4"  data-placeholder="Select a medicine"
+                          style="width: 100%;">
+                    <option>Alabama</option>
+                    <option>Alaska</option>
+                    <option>California</option>
+                    <option>Delaware</option>
+                    <option>Tennessee</option>
+                    <option>Texas</option>
+                    <option>Washington</option>
+                  </select>
+                  </div>
+                  </div>
+                <div class="form-group">
+                <div class="col-sm-6">
+                    <label for="exampleInputEmail1">Quantity</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" name="quantity"/>
+                  </div>
+                </div>
+              </div>
+              </div>
+              
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Add</button>
+                   <a href="/healthcenter" class="btn btn-default float-right">Cancel</a>
+                </div>
+              </form>
+            </div>
+                </div>
+              <div class="tab-pane fade" id="custom-content-below-messages" role="tabpanel" aria-labelledby="custom-content-below-messages-tab">
+                 Morbi turpis dolor, vulputate vitae felis non, tincidunt congue mauris. Phasellus volutpat augue id mi placerat mollis. Vivamus faucibus eu massa eget condimentum. Fusce nec hendrerit sem, ac tristique nulla. Integer vestibulum orci odio. Cras nec augue ipsum. Suspendisse ut velit condimentum, mattis urna a, malesuada nunc. Curabitur eleifend facilisis velit finibus tristique. Nam vulputate, eros non luctus efficitur, ipsum odio volutpat massa, sit amet sollicitudin est libero sed ipsum. Nulla lacinia, ex vitae gravida fermentum, lectus ipsum gravida arcu, id fermentum metus arcu vel metus. Curabitur eget sem eu risus tincidunt eleifend ac ornare magna. 
+              </div>
+            </div>
+           
           </div>
           <!-- /.card -->
         </div>
-        <!-- /.card -->
+  
+      
+  
       </div>
       <!-- /.container-fluid -->
   

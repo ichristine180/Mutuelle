@@ -1,5 +1,8 @@
 package com.example.demo.service;
 
-public class TreatmentService {
+import org.springframework.stereotype.Service;
+
+@Service
+public class TreatmentService implements ITreatmentService {
 
 }

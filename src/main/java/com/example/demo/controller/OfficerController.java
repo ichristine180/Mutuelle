@@ -10,13 +10,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.Model.Patient;
+import com.example.demo.service.IMedicalTestService;
 import com.example.demo.service.IPatientService;
+import com.example.demo.service.ITreatmentService;
 
 
 @Controller
 public class OfficerController {
 	@Autowired
 	private IPatientService PatientService;
+	@Autowired
+	private ITreatmentService tService;
+	@Autowired
+	private IMedicalTestService mTestService;
 
 	@PostMapping("/search")
 	public String searchPatient(@ModelAttribute @Valid Patient patient,BindingResult results,Model model) {
