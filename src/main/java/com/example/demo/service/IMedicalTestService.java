@@ -11,6 +11,8 @@ public interface IMedicalTestService {
 
 	List<MedicalTest> findAll();
 
+	MedicalTest findMedicalTestBytestId(long testId);
+
 }
 
 

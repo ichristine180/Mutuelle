@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.example.demo.Model.MedicalTest;
 import com.example.demo.Model.Patient;
+import com.example.demo.Model.Treatment;
 import com.example.demo.service.IMedicalTestService;
 import com.example.demo.service.IPatientService;
 import com.example.demo.service.ITreatmentService;
@@ -34,7 +38,11 @@ public class OfficerController {
 			// if the patient is found, we proceed
 			if (res != null) {
 				boolean patientidnb = true;
+				List<MedicalTest> exams = mTestService.findAll() ;
+				List<Treatment> medicines = tService.findAll();
 				model.addAttribute("patient",res);
+				model.addAttribute("exams",exams);
+				model.addAttribute("medicines",medicines);
 				model.addAttribute("patientidnb",patientidnb);
 				return "patientDetails";
 

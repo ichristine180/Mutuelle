@@ -13,16 +13,8 @@ public class TreatmentService implements ITreatmentService {
 	@Autowired
 	private TreatmentRepository treatmentRepo;
 
-	public Treatment findTreatmentBytreatmentId(long treatmentId) {
-		try {
-			return treatmentRepo.findBytreatmentId(treatmentId);
-		} catch (Exception e) {
-			throw e;
-		}
-
-	}
-	
-	public List<Treatment> findTreatment() {
+	@Override
+	public List<Treatment> findAll() {
 		try {
 			return treatmentRepo.findAll();
 		} catch (Exception e) {
@@ -32,14 +24,11 @@ public class TreatmentService implements ITreatmentService {
 
 	@Override
 	public Treatment findTreatmentBytreatmentId(Long treatmentId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Treatment> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return treatmentRepo.findBytreatmentId(treatmentId);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
 }

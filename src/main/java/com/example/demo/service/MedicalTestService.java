@@ -14,8 +14,9 @@ import com.example.demo.Repo.MedicalTestRepository;
 public class MedicalTestService implements IMedicalTestService{
 	@Autowired
 	private MedicalTestRepository testRepo;
-
-	public MedicalTest findTreatmentBytreatmentId(long testId) {
+	
+	@Override
+    public MedicalTest findMedicalTestBytestId(long testId) {
 		try {
 			return testRepo.findBytestId(testId);
 		} catch (Exception e) {
@@ -23,27 +24,21 @@ public class MedicalTestService implements IMedicalTestService{
 		}
 
 	}
-	
-	public List<MedicalTest> findTreatment() {
+	@Override
+	public List<MedicalTest> findAll() {
 		try {
 			return testRepo.findAll();
 		} catch (Exception e) {
 			throw e;
 		}
 	}
-
-
-
-
-	@Override
-	public List<MedicalTest> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@Override
 	public MedicalTest findMedicalTestBytestId(Long testId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
+
+
 }
