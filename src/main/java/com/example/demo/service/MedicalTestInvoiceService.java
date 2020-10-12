@@ -3,19 +3,16 @@ package com.example.demo.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.example.demo.Model.MedicalTest;
 import com.example.demo.Model.Treatment;
 import com.example.demo.Repo.MedicalTestRepository;
 
-
-@Service
-public class MedicalTestService implements IMedicalTestService{
+public class MedicalTestInvoiceService implements IMedicalTestInvoiceService {
 	@Autowired
 	private MedicalTestRepository testRepo;
 
-	public MedicalTest findTreatmentBytreatmentId(long testId) {
+	public MedicalTest findMedicalTestBytestId(long testId) {
 		try {
 			return testRepo.findBytestId(testId);
 		} catch (Exception e) {
@@ -24,7 +21,7 @@ public class MedicalTestService implements IMedicalTestService{
 
 	}
 	
-	public List<MedicalTest> findTreatment() {
+	public List<MedicalTest> findMedicalTest() {
 		try {
 			return testRepo.findAll();
 		} catch (Exception e) {
@@ -32,8 +29,11 @@ public class MedicalTestService implements IMedicalTestService{
 		}
 	}
 
-
-
+	@Override
+	public MedicalTest findMedicalTestBytestId(Long testId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public List<MedicalTest> findAll() {
@@ -41,9 +41,13 @@ public class MedicalTestService implements IMedicalTestService{
 		return null;
 	}
 
-	@Override
-	public MedicalTest findMedicalTestBytestId(Long testId) {
-		// TODO Auto-generated method stub
-		return null;
 	}
-}
+
+	
+	
+
+	
+	
+
+
+

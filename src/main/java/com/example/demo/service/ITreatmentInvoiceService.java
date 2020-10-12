@@ -4,14 +4,12 @@ import java.util.List;
 
 import com.example.demo.Model.Treatment;
 
-public interface ITreatmentService {
-	String NAME = "TreatmentService";
+public interface ITreatmentInvoiceService {
+	String NAME = "TreatmentInvoiceService";
 
 	Treatment findTreatmentBytreatmentId(Long treatmentId);
 
 	List<Treatment> findAll();
 
+
 }
-
-
-

@@ -4,13 +4,13 @@ import java.util.List;
 
 import com.example.demo.Model.MedicalTest;
 
-public interface IMedicalTestService {
-	String NAME = "MedicalTestService";
+
+public interface IMedicalTestInvoiceService {
+	String NAME = "MedicalTestInvoiceService";
 
 	MedicalTest findMedicalTestBytestId(Long testId);
 
 	List<MedicalTest> findAll();
 
+
 }
-
-
