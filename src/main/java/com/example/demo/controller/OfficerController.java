@@ -11,38 +11,29 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.demo.Model.MedicalTest;
 import com.example.demo.Model.Patient;
-import com.example.demo.Model.Treatment;
-import com.example.demo.service.IMedicalTestService;
 import com.example.demo.service.IPatientService;
-import com.example.demo.service.ITreatmentService;
+
 
 
 @Controller
 public class OfficerController {
 	@Autowired
 	private IPatientService PatientService;
-	@Autowired
-	private ITreatmentService tService;
-	@Autowired
-	private IMedicalTestService mTestService;
-
+	
 	@PostMapping("/search")
 	public String searchPatient(@ModelAttribute @Valid Patient patient,BindingResult results,Model model) {
 		if(results.hasErrors()) {
 			System.out.println("Validation Errors occured");
 			return "healthOfficerpage";
 		}
-			Patient res = PatientService.findPatientByidnb(patient.getIdnb());
+			Patient res = PatientService.findPatientById(patient.getId());
 			// if the patient is found, we proceed
 			if (res != null) {
 				boolean patientidnb = true;
-				List<MedicalTest> exams = mTestService.findAll() ;
-				List<Treatment> medicines = tService.findAll();
+				
 				model.addAttribute("patient",res);
-				model.addAttribute("exams",exams);
-				model.addAttribute("medicines",medicines);
+				
 				model.addAttribute("patientidnb",patientidnb);
 				return "patientDetails";
 

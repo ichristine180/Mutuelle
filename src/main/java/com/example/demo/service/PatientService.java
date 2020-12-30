@@ -2,42 +2,82 @@ package com.example.demo.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Model.Patient;
-import com.example.demo.Repo.PatientRepository;
+import com.example.demo.Repo.IPatientRepository;
 
+
+
+/**
+ * @Author: chabiman
+ * @FileName: PatientService.java
+ * @Date: Oct 15, 2020
+ * @Package: rw.mutuelle.service
+ * @ProjectName: mutuelle-payment-module
+ *
+ */
 @Service(IPatientService.NAME)
+@Transactional
 public class PatientService implements IPatientService {
 
+	/** The patient repository. */
 	@Autowired
-	private PatientRepository pRepository;
+	private IPatientRepository patientRepository;
 
+	/*
+	 *
+	 * @see rw.mutuelle.service.IPatientService#createPatient(rw.mutuelle.model.Patient)
+	 */
 	@Override
-	public Patient findPatientByidnb(String idnb) {
+	public Patient createPatient(Patient patient) {
 		try {
-			Patient patientPatient = pRepository.findByidnb(idnb);
-			if (patientPatient != null) {
-				return patientPatient;
-			} else {
-				System.out.println("there is no patient with that id number");
-				return null;
-			}
-
-		} catch (Exception e) {
-			throw e;
-		}
-
-	}
-
-	@Override
-	public List<Patient> findAll() {
-		try {
-			return pRepository.findAll();
-		} catch (Exception exc) {
-			throw exc;
+			return patientRepository.save(patient);
+		} catch (Exception ex) {
+			throw ex;
 		}
 	}
 
-}
+	/*
+	 *
+	 * @see rw.mutuelle.service.IPatientService#findAllPatient()
+	 */
+	@Override
+	public List<Patient> findAllPatient() {
+		try {
+			return patientRepository.findAll();
+		} catch (Exception ex) {
+			throw ex;
+		}
+	}
+
+	/*
+	 *
+	 * @see rw.mutuelle.service.IPatientService#findPatientById(java.lang.Long)
+	 */
+	@Override
+	public Patient findPatientById(Long id) {
+		try {
+			
+		} catch (Exception ex) {
+			throw ex;
+		}
+		return null;
+	}
+
+	public List<Patient> listAll() {
+		return patientRepository.findAll();
+	}
+
+	public void save(Patient pat) {
+		patientRepository.save(pat);
+	}
+
+	
+
+	
+	}
+

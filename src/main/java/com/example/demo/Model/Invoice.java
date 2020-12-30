@@ -28,72 +28,78 @@ public class Invoice {
 	@JoinColumn(name = "patientId")
 	private Patient patient;
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "paymentCode")
-	private Payment payment;
+	
+
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "generatedBy")
 	private Users generatedBy;
 
-	public Users getGeneratedBy() {
-		return generatedBy;
-	}
-
-	public void setGeneratedBy(Users generatedBy) {
-		this.generatedBy = generatedBy;
-	}
-
+	
 	public Long getInvoice_id() {
 		return invoice_id;
 	}
+
 
 	public void setInvoice_id(Long invoice_id) {
 		this.invoice_id = invoice_id;
 	}
 
+
 	public Long getPatient_Percentage() {
 		return patient_Percentage;
 	}
+
 
 	public void setPatient_Percentage(Long patient_Percentage) {
 		this.patient_Percentage = patient_Percentage;
 	}
 
+
 	public Long getRssb_Percentage() {
 		return rssb_Percentage;
 	}
+
 
 	public void setRssb_Percentage(Long rssb_Percentage) {
 		this.rssb_Percentage = rssb_Percentage;
 	}
 
+
 	public Long getTotal() {
 		return total;
 	}
+
 
 	public void setTotal(Long total) {
 		this.total = total;
 	}
 
-	public Payment getPayment() {
-		return payment;
-	}
-
-	public void setPayment(Payment payment) {
-		this.payment = payment;
-	}
 
 	public Patient getPatient() {
 		return patient;
 	}
 
+
 	public void setPatient(Patient patient) {
 		this.patient = patient;
 	}
 
+
+	public Users getGeneratedBy() {
+		return generatedBy;
+	}
+
+
+	public void setGeneratedBy(Users generatedBy) {
+		this.generatedBy = generatedBy;
+	}
+
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
 
 	public Invoice() {
 	}

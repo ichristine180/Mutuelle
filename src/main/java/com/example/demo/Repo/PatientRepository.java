@@ -9,7 +9,7 @@ import com.example.demo.Model.Patient;
 
 @Repository
 public interface PatientRepository extends CrudRepository<Patient, Long> {
-	Patient findByidnb(String idnb);
+	Patient findByid(String id);
 
 	@Override
 	List<Patient> findAll();
