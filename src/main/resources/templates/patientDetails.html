@@ -30,7 +30,7 @@
                   <thead>
                     <tr>
                       <th>Names</th>
-                      <th>Age</th>
+                      <th>Birt Date</th>
                       <th>Gender</th>
                       <th>National Id</th>
                       <th>UBUDEHE</th>
@@ -38,11 +38,12 @@
                   </thead>
                   <tbody>
 										<tr th:each="patient: ${patient}">
-										<td th:text="${patient.names}" />
-											<td th:text="${patient.age}" />
+										<td><p th:text="${patient.firstName}"/><p th:text="${patient.lastName}" />
+										</td>
+											<td th:text="${patient.dateOfBirth}" />
 											<td th:text="${patient.gender}" />
 											<td th:text="${patient.idnb}" />
-											<td th:text="${patient.ubudehe}" />
+											<td th:text="${patient.category}" />
 											
 										</tr>
 									</tbody>

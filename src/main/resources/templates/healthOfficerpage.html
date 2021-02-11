@@ -24,10 +24,13 @@
                 </div>
       <p class="login-box-msg">Find Patient By Head of Family  National Id Number.</p>
 
-      <form th:action="@{/search}" action=""  method="post">
-    
+      <form th:action="@{/search}" action="" th:object="${patient}" method="post">
+    <span
+												class="error text-danger"
+												th:if="${#fields.hasErrors('idnb')}" th:errors="*{idnb}"></span>
         <div class="input-group mb-3">
-          <input type="text" class="form-control"  name="idnb" placeholder="enter national Id Number"/>
+        
+          <input type="text" class="form-control"  name="idnb" placeholder="enter national Id Number" th:field="*{idnb}"/>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-search"></span>

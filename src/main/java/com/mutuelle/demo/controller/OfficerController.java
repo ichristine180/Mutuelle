@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.mutuelle.demo.Model.Patient;
 import com.mutuelle.demo.service.IPatientService;
+import com.mutuelle.demo.utils.SearchPatient;
 
 
 @Controller
@@ -20,12 +21,11 @@ public class OfficerController {
 	private IPatientService PatientService;
 	
 	@PostMapping("/search")
-	public String searchPatient(@ModelAttribute Patient patient,BindingResult results,Model model) {
-		System.out.println(results);
-//		if(results.hasErrors()) {
-////			System.out.println("Validation Errors occured");
-//			return "healthOfficerpage";
-//		}
+	public String searchPatient( @ModelAttribute("patient") @Valid SearchPatient patient,BindingResult results,Model model) {
+		if(results.hasErrors()) {
+			System.out.println("Validation Errors occured");
+			return "healthOfficerpage";
+		}
 		System.out.println(patient.getIdnb());
 			Patient res = PatientService.findPatientByIdnbr(patient.getIdnb());
 			// if the patient is found, we proceed

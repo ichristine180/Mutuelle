@@ -5,11 +5,11 @@ package com.mutuelle.demo.controller;
 import java.security.Principal;
 
 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import com.mutuelle.demo.Model.Patient;
+import com.mutuelle.demo.utils.SearchPatient;
 
 @Controller
 public class UserController {
@@ -33,7 +33,7 @@ public class UserController {
 
 	@GetMapping("/healthcenter")
 	public String gDoctor(Model model, Principal principal) {
-		Patient patient = new Patient();
+		SearchPatient patient = new SearchPatient();
 		model.addAttribute("patient", patient);
 		return "healthOfficerpage";
 	}
