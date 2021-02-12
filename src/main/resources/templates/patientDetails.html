@@ -38,9 +38,8 @@
                   </thead>
                   <tbody>
 										<tr th:each="patient: ${patient}">
-										<td><p th:text="${patient.firstName}"/><p th:text="${patient.lastName}" />
-										</td>
-											<td th:text="${patient.dateOfBirth}" />
+										<td th:text="${patient.firstName+' '+patient.lastName}"/>
+										<td th:text="${patient.dateOfBirth}" />
 											<td th:text="${patient.gender}" />
 											<td th:text="${patient.idnb}" />
 											<td th:text="${patient.category}" />
@@ -66,10 +65,7 @@
           <div class="card-body">
             <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
               <li class="nav-item">
-                <a class="nav-link active" id="custom-content-below-home-tab" data-toggle="pill" href="#custom-content-below-home" role="tab" aria-controls="custom-content-below-home" aria-selected="true">Record Exams</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" id="custom-content-below-profile-tab" data-toggle="pill" href="#custom-content-below-profile" role="tab" aria-controls="custom-content-below-profile" aria-selected="false">Record Medicines</a>
+                <a class="nav-link active" id="custom-content-below-profile-tab" data-toggle="pill" href="#custom-content-below-profile" role="tab" aria-controls="custom-content-below-profile" aria-selected="false">Record Medical Acts</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" id="custom-content-below-messages-tab"  data-toggle="modal" data-target="#modal-lg">Generate Personal Invoice </a>
@@ -82,34 +78,7 @@
               <!-- /.card-header -->
               <!-- form start -->
               <form role="form">
-                <div class="card-body">
-                    <input type="hidden" class="form-control" id="exampleInputEmail1" name="idnbr"/>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Exams</label>
-                    <select class="select2bs4" multiple="multiple" data-placeholder="Select exams"
-                          style="width: 100%;">
-                    <option th:each="exams:${exams}"><p th:text="${exams.testName}"></p></option>
-                    
-                  </select>
-                  </div>
-                
-                </div>
-                <!-- /.card-body -->
-
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                   <a href="/healthcenter" class="btn btn-default float-right">Cancel</a>
-                </div>
-              </form>
-            </div>
-            </div>
-              <div class="tab-pane fade" id="custom-content-below-profile" role="tabpanel" aria-labelledby="custom-content-below-profile-tab">
-                 <div class="col-md-8">
-              
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form role="form">
-                <div class="card-body">
+               <div class="card-body">
                     <input type="hidden" class="form-control" id="exampleInputEmail1" name="idnbr"/>
                      <div class="row">
                     <div class="col-sm-6">
@@ -117,7 +86,7 @@
                     <label for="exampleInputPassword1">Medicine</label>
                     <select class="select2bs4"  data-placeholder="Select a medicine"
                           style="width: 100%;">
-                    <option th:each="medicines:${medicines}"><p th:text="${medicines.treatmentName}"></p></option>
+                    <option th:each="medicalService:${medicalService}"><p th:text="${medicalService.name}"></p></option>
                     
                   </select>
                   </div>
@@ -139,7 +108,7 @@
                 </div>
               </form>
             </div>
-                </div>
+            </div>
             </div>
            
           </div>
@@ -155,153 +124,7 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body">
-            <div class="row">
-                  <div class="col-md-4">
-              <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Medicine Details</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body p-0">
-                <ul class="products-list product-list-in-card pl-2 pr-2">
-                  <li class="item">
-                    <div class="product-info">
-                      <a href="javascript:void(0)" class="product-title">Medicine Name
-                        <span class="badge badge-warning float-right">12</span></a>
-                      <span class="product-description">
-                        price.
-                      </span>
-                    </div>
-                  </li>
-                  <!-- /.item -->
-                  <li class="item">
-                    <div class="product-info">
-                      <a href="javascript:void(0)" class="product-title">Medicine Name
-                        <span class="badge badge-warning float-right">12</span></a>
-                      <span class="product-description">
-                        price.
-                      </span>
-                    </div>
-                  </li>
-                  <!-- /.item -->
-                  <li class="item">
-                    <div class="product-info">
-                      <a href="javascript:void(0)" class="product-title">Medicine Name
-                        <span class="badge badge-warning float-right">12</span></a>
-                      <span class="product-description">
-                        price.
-                      </span>
-                    </div>
-                  </li>
-                  <!-- /.item -->
-                  <li class="item">
-                    <div class="product-info">
-                      <a href="javascript:void(0)" class="product-title">Medicine Name
-                        <span class="badge badge-warning float-right">12</span></a>
-                      <span class="product-description">
-                        price.
-                      </span>
-                    </div>
-                  </li>
-                  <!-- /.item -->
-                </ul>
-              </div>
-              
-            </div>
-            <!-- /.card -->
-          </div>
-          <div class="col-md-4">
-              <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Exams Details</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body p-0">
-                <ul class="products-list product-list-in-card pl-2 pr-2">
-                  <li class="item">
-                    <div class="product-info">
-                      <a href="javascript:void(0)" class="product-title">Exam Name
-                        <span class="badge badge-warning float-right">price</span></a>
-                    </div>
-                  </li>
-                  <!-- /.item -->
-                  <li class="item">
-                    <div class="product-info">
-                      <a href="javascript:void(0)" class="product-title">Exam Name
-                        <span class="badge badge-warning float-right">price</span></a>
-                    </div>
-                  </li>
-                  <!-- /.item -->
-                  <li class="item">
-                    <div class="product-info">
-                      <a href="javascript:void(0)" class="product-title">Exam Name
-                        <span class="badge badge-warning float-right">price</span></a>
-                    </div>
-                  </li>
-                  <!-- /.item -->
-                  <li class="item">
-                    <div class="product-info">
-                      <a href="javascript:void(0)" class="product-title">Exam Name
-                        <span class="badge badge-warning float-right">price</span></a>
-                    </div>
-                  </li>
-                  <!-- /.item -->
-                </ul>
-              </div>
-              
-            </div>
-            <!-- /.card -->
-          </div>
-          <!-- /.col -->
-          <div class="col-md-4">
-              <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Invoice Details</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body p-0">
-                <ul class="products-list product-list-in-card pl-2 pr-2">
-                  <li class="item">
-                    <div class="product-info">
-                      <a href="javascript:void(0)" class="product-title">Consultation 
-                        <span class="badge badge-warning float-right">price</span></a>
-                    </div>
-                  </li>
-                  <!-- /.item -->
-                  <li class="item">
-                     <div class="product-info">
-                      <a href="javascript:void(0)" class="product-title">Total Bill 
-                        <span class="badge badge-warning float-right">price</span></a>
-                    </div>
-                  </li>
-                  <!-- /.item -->
-                  <li class="item">
-                     <div class="product-info">
-                      <a href="javascript:void(0)" class="product-title">patient bill 
-                        <span class="badge badge-warning float-right">200</span></a>
-                    </div>
-                  </li>
-                  <!-- /.item -->
-                  <li class="item">
-                    <div class="product-info">
-                      <a href="javascript:void(0)" class="product-title">RSSB Bill 
-                        <span class="badge badge-warning float-right">price</span></a>
-                    </div>
-                  </li>
-                  <!-- /.item -->
-                </ul>
-              </div>
-              
-            </div>
-            <!-- /.card -->
-          </div>
-        </div>
-            </div>
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-              <button type="button" class="btn btn-primary">Generate Invoice</button>
-            </div>
+            <p>Hey You</p>
           </div>
           <!-- /.modal-content -->
         </div>

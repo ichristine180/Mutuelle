@@ -4,10 +4,13 @@ import java.util.ArrayList;
 
 
 
+
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,6 +40,7 @@ public class MedicalService {
 	private String code;
 
 	/** The type. */
+	@Enumerated(EnumType.STRING)
 	private EMedicalServiceType type;
 
 	/** The medical act list. */
