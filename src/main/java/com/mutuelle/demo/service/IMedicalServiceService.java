@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 
 import com.mutuelle.demo.Model.MedicalService;
+import com.mutuelle.demo.utils.EMedicalServiceType;
 
 
 public interface IMedicalServiceService {
@@ -27,5 +28,7 @@ public interface IMedicalServiceService {
 	 * @return the list
 	 */
 	public List<MedicalService> findAll();
+	public List<MedicalService> findExams();
+	public List<MedicalService> findMedicaments(EMedicalServiceType type);
 
 }

@@ -20,8 +20,8 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header bg-dark">
-                <h3 class="card-title">Patient Identification</h3>
-
+                <h3 class="card-title" style="float:left;">Patient Identification</h3>
+                            <h5 class="card-title" style="float:right;"  th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy')}"/>
         
               </div>
               <!-- /.card-header -->
@@ -59,39 +59,168 @@
           <div class="card-header">
             <h3 class="card-title">
               <i class="fas fa-add"></i>
-              Record Medical Acts And Generate Personal Invoice
+              Serives
             </h3>
           </div>
           <div class="card-body">
-            <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
-              <li class="nav-item">
-                <a class="nav-link active" id="custom-content-below-profile-tab" data-toggle="pill" href="#custom-content-below-profile" role="tab" aria-controls="custom-content-below-profile" aria-selected="false">Record Medical Acts</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" id="custom-content-below-messages-tab"  data-toggle="modal" data-target="#modal-lg">Generate Personal Invoice </a>
-              </li>
-            </ul>
-            <div class="tab-content" id="custom-content-below-tabContent">
-              <div class="tab-pane fade show active" id="custom-content-below-home" role="tabpanel" aria-labelledby="custom-content-below-home-tab">
-            <div class="col-md-8">
-              
+            
+            
+               <div class="row">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Exams Service</h3>
+              </div>
               <!-- /.card-header -->
-              <!-- form start -->
-              <form role="form">
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead>                  
+                    <tr>
+                      <th style="width: 10px">#</th>
+                      <th>Name</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1.</td>
+                      <td>Malaria</td>
+                      <td><span class="badge bg-danger">1000</span></td>
+                    </tr>
+                     
+                  </tbody>
+                </table>
+              <button type="button" class="btn btn-info" style="margin-top:10px;" data-toggle="modal" data-target="#modal-default">Add</button>
+              </div>
+            </div>
+            <!-- /.card -->
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">medicaments Service</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <table class="table table-sm">
+                  <thead>
+                    <tr>
+                      <th style="width: 10px">#</th>
+                      <th>Name</th>
+                   
+                      <th style="width: 40px">Amount[rwf]</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1.</td>
+                      <td>Hedex</td>
+                      <td><span class="badge bg-danger">300</span></td>
+                    </tr>
+                   
+                  </tbody>
+                </table>
+                  <button type="button" class="btn btn-info" style="margin-top:10px;" data-toggle="modal" data-target="#modal-medicament">Add</button>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Consultation Services</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th style="width: 10px">#</th>
+                      <th>Name</th>
+                      <th>Amount [rwf]</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1.</td>
+                      <td>Ikayi</td>
+                      <td><span class="badge bg-danger">200</span></td>
+                    </tr>
+                    <tr>
+                      <td>2.</td>
+                      <td>Consultation</td>
+                      <td><span class="badge bg-warning">1000</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            </div>
+            </div>
+            <div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Add Medical Acts(Exams)</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+            <form role="form">
+               <div class="card-body">
+                    <input type="hidden" class="form-control" id="exampleInputEmail1" name="idnbr"/>
+              
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Add Exams</label>
+                    <select class="select2bs4" multiple="multiple" data-placeholder="Select a Exams"
+                           id="medicalService">
+                    <option th:each="exams:${exams}" th:value="${exams.id}"><p th:text="${exams.name}"></p></option>
+                    
+                  </select>
+             
+                 
+              </div>
+              </div>
+              </form>
+            </div>
+            <div class="modal-footer justify-content-between">
+            <button type="submit" class="btn btn-primary">Add</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+              <!-- /.card-header -->
+<div class="modal fade" id="modal-medicament">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Add Medical Acts(Medicaments)</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+             <form role="form">
                <div class="card-body">
                     <input type="hidden" class="form-control" id="exampleInputEmail1" name="idnbr"/>
                      <div class="row">
                     <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Medicine</label>
+                    <label for="exampleInputPassword1">Medicaments Services</label>
                     <select class="select2bs4"  data-placeholder="Select a medicine"
-                          style="width: 100%;">
-                    <option th:each="medicalService:${medicalService}"><p th:text="${medicalService.name}"></p></option>
+                           id="medicament">
+                    <option th:each="medicaments:${medicaments}" th:value="${medicaments.name}"><p th:text="${medicaments.name}" /></option>
                     
                   </select>
                   </div>
                   </div>
-                <div class="form-group">
+                <div class="form-group" id="onexam">
                 <div class="col-sm-6">
                     <label for="exampleInputEmail1">Quantity</label>
                     <input type="text" class="form-control" id="exampleInputEmail1" name="quantity"/>
@@ -99,38 +228,24 @@
                 </div>
               </div>
               </div>
-              
-                <!-- /.card-body -->
-
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Add</button>
-                   <a href="/healthcenter" class="btn btn-default float-right">Cancel</a>
-                </div>
               </form>
             </div>
+            <div class="modal-footer justify-content-between">
+            <button type="submit" class="btn btn-primary">Add</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
-            </div>
-           
-          </div>
-          <!-- /.card -->
-        </div>
-  
-      <div class="modal fade" id="modal-lg">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Generate Personal Invoice</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <p>Hey You</p>
           </div>
           <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
       </div>
-  
+              <!-- /.card-header -->
+              <!-- form start -->
+             
+          </div>
+          </div>
+          
+   
       </div>
       <!-- /.container-fluid -->
   
@@ -144,6 +259,20 @@
 	</div>
 	<div th:replace="common/header :: body-bottom-scripts"></div>
 
-	
+	<script type="text/javascript">
+	let onChangeHandle = ()=>{
+	let e = document.getElementById('medicalService');
+	let selectedService = e.options[e.selectedIndex].getAttribute('type');
+	let show = false;
+	if(selectedService == 'MEDICAMENT'){
+	show = true;
+	document.getElementById("onexam").style.display = '';
+	}else{
+	document.getElementById("onexam").style.display = 'none';
+	}
+	console.log(selectedService);
+	console.log(show);
+	}
+	</script>
 </body>
 </html>

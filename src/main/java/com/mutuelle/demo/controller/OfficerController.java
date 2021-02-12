@@ -16,6 +16,7 @@ import com.mutuelle.demo.Model.MedicalService;
 import com.mutuelle.demo.Model.Patient;
 import com.mutuelle.demo.service.IMedicalServiceService;
 import com.mutuelle.demo.service.IPatientService;
+import com.mutuelle.demo.utils.EMedicalServiceType;
 import com.mutuelle.demo.utils.SearchPatient;
 
 
@@ -34,7 +35,10 @@ public class OfficerController {
 		}
 		System.out.println(patient.getIdnb());
 			Patient res = PatientService.findPatientByIdnbr(patient.getIdnb());
-			List<MedicalService> medicalService  = mService.findAll();
+			List<MedicalService> exams  = mService.
+					findMedicaments(EMedicalServiceType.EXAM);
+			List<MedicalService> medicaments  = mService.
+					findMedicaments(EMedicalServiceType.MEDICAMENT);
 			// if the patient is found, we proceed
 			if (res != null) {
 				boolean patientidnb = true;
@@ -42,7 +46,8 @@ public class OfficerController {
 				model.addAttribute("patient",res);
 				
 				model.addAttribute("patientidnb",patientidnb);
-				model.addAttribute("medicalService",medicalService);
+				model.addAttribute("exams",exams);
+				model.addAttribute("medicaments",medicaments);
 				return "patientDetails";
 
 			}

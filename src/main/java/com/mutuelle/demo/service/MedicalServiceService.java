@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.mutuelle.demo.Model.MedicalService;
 import com.mutuelle.demo.Repo.IMedicalServiceRepository;
+import com.mutuelle.demo.utils.EMedicalServiceType;
 @Service(IMedicalServiceService.NAME)
 public class MedicalServiceService implements IMedicalServiceService {
 
@@ -41,4 +42,24 @@ public class MedicalServiceService implements IMedicalServiceService {
 			throw ex;
 		}
 	}
+
+	@Override
+	public List<MedicalService> findExams() {
+		try {
+		return medicalServiceRepository.findExams();
+		}catch (Exception e) {
+			// TODO: handle exception
+			throw e;
+		}
+	}
+
+	@Override
+	public List<MedicalService> findMedicaments(EMedicalServiceType type) {
+		try {
+			return medicalServiceRepository.findByType(type);
+			}catch (Exception e) {
+				// TODO: handle exception
+				throw e;
+			}
+		}
 }
