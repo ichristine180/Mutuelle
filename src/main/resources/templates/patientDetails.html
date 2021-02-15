@@ -67,12 +67,12 @@
             
                <div class="row">
           <div class="col-md-6">
-            <div class="card">
+            <div class="card exams ">
               <div class="card-header">
                 <h3 class="card-title">Exams Service</h3>
               </div>
               <!-- /.card-header -->
-              <div class="card-body">
+              <div class="card-body" th:fragment="exams">
                 <table class="table table-bordered">
                   <thead>                  
                     <tr>
@@ -95,26 +95,25 @@
             </div>
             <!-- /.card -->
 
-            <div class="card">
+            <div class="card exam_Acts" >
               <div class="card-header">
                 <h3 class="card-title">medicaments Service</h3>
               </div>
               <!-- /.card-header -->
-              <div class="card-body p-0">
+              <div class="card-body p-0" id="info" th:fragment="exam_Acts">
                 <table class="table table-sm">
                   <thead>
                     <tr>
                       <th style="width: 10px">#</th>
                       <th>Name</th>
-                   
                       <th style="width: 40px">Amount[rwf]</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1.</td>
-                      <td>Hedex</td>
-                      <td><span class="badge bg-danger">300</span></td>
+                    <tr th:each="examActs,iStat: ${examActs}">
+                      <td th:text="${iStat.index+1}" />
+                      <td  th:text="${examActs.service.name}"/>
+                      <td  th:text="${examActs.amount}"/>
                     </tr>
                    
                   </tbody>
@@ -159,6 +158,7 @@
             </div>
             </div>
             </div>
+           
             <div class="modal fade" id="modal-default">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -169,25 +169,25 @@
               </button>
             </div>
             <div class="modal-body">
-            <form role="form">
+            <form name="exam"
+                action="/addExam"
+                method="post">
                <div class="card-body">
-                    <input type="hidden" class="form-control" id="exampleInputEmail1" name="idnbr"/>
+                    <input type="hidden" class="form-control" id="idnb" th:value="${patient.idnb}"/>
               
                   <div class="form-group">
                     <label for="exampleInputPassword1">Add Exams</label>
-                    <select class="select2bs4" multiple="multiple" data-placeholder="Select a Exams"
-                           id="medicalService">
+                    <select class="select2bs4" name="exams" multiple="multiple" data-placeholder="Select a Exams"
+                           id="exams">
                     <option th:each="exams:${exams}" th:value="${exams.id}"><p th:text="${exams.name}"></p></option>
                     
                   </select>
-             
-                 
               </div>
               </div>
               </form>
             </div>
             <div class="modal-footer justify-content-between">
-            <button type="submit" class="btn btn-primary">Add</button>
+            <button type="submit" class="btn btn-primary" onclick="doExamPost()">Add</button>
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
           </div>
@@ -206,16 +206,18 @@
               </button>
             </div>
             <div class="modal-body">
-             <form role="form">
+             <form name="ajf"
+                action="/addMedicament"
+                method="post" th:object="${medicamentData}">
                <div class="card-body">
-                    <input type="hidden" class="form-control" id="exampleInputEmail1" name="idnbr"/>
+                    <input type="hidden" class="form-control"  id="idnb" th:value="${patient.idnb}"/>
                      <div class="row">
                     <div class="col-sm-6">
                   <div class="form-group">
                     <label for="exampleInputPassword1">Medicaments Services</label>
-                    <select class="select2bs4"  data-placeholder="Select a medicine"
+                    <select class="select2bs4"  data-placeholder="Select a medicine" 
                            id="medicament">
-                    <option th:each="medicaments:${medicaments}" th:value="${medicaments.name}"><p th:text="${medicaments.name}" /></option>
+                    <option th:each="medicaments:${medicaments}" th:value="${medicaments.id}"><p th:text="${medicaments.name}" /></option>
                     
                   </select>
                   </div>
@@ -223,7 +225,7 @@
                 <div class="form-group" id="onexam">
                 <div class="col-sm-6">
                     <label for="exampleInputEmail1">Quantity</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" name="quantity"/>
+                    <input type="text" class="form-control"  id="quantity"/>
                   </div>
                 </div>
               </div>
@@ -231,8 +233,8 @@
               </form>
             </div>
             <div class="modal-footer justify-content-between">
-            <button type="submit" class="btn btn-primary">Add</button>
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary"  onclick="doAjaxPost()">Add</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal" id="close">Close</button>
             </div>
           </div>
           <!-- /.modal-content -->
@@ -258,21 +260,82 @@
 		<footer th:replace="common/header :: footer"></footer>
 	</div>
 	<div th:replace="common/header :: body-bottom-scripts"></div>
+ <script type="text/javascript">
+ function loadExam(idnb){
+	 $.ajax({
+		  type: 'get',
+		  url: "/getExam/"+idnb,
+		
+		  success: function(data){
+			  $('.exams').html(data);
+			  $('#modal-default').modal('hide');
+			},
+		  
+		})
+ }
+ 
+ function loadSearchResult(idnb)
+	{
+		
+	 $.ajax({
+		  type: 'get',
+		  url: "/getAll/"+idnb,
+		
+		  success: function(data){
+			  $('.exam_Acts').html(data);
+			  $('#modal-medicament').modal('hide');
+			},
+		  
+		})
+		
+	}
+	var doAjaxPost;
+	var doExamPost;
+    $(document).ready(function() {
+    
+    	doAjaxPost = function() {
+            // get the form values
+            var name = $('#medicament').val();
+            var quantity = $('#quantity').val()
+             var idnb = $('#idnb').val()
+            $.ajax({
+            type: "POST",
+            url: "/addMedicament",
+           data:{"service":name,"quantity":quantity,"idnb":idnb},
+            success: function(response){
+            // we have the response
+            loadSearchResult(idnb)
+            },
+            error: function(e){
+            alert('Error: ' + e);
+            }
+            });
+     }
 
-	<script type="text/javascript">
-	let onChangeHandle = ()=>{
-	let e = document.getElementById('medicalService');
-	let selectedService = e.options[e.selectedIndex].getAttribute('type');
-	let show = false;
-	if(selectedService == 'MEDICAMENT'){
-	show = true;
-	document.getElementById("onexam").style.display = '';
-	}else{
-	document.getElementById("onexam").style.display = 'none';
-	}
-	console.log(selectedService);
-	console.log(show);
-	}
-	</script>
+    	doExamPost = function() {
+            // get the form values
+            var exam = $('#exams').val();
+            var idnb = $('#idnb').val()
+            $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/addExams",
+           data:{exams:exam,"idnb":idnb},
+            success: function(response){
+            // we have the response
+            //loadExam(idnb)
+            },
+            error: function(e){
+            	console.log(e)
+            alert('Error: ' + e.message);
+            }
+            });
+            
+     }
+            });
+    
+   
+            
+</script>
 </body>
 </html>

@@ -149,9 +149,6 @@ public class MedicalService {
 		builder.append(code);
 		builder.append(", type=");
 		builder.append(type);
-		builder.append(", medicalActList=");
-		builder.append(medicalActList);
-		builder.append("]");
 		return builder.toString();
 	}
 

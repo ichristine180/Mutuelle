@@ -29,7 +29,7 @@ public class MedicalAct {
 	private LocalDate date;
 
 	/** The amount. */
-	private int amount;
+	private Double amount;
 
 	/** The service. */
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -74,15 +74,15 @@ public class MedicalAct {
 	/**
 	 * @return the amount
 	 */
-	public int getAmount() {
+	public Double getAmount() {
 		return amount;
 	}
 
 	/**
-	 * @param amount the amount to set
+	 * @param d the amount to set
 	 */
-	public void setAmount(int amount) {
-		this.amount = amount;
+	public void setAmount(double d) {
+		this.amount = d;
 	}
 
 	/**

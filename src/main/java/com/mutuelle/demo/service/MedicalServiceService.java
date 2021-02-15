@@ -62,4 +62,15 @@ public class MedicalServiceService implements IMedicalServiceService {
 				throw e;
 			}
 		}
+
+	@Override
+	public MedicalService findById(Long id) {
+		try {
+			return medicalServiceRepository.findOne(id);
+			}catch (Exception e) {
+				// TODO: handle exception
+				throw e;
+			}
+		}
+
 }

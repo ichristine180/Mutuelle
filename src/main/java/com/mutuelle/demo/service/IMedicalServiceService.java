@@ -30,5 +30,6 @@ public interface IMedicalServiceService {
 	public List<MedicalService> findAll();
 	public List<MedicalService> findExams();
 	public List<MedicalService> findMedicaments(EMedicalServiceType type);
+	public MedicalService findById(Long id);
 
 }
