@@ -1,6 +1,8 @@
 package com.mutuelle.demo.service;
 
+
 import java.time.LocalDate;
+
 
 
 import java.util.List;
@@ -48,7 +50,7 @@ public class MedicalActService implements IMedicalActService {
 	 * @see rw.mutuelle.service.IMedicalActService#findOneDateActByPatient(rw.mutuelle.model.Patient,
 	 * java.time.LocalDate)
 	 */
-	@Override
+	
 	public List<MedicalAct> findOneDateActByPatient(Patient patient, LocalDate date) {
 		try {
 			return medicalActRepository.findByPatientAndDate(patient, date);
@@ -56,5 +58,6 @@ public class MedicalActService implements IMedicalActService {
 			throw ex;
 		}
 	}
+
 
 }

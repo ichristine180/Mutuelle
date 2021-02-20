@@ -1,9 +1,20 @@
 package com.mutuelle.demo.utils;
 
-import java.util.List;
+import java.util.Arrays;
 
 public class ExamData {
-	List<String> exams;
+	@Override
+	public String toString() {
+		return "ExamData [exam=" + Arrays.toString(exam) + ", idnb=" + idnb + "]";
+	}
+	private Exam[] exam;
+	
+	public Exam[] getExam() {
+		return exam;
+	}
+	public void setExam(Exam[] exam) {
+		this.exam = exam;
+	}
 	private String idnb;
 	
 	public String getIdnb() {

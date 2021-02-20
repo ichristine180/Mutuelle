@@ -82,10 +82,10 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1.</td>
-                      <td>Malaria</td>
-                      <td><span class="badge bg-danger">1000</span></td>
+                  <tr th:each="examActs,iStat: ${examActs}">
+                      <td th:text="${iStat.index+1}" />
+                      <td  th:text="${examActs.service.name}"/>
+                      <td  th:text="${examActs.amount}"/>
                     </tr>
                      
                   </tbody>
@@ -110,7 +110,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr th:each="examActs,iStat: ${examActs}">
+                    <tr th:each="examActs,iStat: ${mActs}">
                       <td th:text="${iStat.index+1}" />
                       <td  th:text="${examActs.service.name}"/>
                       <td  th:text="${examActs.amount}"/>
@@ -313,25 +313,28 @@
      }
 
     	doExamPost = function() {
-            // get the form values
-            var exam = $('#exams').val();
-            var idnb = $('#idnb').val()
+    	var examData = {
+           exam:$('#exams').val(),
+            idnb:$('#idnb').val()
+        }
+    	
+            console.log(examData)
             $.ajax({
             type: "POST",
-            contentType: "application/json",
+           contentType : 'application/json; charset=utf-8',
             url: "/addExams",
-           data:{exams:exam,"idnb":idnb},
+           data: JSON.stringify(examData),
             success: function(response){
             // we have the response
-            //loadExam(idnb)
+            loadExam($('#idnb').val())
+            console.log("is ok")
             },
             error: function(e){
-            	console.log(e)
-            alert('Error: ' + e.message);
+            alert('Error: ' + e);
             }
             });
-            
      }
+           
             });
     
    

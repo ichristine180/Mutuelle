@@ -3,6 +3,7 @@ package com.mutuelle.demo.service;
 import java.time.LocalDate;
 
 
+
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
@@ -37,6 +38,9 @@ public interface IMedicalActService {
 	 * @param date    the date
 	 * @return the list
 	 */
-	public List<MedicalAct> findOneDateActByPatient(@NotNull Patient patient, @NotNull LocalDate date);
+	
+	//public List<MedicalAct> findOneDateActPatientByService(@NotNull Patient patient, @NotNull LocalDate date);
+
+	public List<MedicalAct> findOneDateActByPatient(Patient patient, LocalDate date);
 
 }
