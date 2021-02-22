@@ -1,8 +1,10 @@
 package com.mutuelle.demo.service;
 
 
-import java.util.List;
 
+
+
+import java.util.List;
 
 import java.util.Set;
 
@@ -12,10 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mutuelle.demo.Model.User;
 import com.mutuelle.demo.Model.security.Erole;
-import com.mutuelle.demo.Model.security.Users;
 import com.mutuelle.demo.Repo.RoleRepository;
 import com.mutuelle.demo.Repo.UsersRepository;
+
+
 
 @Service
 @Transactional
@@ -31,19 +35,18 @@ public class UserService implements IUserService {
 
 
 	@Override
-	public void save(Users user) {
+	public void save(User user) {
 		usersRepository.save(user);
 	}
 
 	@Override
-	public Users findByUsername(String username) {
-		return usersRepository.findByuserName(username);
+	public User findByUsername(String username) {
+		return usersRepository.findByusername(username);
 	}
 
-	@Override
-	public Users findByEmail(String email) {
-		return usersRepository.findByEmail(email);
-	}
+	
+
+	
 	@Override
 	public boolean checkUserExists(String username, String email) {
 		if (checkUsernameExists(username) || checkEmailExists(username)) {
@@ -69,26 +72,22 @@ public class UserService implements IUserService {
 		return false;
 	}
 
+	
 	@Override
-	public Users saveUser(Users user) {
-		return usersRepository.save(user);
-	}
-
-	@Override
-	public List<Users> findUserList() {
+	public List<User> findUserList() {
 		return usersRepository.findAll();
 	}
 
 	@Override
 	public void enableUser(String username) {
-		Users user = findByUsername(username);
+		User user = findByUsername(username);
 
 		usersRepository.save(user);
 	}
 
 	@Override
 	public void disableUser(String username) {
-		Users user = findByUsername(username);
+		User user = findByUsername(username);
 		usersRepository.save(user);
 	}
 
@@ -98,12 +97,28 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public Users createUser(Users user, Set<Erole> eroles) {
+	public User createUser(User user, Set<Erole> eroles) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
+	public User saveUser(User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	
+	@Override
+	public User findByEmail(String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 	
 
 }
+
+
+

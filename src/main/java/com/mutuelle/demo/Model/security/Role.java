@@ -1,35 +1,66 @@
 package com.mutuelle.demo.Model.security;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+
+
 
 @Entity
 @Table(name = "role")
 public class Role {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "role_id")
-	private Long role_id;
-	@Enumerated(EnumType.STRING)
-	@Column(name = "name")
-	private Erole name;
-	public Long getRole_id() {
-		return role_id;
+	@Column(name = "roleId", nullable = false, updatable = false)
+	private int roleId;
+	@Column(name = "name", nullable = false, unique = true)
+	public String name;
+
+	@OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<UserRole> userRoles = new HashSet<>();
+
+	public Role() {
+
 	}
-	public void setRole_id(Long role_id) {
-		this.role_id = role_id;
+
+	public int getRoleId() {
+		return roleId;
 	}
-	public Erole getName() {
+
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
+	}
+
+	public String getName() {
 		return name;
 	}
-	public void setName(Erole name) {
+
+	public void setName(String name) {
 		this.name = name;
 	}
 
-}
+	public Set<UserRole> getUserRoles() {
+		return userRoles;
+	}
+
+	public void setUserRoles(Set<UserRole> userRoles) {
+		this.userRoles = userRoles;
+	}
+	
+	
+	
+	}
+
+

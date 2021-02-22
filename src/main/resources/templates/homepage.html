@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="common/header :: common-header"></head>
+<body class="hold-transition skin-blue fixed layout-top-nav">
+	<div class="wrapper">
+		<!-- Main Header -->
+		<header th:replace="common/header :: main-header"></header>
+		<div class="content-wrapper"
+			sec:authorize="hasRole('ROLE_ADMIN')">
+			<div class="container">
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<h1>
+						Dashboard <small>Admin Panel</small>
+					</h1></section>
+		
+					
+					<section class="content">
+					<!-- Small boxes (Stat box) -->
+					<div class="row">
+						<div class="col-lg-3 col-xs-6">
+							<!-- small box -->
+							<div class="small-box bg-pink">
+								<div class="inner">
+				
+									<h3 th:text="${workersize}"></h3>
+									<p>Registered  Users</p>
+								</div>
+								<div class="icon">
+									<i class="ion ion-bag"></i>
+								</div>
+								<a href="/" class="small-box-footer">More info <i
+									class="fa fa-arrow-circle-right"></i></a>
+							</div>
+						</div>
+						
+						<!-- ./col -->
+						
+					
+						</div>
+						
+				</section>
+								<!-- /.box-header -->
+					
+					<section class="content" >			<!-- form start -->
+					<div class="row">
+					<div class="col-xs-12">
+						<div class="box">
+							<div class="box-header">
+								<h3 class="box-title">All Users</h3>
+							</div>
+							<div class="col-xs-12">
+								<a class="btn btn-primary pull-left" href="/new">
+									<i class="fa fa-user"></i> Register New User
+								</a>
+							</div>
+								<!-- /.box-header -->
+							<div class="box-body">
+						<table id="users"  class="table table-bordered table-hover">
+                          <thead>
+                    <tr>
+                    <th>#</th>
+                    <th>E.Number</th>
+                   <th>FirstName</th>
+                   <th>LastName</th>
+                   <th>Email</th>
+                   <th>Phone</th>
+                   <th>Role</th>
+                  <th>Actions</th>
+                </tr>    
+               </thead>
+        <thbody>
+        <tr th:each ="emp,iStat: ${listEmployees} ">
+        <td th:text="${iStat.index+1}" />
+        <td th:text="${emp.employeeNumber}"> E Number</td>
+        <td th:text="${emp.fname}"> firstname</td>
+        <td th:text="${emp.lname}"> lastname</td>
+        <td th:text="${emp.email}">email</td>
+        <td th:text="${emp.phone}">phone</td>
+       <td th:each="userRole,tat: ${emp.user.userRoles}">
+			<p th:text="${userRole.role.name}"/></td>
+	    
+        
+        <td><a class="btn btn-info" th:href="@{'/details/employee/' + ${emp.employeeNumber}}"> <i class="fa fa-info"></i></a>
+           <a class="btn btn-success" th:href="@{edit/{employeeId}(employeeId=${emp.employeeId})}"> <i class="fa fa-edit"></i></a>								
+	       
+	</td></tr> </thbody>
+</table>
+  </div> </div> </div> </div></section>
+					
+			</div></div></div>	
+				
+	
+				
+
+		<!-- Main Footer -->
+
+		<footer th:replace="common/header :: footer"></footer>
+	
+	<div th:replace="common/header :: body-bottom-scripts"></div>
+	
+</body>
+</html>

@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.mutuelle.demo.Model.security.Users;
+import com.mutuelle.demo.Model.User;
 import com.mutuelle.demo.Repo.UsersRepository;
 
 @Service
@@ -26,7 +26,7 @@ public class UserSecurityService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Users user = userDao.findByuserName(username);
+		User user = userDao.findByUsername(username);
 		if (null == user) {
 			LOG.warn("Username {} not found", username);
 			throw new UsernameNotFoundException("Username " + username + " not found");

@@ -8,7 +8,7 @@ public class SearchPatient {
 
 	@NotNull(message = " This field cant be null")
 	@Pattern(regexp = "[0-9]+", message = "Invalid characters. Use digits only")
-	@Size(min = 16, max = 16, message = "Valid National Identification is 16 Digits")
+	@Size(min = 16, max = 16, message = "Valid National Identification is 16 Digits")	
 private String idnb;
 
 public String getIdnb() {
