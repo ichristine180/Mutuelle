@@ -1,5 +1,6 @@
 package com.mutuelle.demo.controller;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,12 +18,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.mutuelle.demo.Model.Invoice;
 import com.mutuelle.demo.Model.MedicalAct;
 import com.mutuelle.demo.Model.MedicalService;
 import com.mutuelle.demo.Model.Patient;
+import com.mutuelle.demo.Model.security.Users;
+import com.mutuelle.demo.service.IInvoiceService;
 import com.mutuelle.demo.service.IMedicalActService;
 import com.mutuelle.demo.service.IMedicalServiceService;
 import com.mutuelle.demo.service.IPatientService;
+import com.mutuelle.demo.service.UserService;
 import com.mutuelle.demo.utils.EMedicalServiceType;
 import com.mutuelle.demo.utils.Exam;
 import com.mutuelle.demo.utils.ExamData;
@@ -37,7 +43,12 @@ public class OfficerController {
 	private IMedicalServiceService mService;
 	@Autowired
 	private IMedicalActService mActs;
+	@Autowired
+	private UserService userService;
 
+	@Autowired
+	private IInvoiceService invoiceService;
+	
 	@PostMapping("/search")
 	public String searchPatient(@ModelAttribute("patient") @Valid SearchPatient patient, BindingResult results,
 			Model model) {
@@ -141,5 +152,40 @@ public class OfficerController {
 	        mv.addObject("examActs",eActs);
 
 	        return mv;
+	}
+	@RequestMapping(value="/invoiceSuccess/{idnb}", method=RequestMethod.GET)
+	public String generateInvoice(Model model,@PathVariable String idnb,Principal principal) {
+		// creating conslutation acts
+	     MedicalAct mA = new MedicalAct();
+	     MedicalService service=(MedicalService) null;
+		List<MedicalService> services = mService.findByType(EMedicalServiceType.CONSULTATION);
+		for(MedicalService ms:services) {
+			if(ms.getType().equals(EMedicalServiceType.CONSULTATION)) {
+				service = ms;
+				break;
+			}
+			
+		}
+		Patient res = PatientService.findPatientByIdnbr(idnb);
+		mA.setDate(LocalDate.now());
+		mA.setService(service);
+		mA.setAmount(1200);
+		mA.setPatient(res);
+        //System.out.println(mA.toString());
+		//mActs.createMedicalAct(mA);
+		// generating personal invoice 
+		Invoice inv = new Invoice();
+		Double total =invoiceService.calculateInvoiceAmount(res, LocalDate.now());
+		Users user = userService.findByUsername(principal.getName());
+	    Double patient_Percentage = (total*15)/100;
+	    Double rssb_Percentage = total-patient_Percentage;
+		inv.setGeneratedBy(user);
+		inv.setPatient(res);
+		inv.setPatient_Percentage(patient_Percentage);
+		inv.setRssb_Percentage(rssb_Percentage);
+		inv.setTotal(total);
+		Invoice invoice  = invoiceService.createMedicalAct(inv);
+		model.addAttribute("invoice", invoice);
+		return "InvoiceSuccess";
 	}
 }

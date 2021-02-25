@@ -2,6 +2,9 @@ package com.mutuelle.demo.service;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.NotNull;
+
+import com.mutuelle.demo.Model.Invoice;
 import com.mutuelle.demo.Model.Patient;
 
 
@@ -19,5 +22,6 @@ public interface IInvoiceService {
 	 * @return the double
 	 */
 	double calculateInvoiceAmount(Patient patient, LocalDate date);
+	public Invoice createMedicalAct(@NotNull Invoice invoice);
 
 }

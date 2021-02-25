@@ -22,9 +22,9 @@ public class Invoice {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long invoice_id;
-	private Long patient_Percentage;
-	private Long rssb_Percentage;
-	private Long total;
+	private Double patient_Percentage;
+	private Double rssb_Percentage;
+	private Double total;
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "patientId")
@@ -48,32 +48,35 @@ public class Invoice {
 	}
 
 
-	public Long getPatient_Percentage() {
+	
+
+
+	public Double getPatient_Percentage() {
 		return patient_Percentage;
 	}
 
 
-	public void setPatient_Percentage(Long patient_Percentage) {
+	public void setPatient_Percentage(Double patient_Percentage) {
 		this.patient_Percentage = patient_Percentage;
 	}
 
 
-	public Long getRssb_Percentage() {
+	public Double getRssb_Percentage() {
 		return rssb_Percentage;
 	}
 
 
-	public void setRssb_Percentage(Long rssb_Percentage) {
+	public void setRssb_Percentage(Double rssb_Percentage) {
 		this.rssb_Percentage = rssb_Percentage;
 	}
 
 
-	public Long getTotal() {
+	public Double getTotal() {
 		return total;
 	}
 
 
-	public void setTotal(Long total) {
+	public void setTotal(Double total) {
 		this.total = total;
 	}
 

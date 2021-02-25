@@ -100,8 +100,8 @@
                 <h3 class="card-title">medicaments Service</h3>
               </div>
               <!-- /.card-header -->
-              <div class="card-body p-0" id="info" th:fragment="exam_Acts">
-                <table class="table table-sm">
+              <div class="card-body" th:fragment="exam_Acts">
+               <table class="table table-bordered">
                   <thead>
                     <tr>
                       <th style="width: 10px">#</th>
@@ -154,9 +154,14 @@
                   </tbody>
                 </table>
               </div>
+             
               <!-- /.card-body -->
             </div>
+             <div class="modal-footer justify-content-between">
+            <a href="invoiceSuccess/${patient.idnb}" id="invoiceBtn" class="btn btn-primary" >Generate Personal Invoice</a>
             </div>
+            </div>
+            
             </div>
            
             <div class="modal fade" id="modal-default">
@@ -246,7 +251,7 @@
              
           </div>
           </div>
-          
+           
    
       </div>
       <!-- /.container-fluid -->
@@ -261,6 +266,23 @@
 	</div>
 	<div th:replace="common/header :: body-bottom-scripts"></div>
  <script type="text/javascript">
+ function invoice()
+	{	
+	 var idnb = $('#invoiceBtn').val()
+	 $.ajax({
+		  type: 'get',
+		  url: "/invoiceSuccess/"+idnb,
+		
+		  success: function(data){
+			console.log("ok")
+			},
+			 error: function(e){
+            alert('something went wrong try again later!');
+            }
+		  
+		})
+		
+	}
  function loadExam(idnb){
 	 $.ajax({
 		  type: 'get',

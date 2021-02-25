@@ -73,4 +73,14 @@ public class MedicalServiceService implements IMedicalServiceService {
 			}
 		}
 
+	@Override
+	public List<MedicalService> findByType(EMedicalServiceType consultation) {
+		try {
+			return medicalServiceRepository.findByType(consultation);
+			}catch (Exception e) {
+				// TODO: handle exception
+				throw e;
+			}
+		}
+
 }

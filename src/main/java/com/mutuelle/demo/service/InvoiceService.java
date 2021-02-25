@@ -8,14 +8,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mutuelle.demo.Model.Invoice;
 import com.mutuelle.demo.Model.MedicalAct;
 import com.mutuelle.demo.Model.Patient;
+import com.mutuelle.demo.Repo.InvoiceRepository;
 
 @Service(IInvoiceService.NAME)
 public class InvoiceService implements IInvoiceService {
 
 	@Autowired
 	private IMedicalActService mActService;
+	@Autowired
+	private InvoiceRepository iRepository;
 
 	/*
 	 *
@@ -31,6 +35,15 @@ public class InvoiceService implements IInvoiceService {
 				amount += actPrice;
 			}
 			return amount;
+		} catch (Exception ex) {
+			throw ex;
+		}
+	}
+
+	@Override
+	public Invoice createMedicalAct(Invoice invoice) {
+		try {
+			return iRepository.save(invoice);
 		} catch (Exception ex) {
 			throw ex;
 		}
