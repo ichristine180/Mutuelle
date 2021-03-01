@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,11 +24,13 @@ import com.mutuelle.demo.Model.Invoice;
 import com.mutuelle.demo.Model.MedicalAct;
 import com.mutuelle.demo.Model.MedicalService;
 import com.mutuelle.demo.Model.Patient;
+import com.mutuelle.demo.Model.PaymentLog;
 import com.mutuelle.demo.Model.security.Users;
 import com.mutuelle.demo.service.IInvoiceService;
 import com.mutuelle.demo.service.IMedicalActService;
 import com.mutuelle.demo.service.IMedicalServiceService;
 import com.mutuelle.demo.service.IPatientService;
+import com.mutuelle.demo.service.IPaymentService;
 import com.mutuelle.demo.service.UserService;
 import com.mutuelle.demo.utils.EMedicalServiceType;
 import com.mutuelle.demo.utils.Exam;
@@ -35,157 +38,188 @@ import com.mutuelle.demo.utils.ExamData;
 import com.mutuelle.demo.utils.MedicamentData;
 import com.mutuelle.demo.utils.SearchPatient;
 
+
 @Controller
-public class OfficerController {
-	@Autowired
-	private IPatientService PatientService;
-	@Autowired
-	private IMedicalServiceService mService;
-	@Autowired
-	private IMedicalActService mActs;
-	@Autowired
-	private UserService userService;
+public class OfficerController
+{
+    @Autowired
+    private IPatientService PatientService;
+    @Autowired
+    private IMedicalServiceService mService;
+    @Autowired
+    private IMedicalActService mActs;
+    @Autowired
+    private UserService userService;
 
-	@Autowired
-	private IInvoiceService invoiceService;
-	
-	@PostMapping("/search")
-	public String searchPatient(@ModelAttribute("patient") @Valid SearchPatient patient, BindingResult results,
-			Model model) {
-		if (results.hasErrors()) {
-			System.out.println("Validation Errors occured");
-			return "healthOfficerpage";
-		}
-		
-		Patient res = PatientService.findPatientByIdnbr(patient.getIdnb());
-		List<MedicalService> exams = mService.findMedicaments(EMedicalServiceType.EXAM);
-		List<MedicalAct> examActs = mActs.findOneDateActByPatient(res, LocalDate.now());
-		List<MedicalAct> mActs = examActs.stream().filter(acts -> acts.getService().getType()
-				.equals(EMedicalServiceType.MEDICAMENT)).collect(Collectors.toList());
-		List<MedicalAct> eActs = examActs.stream().filter(acts -> acts.getService().getType()
-				.equals(EMedicalServiceType.EXAM)).collect(Collectors.toList());
-		
+    @Autowired
+    private IInvoiceService invoiceService;
+
+    @Autowired
+    private IPaymentService paymentService;
+
+    @PostMapping("/search")
+    public String searchPatient(@ModelAttribute("patient") @Valid final SearchPatient patient, final BindingResult results,
+                                final Model model)
+    {
+        if (results.hasErrors())
+        {
+            System.out.println("Validation Errors occured");
+            return "healthOfficerpage";
+        }
+
+        final Patient res = PatientService.findPatientByIdnbr(patient.getIdnb());
+        final List<MedicalService> exams = mService.findMedicaments(EMedicalServiceType.EXAM);
+        final List<MedicalAct> examActs = mActs.findOneDateActByPatient(res, LocalDate.now());
+        final List<MedicalAct> mActs = examActs.stream().filter(acts -> acts.getService().getType()
+            .equals(EMedicalServiceType.MEDICAMENT)).collect(Collectors.toList());
+        final List<MedicalAct> eActs = examActs.stream().filter(acts -> acts.getService().getType()
+            .equals(EMedicalServiceType.EXAM)).collect(Collectors.toList());
+
 //		System.out.println(examActs);
-		List<MedicalService> medicaments = mService.findMedicaments(EMedicalServiceType.MEDICAMENT);
-		// if the patient is found, we proceed
-		if (res != null) {
-			boolean patientidnb = true;
+        final List<MedicalService> medicaments = mService.findMedicaments(EMedicalServiceType.MEDICAMENT);
+        // if the patient is found, we proceed
+        if (res != null)
+        {
+            final boolean patientidnb = true;
 
-			model.addAttribute("patient", res);
-			MedicamentData medicamentData = new MedicamentData();
-			ExamData examData = new ExamData();
-			model.addAttribute("patientidnb", patientidnb);
-			model.addAttribute("mActs", mActs);
-			model.addAttribute("examActs", eActs);
-			model.addAttribute("exams", exams);
-			model.addAttribute("medicaments", medicaments);
-			model.addAttribute("medicamentData", medicamentData);
-			model.addAttribute("examData", examData);
-			return "patientDetails";
+            model.addAttribute("patient", res);
+            final MedicamentData medicamentData = new MedicamentData();
+            final ExamData examData = new ExamData();
+            model.addAttribute("patientidnb", patientidnb);
+            model.addAttribute("mActs", mActs);
+            model.addAttribute("examActs", eActs);
+            model.addAttribute("exams", exams);
+            model.addAttribute("medicaments", medicaments);
+            model.addAttribute("medicamentData", medicamentData);
+            model.addAttribute("examData", examData);
+            return "patientDetails";
 
-		}
-		model.addAttribute("errormessage", "identification details are not found.");
-		return "healthOfficerpage";
-	}
+        }
+        model.addAttribute("errormessage", "identification details are not found.");
+        return "healthOfficerpage";
+    }
 
-	@RequestMapping(value = "/addMedicament", method = RequestMethod.POST)
-	public @ResponseBody String addMedicament(@ModelAttribute MedicamentData us, BindingResult result) {
-		
-		String returnText;
-		if (!result.hasErrors()) {
-			MedicalAct mA = new MedicalAct();
-			MedicalService service = mService.findById(us.getService());
-			Patient res = PatientService.findPatientByIdnbr(us.getIdnb());
-			mA.setDate(LocalDate.now());
-			mA.setService(service);
-			mA.setAmount(us.getQuantity()*service.getUnitPrice());
-			mA.setPatient(res);
-			System.out.println(mA.toString());
-			mActs.createMedicalAct(mA);
+    @RequestMapping(value = "/addMedicament", method = RequestMethod.POST)
+    public @ResponseBody
+    String addMedicament(@ModelAttribute final MedicamentData us, final BindingResult result)
+    {
 
-			returnText = "User has been added to the list.";
-		} else {
-			returnText = "Sorry, an error has occur. User has not been added to list.";
-		}
-		return returnText;
-	}
+        final String returnText;
+        if (!result.hasErrors())
+        {
+            final MedicalAct mA = new MedicalAct();
+            final MedicalService service = mService.findById(us.getService());
+            final Patient res = PatientService.findPatientByIdnbr(us.getIdnb());
+            mA.setDate(LocalDate.now());
+            mA.setService(service);
+            mA.setAmount(us.getQuantity() * service.getUnitPrice());
+            mA.setPatient(res);
+            System.out.println(mA.toString());
+            mActs.createMedicalAct(mA);
 
-	@RequestMapping(value = "/getAll/{idnb}", method = RequestMethod.GET)
-	public ModelAndView  getAll(Model model,@PathVariable String idnb) {
-		Patient res = PatientService.findPatientByIdnbr(idnb);
-		List<MedicalAct> examActs = mActs.findOneDateActByPatient(res, LocalDate.now());
-		List<MedicalAct> mActs = examActs.stream().filter(acts -> acts.getService().getType()
-				.equals(EMedicalServiceType.MEDICAMENT)).collect(Collectors.toList());
-		  ModelAndView mv= new ModelAndView("patientDetails::exam_Acts"); 
-	        mv.addObject("mActs",mActs);
+            returnText = "User has been added to the list.";
+        }
+        else
+        {
+            returnText = "Sorry, an error has occur. User has not been added to list.";
+        }
+        return returnText;
+    }
 
-	        return mv;
-	}
-	
-	@RequestMapping(value = "/addExams", method = RequestMethod.POST)
-	public @ResponseBody String addExams(@RequestBody ExamData examData) {
-		String returnText;
-		Patient res = PatientService.findPatientByIdnbr(examData.getIdnb());
-		
-	for(Exam exam:examData.getExam()){
-		Long examId = Long.valueOf(exam.getExamName()).longValue();
-			MedicalService service = mService.findById(examId);
-			MedicalAct mA = new MedicalAct();
-			mA.setDate(LocalDate.now());
-			mA.setService(service);
-			mA.setAmount(service.getUnitPrice());
-			mA.setPatient(res);
-			System.out.println(mA.toString());
-			mActs.createMedicalAct(mA);
-	}
-		returnText = "exam has been added to the list.";
-		
-		return returnText;
-	}
-	@RequestMapping(value = "/getExam/{idnb}", method = RequestMethod.GET)
-	public ModelAndView  getExam(Model model,@PathVariable String idnb) {
-		Patient res = PatientService.findPatientByIdnbr(idnb);
-		List<MedicalAct> examActs = mActs.findOneDateActByPatient(res, LocalDate.now());
-		List<MedicalAct> eActs = examActs.stream().filter(acts -> acts.getService().getType()
-				.equals(EMedicalServiceType.EXAM)).collect(Collectors.toList());
-		  ModelAndView mv= new ModelAndView("patientDetails::exams"); 
-	        mv.addObject("examActs",eActs);
+    @RequestMapping(value = "/getAll/{idnb}", method = RequestMethod.GET)
+    public ModelAndView getAll(final Model model, @PathVariable final String idnb)
+    {
+        final Patient res = PatientService.findPatientByIdnbr(idnb);
+        final List<MedicalAct> examActs = mActs.findOneDateActByPatient(res, LocalDate.now());
+        final List<MedicalAct> mActs = examActs.stream().filter(acts -> acts.getService().getType()
+            .equals(EMedicalServiceType.MEDICAMENT)).collect(Collectors.toList());
+        final ModelAndView mv = new ModelAndView("patientDetails::exam_Acts");
+        mv.addObject("mActs", mActs);
 
-	        return mv;
-	}
-	@RequestMapping(value="/invoiceSuccess/{idnb}", method=RequestMethod.GET)
-	public String generateInvoice(Model model,@PathVariable String idnb,Principal principal) {
-		// creating conslutation acts
-	     MedicalAct mA = new MedicalAct();
-	     MedicalService service=(MedicalService) null;
-		List<MedicalService> services = mService.findByType(EMedicalServiceType.CONSULTATION);
-		for(MedicalService ms:services) {
-			if(ms.getType().equals(EMedicalServiceType.CONSULTATION)) {
-				service = ms;
-				break;
-			}
-			
-		}
-		Patient res = PatientService.findPatientByIdnbr(idnb);
-		mA.setDate(LocalDate.now());
-		mA.setService(service);
-		mA.setAmount(1200);
-		mA.setPatient(res);
+        return mv;
+    }
+
+    @RequestMapping(value = "/addExams", method = RequestMethod.POST)
+    public @ResponseBody
+    String addExams(@RequestBody final ExamData examData)
+    {
+        final String returnText;
+        final Patient res = PatientService.findPatientByIdnbr(examData.getIdnb());
+
+        for (final Exam exam : examData.getExam())
+        {
+            final Long examId = Long.valueOf(exam.getExamName()).longValue();
+            final MedicalService service = mService.findById(examId);
+            final MedicalAct mA = new MedicalAct();
+            mA.setDate(LocalDate.now());
+            mA.setService(service);
+            mA.setAmount(service.getUnitPrice());
+            mA.setPatient(res);
+            System.out.println(mA.toString());
+            mActs.createMedicalAct(mA);
+        }
+        returnText = "exam has been added to the list.";
+
+        return returnText;
+    }
+
+    @RequestMapping(value = "/getExam/{idnb}", method = RequestMethod.GET)
+    public ModelAndView getExam(final Model model, @PathVariable final String idnb)
+    {
+        final Patient res = PatientService.findPatientByIdnbr(idnb);
+        final List<MedicalAct> examActs = mActs.findOneDateActByPatient(res, LocalDate.now());
+        final List<MedicalAct> eActs = examActs.stream().filter(acts -> acts.getService().getType()
+            .equals(EMedicalServiceType.EXAM)).collect(Collectors.toList());
+        final ModelAndView mv = new ModelAndView("patientDetails::exams");
+        mv.addObject("examActs", eActs);
+
+        return mv;
+    }
+
+    @RequestMapping(value = "/invoiceSuccess/{idnb}", method = RequestMethod.GET)
+    public String generateInvoice(final Model model, @PathVariable final String idnb, final Principal principal)
+    {
+        // creating conslutation acts
+        final MedicalAct mA = new MedicalAct();
+        MedicalService service = (MedicalService) null;
+        final List<MedicalService> services = mService.findByType(EMedicalServiceType.CONSULTATION);
+        for (final MedicalService ms : services)
+        {
+            if (ms.getType().equals(EMedicalServiceType.CONSULTATION))
+            {
+                service = ms;
+                break;
+            }
+
+        }
+        final Patient res = PatientService.findPatientByIdnbr(idnb);
+        mA.setDate(LocalDate.now());
+        mA.setService(service);
+        mA.setAmount(1200);
+        mA.setPatient(res);
         //System.out.println(mA.toString());
-		//mActs.createMedicalAct(mA);
-		// generating personal invoice 
-		Invoice inv = new Invoice();
-		Double total =invoiceService.calculateInvoiceAmount(res, LocalDate.now());
-		Users user = userService.findByUsername(principal.getName());
-	    Double patient_Percentage = (total*15)/100;
-	    Double rssb_Percentage = total-patient_Percentage;
-		inv.setGeneratedBy(user);
-		inv.setPatient(res);
-		inv.setPatient_Percentage(patient_Percentage);
-		inv.setRssb_Percentage(rssb_Percentage);
-		inv.setTotal(total);
-		Invoice invoice  = invoiceService.createMedicalAct(inv);
-		model.addAttribute("invoice", invoice);
-		return "InvoiceSuccess";
-	}
+        //mActs.createMedicalAct(mA);
+        // generating personal invoice
+        final Invoice inv = new Invoice();
+        final long total = invoiceService.calculateInvoiceAmount(res, LocalDate.now());
+        final Users user = userService.findByUsername(principal.getName());
+        final long patient_Percentage = (total * 15) / 100;
+        final long rssb_Percentage = total - patient_Percentage;
+        inv.setGeneratedBy(user);
+        inv.setPatient(res);
+        inv.setPatient_Percentage(patient_Percentage);
+        inv.setRssb_Percentage(rssb_Percentage);
+        inv.setTotal(total);
+        final Invoice invoice = invoiceService.createMedicalAct(inv);
+        model.addAttribute("invoice", invoice);
+
+        //Update payment log by adding this amount to what RSSB owes the health facility
+        final PaymentLog paymentLog = paymentService.findPaymentLog(invoice.getHealthFacility());
+        final long updatedBalance = paymentLog.getTotalBalance() + invoice.getRssb_Percentage();
+        paymentLog.setTotalBalance(updatedBalance);
+
+        paymentService.updatePaymentLog(paymentLog);
+
+        return "InvoiceSuccess";
+    }
 }
