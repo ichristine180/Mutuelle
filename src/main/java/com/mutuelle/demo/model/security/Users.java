@@ -1,4 +1,4 @@
-package com.mutuelle.demo.Model.security;
+package com.mutuelle.demo.model.security;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -20,7 +20,7 @@ import javax.persistence.UniqueConstraint;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.mutuelle.demo.Model.HealthFacility;
+import com.mutuelle.demo.model.HealthFacility;
 
 
 @Entity
@@ -106,7 +106,7 @@ public class Users implements UserDetails
     }
 
     @Override
-	public String getPassword()
+    public String getPassword()
     {
         return password;
     }

@@ -1,4 +1,4 @@
-package com.mutuelle.demo.Model;
+package com.mutuelle.demo.model;
 
 import java.time.LocalDateTime;
 
@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.mutuelle.demo.Model.security.Users;
+import com.mutuelle.demo.model.security.Users;
 
 
 @Entity

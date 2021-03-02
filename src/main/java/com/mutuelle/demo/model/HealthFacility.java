@@ -1,4 +1,4 @@
-package com.mutuelle.demo.Model;
+package com.mutuelle.demo.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -50,4 +50,14 @@ public class HealthFacility
         this.adrress = adrress;
     }
 
+    @Override
+    public String toString()
+    {
+        final StringBuilder sb = new StringBuilder("HealthFacility{");
+        sb.append("id=").append(id);
+        sb.append(", facilityName='").append(facilityName).append('\'');
+        sb.append(", adrress='").append(adrress).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

@@ -1,36 +1,36 @@
 package com.mutuelle.demo.service;
 
-
 import java.util.List;
-
 import java.util.Set;
 
-import com.mutuelle.demo.Model.security.Erole;
-import com.mutuelle.demo.Model.security.Users;
+import com.mutuelle.demo.model.security.Erole;
+import com.mutuelle.demo.model.security.Users;
 
-public interface IUserService {
-	Users findByUsername(String username);
 
-	Users findByEmail(String email);
+public interface IUserService
+{
+    Users findByUsername(String username);
 
-	boolean checkUserExists(String username, String email);
+    Users findByEmail(String email);
 
-	boolean checkUsernameExists(String username);
+    boolean checkUserExists(String username, String email);
 
-	boolean checkEmailExists(String email);
+    boolean checkUsernameExists(String username);
 
-	void save(Users user);
+    boolean checkEmailExists(String email);
 
-	Users createUser(Users user, Set<Erole> eroles);
+    void save(Users user);
 
-	Users saveUser(Users user);
+    Users createUser(Users user, Set<Erole> eroles);
 
-	List<Users> findUserList();
+    Users saveUser(Users user);
 
-	void enableUser(String username);
+    List<Users> findUserList();
 
-	void disableUser(String username);
+    void enableUser(String username);
 
-	void updatePassword(String updatedPassword, String username);
+    void disableUser(String username);
+
+    void updatePassword(String updatedPassword, String username);
 
 }

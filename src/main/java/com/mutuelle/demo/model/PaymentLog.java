@@ -1,4 +1,4 @@
-package com.mutuelle.demo.Model;
+package com.mutuelle.demo.model;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 @Entity
@@ -20,6 +22,7 @@ public class PaymentLog
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "HEALTH_FACILITY_ID")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private HealthFacility healthFacility;
 
     private long totalBalance;

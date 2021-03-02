@@ -1,4 +1,4 @@
-package com.mutuelle.demo.Model;
+package com.mutuelle.demo.model;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.mutuelle.demo.Model.security.Users;
+import com.mutuelle.demo.model.security.Users;
 
 
 @Entity

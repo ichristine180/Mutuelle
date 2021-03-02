@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mutuelle.demo.Model.HealthFacility;
-import com.mutuelle.demo.Model.PaymentLog;
-import com.mutuelle.demo.Model.PaymentTransaction;
-import com.mutuelle.demo.Repo.IPaymentLogRepository;
-import com.mutuelle.demo.Repo.IPaymentTransactionRepository;
+import com.mutuelle.demo.model.HealthFacility;
+import com.mutuelle.demo.model.PaymentLog;
+import com.mutuelle.demo.model.PaymentTransaction;
+import com.mutuelle.demo.repository.IPaymentLogRepository;
+import com.mutuelle.demo.repository.IPaymentTransactionRepository;
 
 
 @Service
@@ -88,7 +88,12 @@ public class PaymentService implements IPaymentService
     {
         try
         {
-            return paymentLogRepository.findByHealthFacility(healthFacility);
+            final PaymentLog paymentLog = paymentLogRepository.findByHealthFacility(healthFacility);
+            if (paymentLog == null)
+            {
+                return new PaymentLog();
+            }
+            return paymentLog;
         }
         catch (final Exception ex)
         {

@@ -2,9 +2,9 @@ package com.mutuelle.demo.service;
 
 import java.util.List;
 
-import com.mutuelle.demo.Model.HealthFacility;
-import com.mutuelle.demo.Model.PaymentLog;
-import com.mutuelle.demo.Model.PaymentTransaction;
+import com.mutuelle.demo.model.HealthFacility;
+import com.mutuelle.demo.model.PaymentLog;
+import com.mutuelle.demo.model.PaymentTransaction;
 
 
 /**

@@ -20,12 +20,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mutuelle.demo.Model.Invoice;
-import com.mutuelle.demo.Model.MedicalAct;
-import com.mutuelle.demo.Model.MedicalService;
-import com.mutuelle.demo.Model.Patient;
-import com.mutuelle.demo.Model.PaymentLog;
-import com.mutuelle.demo.Model.security.Users;
+import com.mutuelle.demo.model.Invoice;
+import com.mutuelle.demo.model.MedicalAct;
+import com.mutuelle.demo.model.MedicalService;
+import com.mutuelle.demo.model.Patient;
+import com.mutuelle.demo.model.PaymentLog;
+import com.mutuelle.demo.model.security.Users;
 import com.mutuelle.demo.service.IInvoiceService;
 import com.mutuelle.demo.service.IMedicalActService;
 import com.mutuelle.demo.service.IMedicalServiceService;
@@ -210,6 +210,8 @@ public class OfficerController
         inv.setPatient_Percentage(patient_Percentage);
         inv.setRssb_Percentage(rssb_Percentage);
         inv.setTotal(total);
+        inv.setHealthFacility(user.getHealth_facility());
+        
         final Invoice invoice = invoiceService.createMedicalAct(inv);
         model.addAttribute("invoice", invoice);
 
