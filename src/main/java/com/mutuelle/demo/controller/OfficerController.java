@@ -207,17 +207,17 @@ public class OfficerController
         final long rssb_Percentage = total - patient_Percentage;
         inv.setGeneratedBy(user);
         inv.setPatient(res);
-        inv.setPatient_Percentage(patient_Percentage);
-        inv.setRssb_Percentage(rssb_Percentage);
+        inv.setPatientPayment(patient_Percentage);
+        inv.setRssbPayment(rssb_Percentage);
         inv.setTotal(total);
         inv.setHealthFacility(user.getHealth_facility());
-        
-        final Invoice invoice = invoiceService.createMedicalAct(inv);
+
+        final Invoice invoice = invoiceService.createInvoice(inv);
         model.addAttribute("invoice", invoice);
 
         //Update payment log by adding this amount to what RSSB owes the health facility
         final PaymentLog paymentLog = paymentService.findPaymentLog(invoice.getHealthFacility());
-        final long updatedBalance = paymentLog.getTotalBalance() + invoice.getRssb_Percentage();
+        final long updatedBalance = paymentLog.getTotalBalance() + invoice.getRssbPayment();
         paymentLog.setTotalBalance(updatedBalance);
 
         paymentService.updatePaymentLog(paymentLog);

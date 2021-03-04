@@ -1,5 +1,7 @@
 package com.mutuelle.demo.model;
 
+import java.time.LocalDate;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,14 +18,13 @@ import com.mutuelle.demo.model.security.Users;
 @Table(name = "INVOICE")
 public class Invoice
 {
-
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long invoice_id;
-    private long patient_Percentage;
-    private long rssb_Percentage;
+    private Long invoiceId;
+    private long patientPayment;
+    private long rssbPayment;
     private long total;
+    private LocalDate createdOn;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "patientId")
@@ -37,34 +38,34 @@ public class Invoice
     @JoinColumn(name = "HEALTH_FACILITY_ID")
     private HealthFacility healthFacility;
 
-    public Long getInvoice_id()
+    public Long getInvoiceId()
     {
-        return invoice_id;
+        return invoiceId;
     }
 
-    public void setInvoice_id(final Long invoice_id)
+    public void setInvoiceId(final Long invoice_id)
     {
-        this.invoice_id = invoice_id;
+        this.invoiceId = invoice_id;
     }
 
-    public long getPatient_Percentage()
+    public long getPatientPayment()
     {
-        return patient_Percentage;
+        return patientPayment;
     }
 
-    public void setPatient_Percentage(final long patient_Percentage)
+    public void setPatientPayment(final long patient_Percentage)
     {
-        this.patient_Percentage = patient_Percentage;
+        this.patientPayment = patient_Percentage;
     }
 
-    public long getRssb_Percentage()
+    public long getRssbPayment()
     {
-        return rssb_Percentage;
+        return rssbPayment;
     }
 
-    public void setRssb_Percentage(final long rssb_Percentage)
+    public void setRssbPayment(final long rssb_Percentage)
     {
-        this.rssb_Percentage = rssb_Percentage;
+        this.rssbPayment = rssb_Percentage;
     }
 
     public long getTotal()
@@ -107,14 +108,25 @@ public class Invoice
         this.healthFacility = healthFacility;
     }
 
+    public LocalDate getCreatedOn()
+    {
+        return createdOn;
+    }
+
+    public void setCreatedOn(final LocalDate createdOn)
+    {
+        this.createdOn = createdOn;
+    }
+
     @Override
     public String toString()
     {
         final StringBuilder sb = new StringBuilder("Invoice{");
-        sb.append("invoice_id=").append(invoice_id);
-        sb.append(", patient_Percentage=").append(patient_Percentage);
-        sb.append(", rssb_Percentage=").append(rssb_Percentage);
+        sb.append("invoiceId=").append(invoiceId);
+        sb.append(", patientPayment=").append(patientPayment);
+        sb.append(", rssbPayment=").append(rssbPayment);
         sb.append(", total=").append(total);
+        sb.append(", createdOn=").append(createdOn);
         sb.append(", patient=").append(patient);
         sb.append(", generatedBy=").append(generatedBy);
         sb.append(", healthFacility=").append(healthFacility);

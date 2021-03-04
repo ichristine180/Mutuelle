@@ -61,7 +61,7 @@ public class InvoiceService implements IInvoiceService
     }
 
     @Override
-    public Invoice createMedicalAct(final Invoice invoice)
+    public Invoice createInvoice(final Invoice invoice)
     {
         try
         {
@@ -102,6 +102,12 @@ public class InvoiceService implements IInvoiceService
         return detailedInvoice;
     }
 
+    @Override
+    public List<Invoice> findInvoice(final Patient patient)
+    {
+        return iRepository.findByPatient(patient);
+    }
+
     private static void populateDetailedInvoice(final Patient patient,
                                                 final HealthFacility healthFacility,
                                                 final DetailedInvoice detailedInvoice,
@@ -131,8 +137,9 @@ public class InvoiceService implements IInvoiceService
         invoice.setHealthFacility(healthFacility);
         invoice.setGeneratedBy(processedBy);
         invoice.setTotal(totalAmount);
-        invoice.setRssb_Percentage(rssbPercentage);
-        invoice.setPatient_Percentage(patientPercentage);
+        invoice.setRssbPayment(rssbPercentage);
+        invoice.setPatientPayment(patientPercentage);
+        invoice.setCreatedOn(LocalDate.now());
         iRepository.save(invoice);
     }
 

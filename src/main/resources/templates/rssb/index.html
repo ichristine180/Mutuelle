@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="common/header :: common-header"></head>
+<body class="hold-transition skin-blue fixed layout-top-nav">
+<div class="wrapper">
+    <header th:replace="common/header :: main-header"></header>
+    <div class="content-wrapper"
+         sec:authorize="hasRole('ROLE_RSSB')">
+        <div class="content-header">
+            <div class="container">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark"> Top Navigation <small>Example 3.0</small></h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#">Layout</a></li>
+                            <li class="breadcrumb-item active">Top Navigation</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Payment Status</h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid"
+                                                   aria-describedby="example1_info">
+                                                <thead>
+                                                <tr role="row">
+                                                    <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                        aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">
+                                                        #
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                        aria-label="Browser: activate to sort column ascending">Health Center Name
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                        aria-label="Platform(s): activate to sort column ascending">Total Payment Balance
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                        aria-label="CSS grade: activate to sort column ascending">Detailed
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                        aria-label="CSS grade: activate to sort column ascending">Action
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:if="${#lists.isEmpty(paymentLogList)}" role="row" class="odd">
+                                                    <td colspan="6"> No Patients Available</td>
+                                                </tr>
+                                                <tr th:each="paymentLog,count : ${paymentLogList}" role="row" class="odd">
+                                                    <td tabindex="0" class="sorting_1" th:text="${count.index+1}"></td>
+                                                    <td><span th:text="${paymentLog.healthFacility.facilityName}"> Title </span></td>
+                                                    <td><span th:text="${paymentLog.totalBalance}"> Title </span></td>
+                                                    <td>
+                                                        <a th:href="@{/}"><span> View</span></a>
+                                                    </td>
+                                                    <td>
+                                                        <a th:href="@{/}"><span> Pay </span></a>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+    </div>
+    <footer th:replace="common/header :: footer"></footer>
+</div>
+<div th:replace="common/header :: body-bottom-scripts"></div>
+<script>
+    $(function () {
+        $("#example1").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+        });
+    });
+</script>
+</body>
+
+</html>

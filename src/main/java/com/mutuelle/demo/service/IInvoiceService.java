@@ -36,7 +36,7 @@ public interface IInvoiceService
      * @param invoice the invoice
      * @return the invoice
      */
-    Invoice createMedicalAct(@NotNull Invoice invoice);
+    Invoice createInvoice(@NotNull Invoice invoice);
 
     /**
      * Save patient treatement transaction detailed invoice.
@@ -50,4 +50,12 @@ public interface IInvoiceService
                                                      List<MedicalAct> treatementList,
                                                      final Patient patient,
                                                      final Users processedBy);
+
+    /**
+     * Find invoice list.
+     *
+     * @param patient the patient
+     * @return the list
+     */
+    List<Invoice> findInvoice(Patient patient);
 }

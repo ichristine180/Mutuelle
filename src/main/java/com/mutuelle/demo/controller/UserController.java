@@ -1,47 +1,60 @@
-
 package com.mutuelle.demo.controller;
 
-
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.mutuelle.demo.model.Patient;
+import com.mutuelle.demo.model.PaymentLog;
+import com.mutuelle.demo.service.IPatientService;
+import com.mutuelle.demo.service.IPaymentService;
 import com.mutuelle.demo.service.UserService;
-import com.mutuelle.demo.utils.SearchPatient;
+
 
 @Controller
-public class UserController {
+public class UserController
+{
 
-	@Autowired
-	private UserService userService;
+    @Autowired
+    private IPatientService patientService;
 
-	
+    @Autowired
+    private IPaymentService paymentService;
 
-	@GetMapping("/admin")
-	public String homepage(Model model) {
+    @Autowired
+    private UserService userService;
 
-		return "adminpage";
-	}
+    @GetMapping("/admin")
+    public String homepage(final Model model)
+    {
 
-	@GetMapping("/rssb")
-	public String Receptionist(Model model, Principal principal) {
-		
-		return "rssbpage";
-	}
+        return "adminpage";
+    }
 
-	@GetMapping("/healthcenter")
-	public String gDoctor(Model model, Principal principal) {
-	
-		SearchPatient patient = new SearchPatient();
-		model.addAttribute("patient", patient);
-		return "healthOfficerpage";
-	}
-	@GetMapping("/login")
-	public String login() {
-		return "login";
-	}
+    @GetMapping("/rssb")
+    public String Receptionist(final Model model, final Principal principal)
+    {
+        final List<PaymentLog> paymentLogList = paymentService.showPaymentStatus();
+        model.addAttribute("paymentLogList", paymentLogList);
+        return "rssb/index";
+    }
+
+    @GetMapping("/healthcenter")
+    public String gDoctor(final Model model, final Principal principal)
+    {
+        final List<Patient> patientList = patientService.findAllPatient();
+        model.addAttribute("patientList", patientList);
+        return "officer/index";
+    }
+
+    @GetMapping("/login")
+    public String login()
+    {
+        return "login";
+    }
 
 }

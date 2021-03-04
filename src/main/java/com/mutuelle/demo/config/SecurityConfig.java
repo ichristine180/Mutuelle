@@ -59,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
             .antMatchers("/admin/**")
             .hasRole("ADMIN")
             .antMatchers("/health").hasRole("HEALTH")
-        /*   .anyRequest().authenticated()*/;
+            .anyRequest().authenticated();
 
         http.csrf().disable().cors().disable().formLogin().failureUrl("/login?error")
             .successHandler(myAuthenticationSuccessHandler()).loginPage("/login").permitAll().and().logout()
