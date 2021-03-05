@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="common/header :: common-header"></head>
+<body class="hold-transition skin-blue fixed layout-top-nav">
+<div class="wrapper">
+    <header th:replace="common/header :: main-header"></header>
+    <div class="content-wrapper"
+         sec:authorize="hasRole('ROLE_ADMIN')">
+        <div class="content-header">
+            <div class="container">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark"> Health Facility <small>Details</small></h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#">healthFacility</a></li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8" style="margin-left:auto; margin-right:auto;">
+                    <div class="alert alert-success alert-dismissible" th:if="${message==true}">
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                  <h5><i class="icon fas fa-check"></i> success!</h5>
+                 <p th:text="${successMessage}"/>
+                </div>
+                    <div class="box" style="margin-bottom:10px;;">
+			
+							<div class="col-xs-12">
+								<a class="btn btn-success pull-left" href="/addHealthFacility">
+									<i class="fa fa-user"></i> Register New Health Center
+								</a>
+							</div>
+							</div>
+                        <div class="card">
+            <div class="card-header">
+                                <h3 class="card-title">List Of All Health Center Facilities</h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid"
+                                                   aria-describedby="example1_info">
+                                                <thead>
+                                                <tr role="row">
+                                                    <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                        aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">
+                                                        #
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                        aria-label="Browser: activate to sort column ascending">Health Center Name
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                        aria-label="Platform(s): activate to sort column ascending">Health Center Location
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                        aria-label="CSS grade: activate to sort column ascending">Action
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:if="${#lists.isEmpty(healthFacility)}" role="row" class="odd">
+                                                    <td colspan="6"> No health center Available</td>
+                                                </tr>
+                                                <tr th:each="healthFacility,count : ${healthFacility}" role="row" class="odd">
+                                                    <td tabindex="0" class="sorting_1" th:text="${count.index+1}"></td>
+                                                    <td><span th:text="${healthFacility.facilityName}">  </span></td>
+                                                    <td><span th:text="${healthFacility.adrress}">  </span></td>
+                                                    
+                                                   <td><a class="btn btn-success" href="#"> <i
+													class="fa fa-edit"></i>
+											</a> <a class="btn btn-primary" href="#"> <i
+													class="fa fa-times"></i>
+											</a></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+    </div>
+    <footer th:replace="common/header :: footer"></footer>
+</div>
+<div th:replace="common/header :: body-bottom-scripts"></div>
+<script>
+    $(function () {
+        $("#example1").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+        });
+    });
+</script>
+</body>
+
+</html>

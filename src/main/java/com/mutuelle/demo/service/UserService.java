@@ -1,15 +1,14 @@
 package com.mutuelle.demo.service;
 
 import java.util.List;
+
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mutuelle.demo.model.security.Erole;
+import com.mutuelle.demo.model.security.UserRole;
 import com.mutuelle.demo.model.security.Users;
 import com.mutuelle.demo.repository.RoleRepository;
 import com.mutuelle.demo.repository.UsersRepository;
@@ -20,7 +19,7 @@ import com.mutuelle.demo.repository.UsersRepository;
 public class UserService implements IUserService
 {
 
-    private static final Logger LOG = LoggerFactory.getLogger(IUserService.class);
+   
 
     @Autowired
     private UsersRepository usersRepository;
@@ -111,10 +110,18 @@ public class UserService implements IUserService
     }
 
     @Override
-    public Users createUser(final Users user, final Set<Erole> eroles)
-    {
-        // TODO Auto-generated method stub
-        return null;
+    public Users createUser(Users user, Set<UserRole> userRoles) {
+		for (UserRole ur : userRoles) {
+			roleRepository.save(ur.getRole());
+		}
+		user.getUserRoles().addAll(userRoles);
+		try {
+
+			return usersRepository.save(user);
+		} catch (Exception e) {
+			System.out.println(e.getMessage() + " JSJS");
+			throw e;
+		}
     }
 
 }
