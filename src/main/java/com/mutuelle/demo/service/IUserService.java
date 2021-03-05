@@ -1,9 +1,10 @@
 package com.mutuelle.demo.service;
 
 import java.util.List;
+
 import java.util.Set;
 
-import com.mutuelle.demo.model.security.Erole;
+import com.mutuelle.demo.model.security.UserRole;
 import com.mutuelle.demo.model.security.Users;
 
 
@@ -21,7 +22,7 @@ public interface IUserService
 
     void save(Users user);
 
-    Users createUser(Users user, Set<Erole> eroles);
+  //  Users createUser(Users user, Set<Erole> eroles);
 
     Users saveUser(Users user);
 
@@ -32,5 +33,7 @@ public interface IUserService
     void disableUser(String username);
 
     void updatePassword(String updatedPassword, String username);
+
+	Users createUser(Users user, Set<UserRole> userRoles);
 
 }

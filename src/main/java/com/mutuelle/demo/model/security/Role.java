@@ -18,9 +18,9 @@ public class Role
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "role_id")
     private Long role_id;
-    @Enumerated(EnumType.STRING)
+   
     @Column(name = "name")
-    private Erole name;
+    private String name;
 
     public Long getRole_id()
     {
@@ -32,12 +32,12 @@ public class Role
         this.role_id = role_id;
     }
 
-    public Erole getName()
+    public String getName()
     {
         return name;
     }
 
-    public void setName(final Erole name)
+    public void setName(final String name)
     {
         this.name = name;
     }

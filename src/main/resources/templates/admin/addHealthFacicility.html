@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="common/header :: common-header"></head>
+<body class="hold-transition skin-blue fixed layout-top-nav">
+	<div class="wrapper">
+		<!-- Main Header -->
+		<header th:replace="common/header :: main-header"></header>
+		<div class="content-wrapper"
+			sec:authorize="hasRole('ROLE_ADMIN')">
+			<div class="container">
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<h1>
+						Dashboard <small>Admin Panel</small>
+					</h1>
+				</section>
+				
+				
+				<div class="card col-sm-6" style="margin-left:auto; margin-right:auto;">
+    <div class="card-body login-card-body">
+      <p class="login-box-msg">Register Health Facility</p>
+
+       <form th:action="@{/addfacility}" th:object="${healthFacility}" method="post" role="login">
+        <span class="error text-danger" th:if="${#fields.hasErrors('facilityName')}" th:errors="*{facilityName}"></span>
+        <div class="input-group mb-3">
+         <input type="text" th:field="*{facilityName}" class="form-control" placeholder="facilityName" />
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-school"></span>
+            </div>
+          </div>
+        </div>
+         <span class="error text-danger" th:if="${#fields.hasErrors('adrress')}" th:errors="*{adrress}"></span>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" name="adrress"
+											placeholder="Adress/location" />
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-address-card"></span>
+            </div>
+          </div>
+        </div>
+         
+        <div class="row">
+          <div class="col-4">
+            <button type="submit" class="btn btn-primary btn-block">Save</button>
+          </div>
+          <div class="col-4" style="margin-left:auto;">
+            <a href="/healthFacilities" class="btn btn-default btn-block">Cancel</a>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+    </div>
+    
+    <!-- /.login-card-body -->
+  </div>
+				</div>
+				</div>
+				
+
+		<!-- Main Footer -->
+
+		<footer th:replace="common/header :: footer"></footer>
+	</div>
+	<div th:replace="common/header :: body-bottom-scripts"></div>
+
+	
+</body>
+</html>
