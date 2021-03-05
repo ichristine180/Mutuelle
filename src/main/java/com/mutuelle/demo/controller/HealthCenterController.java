@@ -1,5 +1,6 @@
 package com.mutuelle.demo.controller;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +20,15 @@ import com.mutuelle.demo.model.Invoice;
 import com.mutuelle.demo.model.MedicalAct;
 import com.mutuelle.demo.model.MedicalService;
 import com.mutuelle.demo.model.Patient;
+import com.mutuelle.demo.model.security.User;
 import com.mutuelle.demo.service.IInvoiceService;
-import com.mutuelle.demo.service.IMedicalActService;
 import com.mutuelle.demo.service.IMedicalServiceService;
 import com.mutuelle.demo.service.IPatientService;
+import com.mutuelle.demo.service.IUserService;
+import com.mutuelle.demo.utils.DetailedInvoice;
 import com.mutuelle.demo.utils.InvoiceHelper;
 import com.mutuelle.demo.utils.MedicalActDraft;
+import com.mutuelle.demo.utils.MedicalActDto;
 
 
 @Controller
@@ -35,7 +39,7 @@ public class HealthCenterController
     private IPatientService patientService;
 
     @Autowired
-    private IMedicalActService medicalActService;
+    private IUserService userService;
 
     @Autowired
     private IMedicalServiceService medicalServiceService;
@@ -85,13 +89,28 @@ public class HealthCenterController
         return "officer/draft";
     }
 
-    @PostMapping(value = "/patient/transaction/invoice", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String generatePatientInvoice(final InvoiceHelper invoiceHelper, final Model model)
+    @PostMapping(value = "/patient/transaction/invoice")
+    public String generatePatientInvoice(final InvoiceHelper invoiceHelper, final Model model, final Principal principal)
     {
+        LOG.info("Invoice Sample Received: {}", invoiceHelper);
         final Patient patient = patientService.findPatientById(invoiceHelper.getPatientId());
-        LOG.info("Draft Received: {}", invoiceHelper);
+        //generate invoice and return it to the UI
+        final List<MedicalAct> treatementList = new ArrayList<>();
+        for (final MedicalActDto medicalActDto : invoiceHelper.getMedicalActList())
+        {
+            final MedicalAct medicalAct = new MedicalAct();
+            medicalAct.setAmount(medicalActDto.getAmount());
+            medicalAct.setDate(LocalDate.now());
+            medicalAct.setPatient(patient);
+            medicalAct.setService(medicalActDto.getService());
+            medicalAct.setAmount(medicalActDto.getAmount());
 
+            treatementList.add(medicalAct);
+        }
+        final User processedBy = userService.findByUsername(principal.getName());
+        final DetailedInvoice invoice = invoiceService.savePatientTreatementTransaction(treatementList, patient, processedBy);
         model.addAttribute("patient", patient);
+        model.addAttribute("invoice", invoice);
         return "officer/invoice";
     }
 
@@ -102,7 +121,6 @@ public class HealthCenterController
         for (final MedicalService medicalService : medicalServiceList)
         {
             final MedicalAct medicalAct = new MedicalAct();
-            medicalAct.setDate(LocalDate.now());
             medicalAct.setService(medicalService);
             medicalAct.setPatient(patient);
             medicalActList.add(medicalAct);

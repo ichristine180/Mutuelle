@@ -25,7 +25,7 @@ import com.mutuelle.demo.model.MedicalAct;
 import com.mutuelle.demo.model.MedicalService;
 import com.mutuelle.demo.model.Patient;
 import com.mutuelle.demo.model.PaymentLog;
-import com.mutuelle.demo.model.security.Users;
+import com.mutuelle.demo.model.security.User;
 import com.mutuelle.demo.service.IInvoiceService;
 import com.mutuelle.demo.service.IMedicalActService;
 import com.mutuelle.demo.service.IMedicalServiceService;
@@ -110,9 +110,9 @@ public class OfficerController
             final MedicalAct mA = new MedicalAct();
             final MedicalService service = mService.findById(us.getService());
             final Patient res = PatientService.findPatientByIdnbr(us.getIdnb());
-            mA.setDate(LocalDate.now());
+            //mA.setDate(LocalDate.now());
             mA.setService(service);
-            mA.setAmount(us.getQuantity() * service.getUnitPrice());
+            mA.setAmount((long) (us.getQuantity() * service.getUnitPrice()));
             mA.setPatient(res);
             System.out.println(mA.toString());
             mActs.createMedicalAct(mA);
@@ -153,7 +153,7 @@ public class OfficerController
             final MedicalAct mA = new MedicalAct();
             mA.setDate(LocalDate.now());
             mA.setService(service);
-            mA.setAmount(service.getUnitPrice());
+            mA.setAmount((long) service.getUnitPrice());
             mA.setPatient(res);
             System.out.println(mA.toString());
             mActs.createMedicalAct(mA);
@@ -202,7 +202,7 @@ public class OfficerController
         // generating personal invoice
         final Invoice inv = new Invoice();
         final long total = invoiceService.calculateInvoiceAmount(res, LocalDate.now());
-        final Users user = userService.findByUsername(principal.getName());
+        final User user = userService.findByUsername(principal.getName());
         final long patient_Percentage = (total * 15) / 100;
         final long rssb_Percentage = total - patient_Percentage;
         inv.setGeneratedBy(user);

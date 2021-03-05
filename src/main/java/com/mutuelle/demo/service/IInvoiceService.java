@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import com.mutuelle.demo.model.Invoice;
 import com.mutuelle.demo.model.MedicalAct;
 import com.mutuelle.demo.model.Patient;
-import com.mutuelle.demo.model.security.Users;
+import com.mutuelle.demo.model.security.User;
 import com.mutuelle.demo.utils.DetailedInvoice;
 
 
@@ -49,7 +49,7 @@ public interface IInvoiceService
     DetailedInvoice savePatientTreatementTransaction(final
                                                      List<MedicalAct> treatementList,
                                                      final Patient patient,
-                                                     final Users processedBy);
+                                                     final User processedBy);
 
     /**
      * Find invoice list.

@@ -13,7 +13,7 @@ import com.mutuelle.demo.model.MedicalAct;
 import com.mutuelle.demo.model.MedicalService;
 import com.mutuelle.demo.model.Patient;
 import com.mutuelle.demo.model.PaymentLog;
-import com.mutuelle.demo.model.security.Users;
+import com.mutuelle.demo.model.security.User;
 import com.mutuelle.demo.repository.InvoiceRepository;
 import com.mutuelle.demo.utils.DetailedInvoice;
 
@@ -74,7 +74,7 @@ public class InvoiceService implements IInvoiceService
     }
 
     @Override
-    public DetailedInvoice savePatientTreatementTransaction(final List<MedicalAct> treatementList, final Patient patient, final Users processedBy)
+    public DetailedInvoice savePatientTreatementTransaction(final List<MedicalAct> treatementList, final Patient patient, final User processedBy)
     {
         final HealthFacility healthFacility = processedBy.getHealth_facility();
         final DetailedInvoice detailedInvoice = new DetailedInvoice();
@@ -126,7 +126,7 @@ public class InvoiceService implements IInvoiceService
     }
 
     private void createPatientInvoice(final Patient patient,
-                                      final Users processedBy,
+                                      final User processedBy,
                                       final HealthFacility healthFacility,
                                       final long totalAmount,
                                       final long patientPercentage,

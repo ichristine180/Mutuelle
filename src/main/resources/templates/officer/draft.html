@@ -40,7 +40,8 @@
                                 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <form th:action="@{/healthcenter/patient/transaction/invoice}" th:object="${invoiceHelper}">
+                                            <form th:action="@{/healthcenter/patient/transaction/invoice}" th:object="${invoiceHelper}" method="POST">
+                                                <input type="hidden" th:value="${patient.id}" name="patientId"/>
                                                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid"
                                                        aria-describedby="example1_info">
                                                     <thead>
@@ -64,10 +65,17 @@
                                                         role="row" class="odd" th:field="*{medicalActList}">
                                                         <td tabindex="0" class="sorting_1" th:text="${count.index+1}"></td>
                                                         <td>
-                                                            <span th:text="${medicalAct.service.name}"> </span>
+                                                            <span th:text=" ${medicalAct.service.name}"> </span>
                                                         </td>
-                                                        <td><span th:text="${medicalAct.service.unitPrice}">  </span></td>
-                                                        <td><input type="text" name="amount" class="form-control" style="width: 4em" placeholder="#"/>
+                                                        <td>
+                                                            <span th:text="${medicalAct.service.unitPrice}">  </span>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" th:name="|medicalActList[__${count.index}__].service|"
+                                                                   th:value="${medicalAct.service.id}"/>
+                                                            <input type="number" th:field="*{medicalActList[__${count.index}__].amount}"
+                                                                   class="form-control" style="width: 6em" min="1"
+                                                                   max="1000"/>
                                                         </td>
                                                     </tr>
                                                     </tbody>

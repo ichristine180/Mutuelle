@@ -11,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.mutuelle.demo.model.security.Users;
+import com.mutuelle.demo.model.security.User;
 
 
 @Entity
@@ -32,7 +32,7 @@ public class Invoice
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "generatedBy")
-    private Users generatedBy;
+    private User generatedBy;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "HEALTH_FACILITY_ID")
@@ -88,12 +88,12 @@ public class Invoice
         this.patient = patient;
     }
 
-    public Users getGeneratedBy()
+    public User getGeneratedBy()
     {
         return generatedBy;
     }
 
-    public void setGeneratedBy(final Users generatedBy)
+    public void setGeneratedBy(final User generatedBy)
     {
         this.generatedBy = generatedBy;
     }

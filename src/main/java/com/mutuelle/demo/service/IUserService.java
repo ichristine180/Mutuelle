@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.Set;
 
 import com.mutuelle.demo.model.security.Erole;
-import com.mutuelle.demo.model.security.Users;
+import com.mutuelle.demo.model.security.User;
 
 
 public interface IUserService
 {
-    Users findByUsername(String username);
+    User findByUsername(String username);
 
-    Users findByEmail(String email);
+    User findByEmail(String email);
 
     boolean checkUserExists(String username, String email);
 
@@ -19,13 +19,13 @@ public interface IUserService
 
     boolean checkEmailExists(String email);
 
-    void save(Users user);
+    void save(User user);
 
-    Users createUser(Users user, Set<Erole> eroles);
+    User createUser(User user, Set<Erole> eroles);
 
-    Users saveUser(Users user);
+    User saveUser(User user);
 
-    List<Users> findUserList();
+    List<User> findUserList();
 
     void enableUser(String username);
 

@@ -12,7 +12,7 @@ public class MedicalActDraft
     private List<MedicalService> laboratoryServiceList;
 
     private List<MedicalService> drugList;
-
+    
     private long patientId;
 
     public List<MedicalService> getConsultationServiceList()
