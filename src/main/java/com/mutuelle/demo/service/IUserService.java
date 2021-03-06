@@ -2,10 +2,13 @@ package com.mutuelle.demo.service;
 
 import java.util.List;
 
+
 import java.util.Set;
 
+import com.mutuelle.demo.model.security.Role;
 import com.mutuelle.demo.model.security.UserRole;
 import com.mutuelle.demo.model.security.Users;
+
 
 
 public interface IUserService
@@ -35,5 +38,9 @@ public interface IUserService
     void updatePassword(String updatedPassword, String username);
 
 	Users createUser(Users user, Set<UserRole> userRoles);
+	Role findByName(String rolename);
+	Iterable<Role> findAllRole();
+
+	Users encryptPass(Users password);
 
 }

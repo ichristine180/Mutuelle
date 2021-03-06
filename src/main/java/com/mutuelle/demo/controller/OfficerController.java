@@ -210,7 +210,7 @@ public class OfficerController
         inv.setPatientPayment(patient_Percentage);
         inv.setRssbPayment(rssb_Percentage);
         inv.setTotal(total);
-        inv.setHealthFacility(user.getHealth_facility());
+        inv.setHealthFacility(user.getHealthFacility());
 
         final Invoice invoice = invoiceService.createInvoice(inv);
         model.addAttribute("invoice", invoice);

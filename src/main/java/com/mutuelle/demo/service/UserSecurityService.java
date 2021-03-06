@@ -25,7 +25,8 @@ public class UserSecurityService implements UserDetailsService
     @Override
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException
     {
-        final Users user = userDao.findByuserName(username);
+        final Users user = userDao.findByusername(username);
+       
         if (null == user)
         {
             LOG.warn("Username {} not found", username);

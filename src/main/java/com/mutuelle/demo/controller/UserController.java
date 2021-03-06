@@ -31,6 +31,7 @@ public class UserController
     @GetMapping("/admin")
     public String homepage(final Model model)
     {
+    	model.addAttribute("users", userService.findUserList());
 
         return "adminpage";
     }

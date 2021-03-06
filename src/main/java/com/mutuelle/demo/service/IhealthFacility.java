@@ -10,7 +10,9 @@ public interface IhealthFacility {
 	List<HealthFacility> findAllService();
 
 	HealthFacility findOne(long id);
+	HealthFacility findByName(String name);
 
 	HealthFacility create(HealthFacility hf);
+	
 
 }

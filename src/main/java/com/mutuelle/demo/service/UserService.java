@@ -2,16 +2,20 @@ package com.mutuelle.demo.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Set;
-
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mutuelle.demo.model.security.Role;
 import com.mutuelle.demo.model.security.UserRole;
 import com.mutuelle.demo.model.security.Users;
 import com.mutuelle.demo.repository.RoleRepository;
 import com.mutuelle.demo.repository.UsersRepository;
+
 
 
 @Service
@@ -19,14 +23,16 @@ import com.mutuelle.demo.repository.UsersRepository;
 public class UserService implements IUserService
 {
 
-   
+	private static final Logger LOG = LoggerFactory.getLogger(IUserService.class);
 
     @Autowired
     private UsersRepository usersRepository;
 
     @Autowired
     private RoleRepository roleRepository;
-
+    
+    @Autowired
+	private BCryptPasswordEncoder passwordEncoder;
     @Override
     public void save(final Users user)
     {
@@ -36,7 +42,7 @@ public class UserService implements IUserService
     @Override
     public Users findByUsername(final String username)
     {
-        return usersRepository.findByuserName(username);
+        return usersRepository.findByusername(username);
     }
 
     @Override
@@ -89,32 +95,17 @@ public class UserService implements IUserService
     }
 
     @Override
-    public void enableUser(final String username)
-    {
-        final Users user = findByUsername(username);
-
-        usersRepository.save(user);
-    }
-
-    @Override
-    public void disableUser(final String username)
-    {
-        final Users user = findByUsername(username);
-        usersRepository.save(user);
-    }
-
-    @Override
-    public void updatePassword(final String updatedPassword, final String userName)
-    {
-        usersRepository.updatePassword(updatedPassword, userName);
-    }
-
-    @Override
     public Users createUser(Users user, Set<UserRole> userRoles) {
 		for (UserRole ur : userRoles) {
 			roleRepository.save(ur.getRole());
 		}
 		user.getUserRoles().addAll(userRoles);
+		Users localUser = usersRepository.findByusername(user.getUsername());
+		if (localUser != null) {
+			LOG.info("Account with {} username, exists", user.getUsername());
+		} else {
+			String encryptedPassword = passwordEncoder.encode(user.getPassword());
+			user.setPassword(encryptedPassword);
 		try {
 
 			return usersRepository.save(user);
@@ -122,6 +113,54 @@ public class UserService implements IUserService
 			System.out.println(e.getMessage() + " JSJS");
 			throw e;
 		}
+		}
+		return localUser;
     }
 
+	@Override
+	public Role findByName(String rolename) {
+		// TODO Auto-generated method stub
+		try {
+		return roleRepository.findByName(rolename);
+		} catch (Exception e) {
+			System.out.println(e.getMessage() + " JSJS");
+			throw e;
+		}
+	}
+
+	@Override
+	public Iterable<Role> findAllRole() {
+		// TODO Auto-generated method stub
+		try {
+			return roleRepository.findAll();
+			} catch (Exception e) {
+				System.out.println(e.getMessage() + " JSJS");
+				throw e;
+			}
+	}
+	@Override
+	public Users encryptPass(Users password) {
+		String encryptedPassword = passwordEncoder.encode(password.getPassword());
+		password.setPassword(encryptedPassword);
+
+		return password;
+	}
+	@Override
+	public void enableUser(String username) {
+		Users user = findByUsername(username);
+		user.setEnabled(true);
+		usersRepository.save(user);
+	}
+
+	@Override
+	public void disableUser(String username) {
+		Users user = findByUsername(username);
+		user.setEnabled(false);
+		usersRepository.save(user);
+	}
+
+	@Override
+	public void updatePassword(String updatedPassword, String username) {
+		usersRepository.updatePassword(updatedPassword, username);
+	}
 }

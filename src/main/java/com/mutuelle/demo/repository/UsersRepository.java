@@ -15,7 +15,7 @@ import com.mutuelle.demo.model.security.Users;
 public interface UsersRepository extends CrudRepository<Users, Long>
 {
 
-    Users findByuserName(String username);
+    Users findByusername(String username);
 
     Users findByEmail(String email);
 
@@ -23,6 +23,6 @@ public interface UsersRepository extends CrudRepository<Users, Long>
     List<Users> findAll();
 
     @Modifying
-    @Query("update Users u set u.password = :password where u.userName = :userName")
-    void updatePassword(@Param("password") String password, @Param("userName") String userName);
+    @Query("update Users u set u.password = :password where u.username = :username")
+    void updatePassword(@Param("password") String password, @Param("username") String username);
 }

@@ -25,7 +25,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8" style="margin-left:auto; margin-right:auto;">
-                    <div class="alert alert-success alert-dismissible" th:if="${message==true}">
+                    <div class="alert alert-success alert-dismissible" th:if="${successMessage}">
                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                   <h5><i class="icon fas fa-check"></i> success!</h5>
                  <p th:text="${successMessage}"/>
@@ -33,7 +33,7 @@
                     <div class="box" style="margin-bottom:10px;;">
 			
 							<div class="col-xs-12">
-								<a class="btn btn-success pull-left" href="/addHealthFacility">
+								<a class="btn btn-info pull-left" href="/addHealthFacility">
 									<i class="fa fa-user"></i> Register New Health Center
 								</a>
 							</div>

@@ -2,6 +2,7 @@ package com.mutuelle.demo.config;
 
 import java.security.SecureRandom;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,11 +11,12 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import com.mutuelle.demo.service.UserSecurityService;
 
 
 @Configuration
@@ -27,15 +29,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     private AccessDeniedHandler accessDeniedHandler;
 
     @Autowired
-    private UserDetailsService userSecurityService;
+	private UserSecurityService userSecurityService;
 
-    private static final String SALT = "salt";
+	private static final String SALT = "salt";
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder()
-    {
-        return new BCryptPasswordEncoder(12, new SecureRandom(SALT.getBytes()));
-    }
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder(12, new SecureRandom(SALT.getBytes()));
+	}
+
 
     @Bean
     public AuthenticationSuccessHandler myAuthenticationSuccessHandler()
@@ -71,6 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     @Autowired
     public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception
     {
+    	 //System.out.println(userSecurityService);
         // This is in-memory authentication
         auth.inMemoryAuthentication().withUser("rssb@mutuelle.com").password("pass").roles("RSSB");
         auth.inMemoryAuthentication().withUser("health@mutuelle.com").password("pass").roles("HEALTH");
