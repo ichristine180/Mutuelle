@@ -71,7 +71,7 @@
                                                             <span th:text="${medicalAct.service.unitPrice}">  </span>
                                                         </td>
                                                         <td>
-                                                            <input type="text" th:name="|medicalActList[__${count.index}__].service|"
+                                                            <input type="hidden" th:name="|medicalActList[__${count.index}__].service|"
                                                                    th:value="${medicalAct.service.id}"/>
                                                             <input type="number" th:field="*{medicalActList[__${count.index}__].amount}"
                                                                    class="form-control" style="width: 6em" min="1"

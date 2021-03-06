@@ -107,7 +107,12 @@ public class HealthCenterController
 
             treatementList.add(medicalAct);
         }
-        final User processedBy = userService.findByUsername(principal.getName());
+        User processedBy = userService.findByUsername(principal.getName());
+        if (processedBy == null)
+        {
+            processedBy = userService.findByUsername("muganga");
+        }
+        LOG.info("Processing invoice: {}", treatementList);
         final DetailedInvoice invoice = invoiceService.savePatientTreatementTransaction(treatementList, patient, processedBy);
         model.addAttribute("patient", patient);
         model.addAttribute("invoice", invoice);
