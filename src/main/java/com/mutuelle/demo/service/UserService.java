@@ -1,15 +1,14 @@
 package com.mutuelle.demo.service;
 
 import java.util.List;
-
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mutuelle.demo.model.security.User;
 import com.mutuelle.demo.model.security.UserRole;
-import com.mutuelle.demo.model.security.Users;
 import com.mutuelle.demo.repository.RoleRepository;
 import com.mutuelle.demo.repository.UsersRepository;
 
@@ -19,8 +18,6 @@ import com.mutuelle.demo.repository.UsersRepository;
 public class UserService implements IUserService
 {
 
-   
-
     @Autowired
     private UsersRepository usersRepository;
 
@@ -28,19 +25,19 @@ public class UserService implements IUserService
     private RoleRepository roleRepository;
 
     @Override
-    public void save(final Users user)
+    public void save(final User user)
     {
         usersRepository.save(user);
     }
 
     @Override
-    public Users findByUsername(final String username)
+    public User findByUsername(final String username)
     {
         return usersRepository.findByuserName(username);
     }
 
     @Override
-    public Users findByEmail(final String email)
+    public User findByEmail(final String email)
     {
         return usersRepository.findByEmail(email);
     }
@@ -77,13 +74,13 @@ public class UserService implements IUserService
     }
 
     @Override
-    public Users saveUser(final Users user)
+    public User saveUser(final User user)
     {
         return usersRepository.save(user);
     }
 
     @Override
-    public List<Users> findUserList()
+    public List<User> findUserList()
     {
         return usersRepository.findAll();
     }
@@ -91,7 +88,7 @@ public class UserService implements IUserService
     @Override
     public void enableUser(final String username)
     {
-        final Users user = findByUsername(username);
+        final User user = findByUsername(username);
 
         usersRepository.save(user);
     }
@@ -99,7 +96,7 @@ public class UserService implements IUserService
     @Override
     public void disableUser(final String username)
     {
-        final Users user = findByUsername(username);
+        final User user = findByUsername(username);
         usersRepository.save(user);
     }
 
@@ -110,18 +107,22 @@ public class UserService implements IUserService
     }
 
     @Override
-    public Users createUser(Users user, Set<UserRole> userRoles) {
-		for (UserRole ur : userRoles) {
-			roleRepository.save(ur.getRole());
-		}
-		user.getUserRoles().addAll(userRoles);
-		try {
-
-			return usersRepository.save(user);
-		} catch (Exception e) {
-			System.out.println(e.getMessage() + " JSJS");
-			throw e;
-		}
+    public User createUser(final User user, final Set<UserRole> userRoles)
+    {
+        for (final UserRole ur : userRoles)
+        {
+            roleRepository.save(ur.getRole());
+        }
+        user.getUserRoles().addAll(userRoles);
+        try
+        {
+            return usersRepository.save(user);
+        }
+        catch (final Exception e)
+        {
+            System.out.println(e.getMessage() + " JSJS");
+            throw e;
+        }
     }
-
 }
+

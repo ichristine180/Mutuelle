@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="common/header :: common-header"></head>
+<body class="hold-transition skin-blue fixed layout-top-nav">
+<div class="wrapper">
+    <header th:replace="common/header :: main-header"></header>
+    <div class="content-wrapper"
+         sec:authorize="hasRole('ROLE_HEALTH')">
+        <div class="content-header">
+            <div class="container">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark"> Invoice <small>Generator</small></h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#">Layout</a></li>
+                            <li class="breadcrumb-item active">Top Navigation</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <table>
+                                    <tr>
+                                        <td>Invoice Number</td>
+                                        <td><span th:text="${invoice.invoiceNumber}"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Health Center</td>
+                                        <td><span th:text="${invoice.healthFacility.facilityName}"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Names</td>
+                                        <td><span th:text="${invoice.patient.firstName}"></span> &nbsp; <span
+                                                th:text="${invoice.patient.firstName}"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Names</td>
+                                        <td><span th:text="${invoice.treatedOn}"></span></td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                            <div class="card-body">
+                                <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid"
+                                                   aria-describedby="example1_info">
+                                                <thead>
+                                                <tr role="row">
+                                                    <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                        aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">
+                                                        #
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                        aria-label="Browser: activate to sort column ascending">Service
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                        aria-label="Platform(s): activate to sort column ascending">Unit Price
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                        aria-label="Engine version: activate to sort column ascending">Amount(#)
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                        aria-label="CSS grade: activate to sort column ascending">Total Price [RWFs]
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:if="${#lists.isEmpty(invoice.treatementList)}" role="row" class="odd">
+                                                    <td colspan="5"> No Patients Available</td>
+                                                </tr>
+                                                <tr th:each="invoiceAct,count : ${invoice.treatementList}" role="row" class="odd">
+                                                    <td tabindex="0" class="sorting_1" th:text="${count.index+1}"></td>
+                                                    <td><span th:text="${invoiceAct.service.name}"> Title </span></td>
+                                                    <td><span th:text="${invoiceAct.service.unitPrice}"> Title </span></td>
+                                                    <td><span th:text="${invoiceAct.amount}"> Title </span></td>
+                                                    <td><span th:with="var=${invoiceAct.amount * invoiceAct.service.unitPrice}"
+                                                              th:text="${var}"> Title </span>
+                                                    </td>
+                                                </tr>
+                                                <tr role="row" class="odd">
+                                                    <td colspan="3"></td>
+                                                    <td>Total</td>
+                                                    <td><span th:text="${invoice.totalAmount}"> Title </span></td>
+                                                </tr>
+                                                <tr role="row" class="odd">
+                                                    <td colspan="3"></td>
+                                                    <td>RSSB Amount[85%]</td>
+                                                    <td><span th:text="${invoice.insuranceAmount}">  </span></td>
+                                                </tr>
+                                                <tr role="row" class="odd">
+                                                    <td colspan="3"></td>
+                                                    <td>Patient Amount[15%]</td>
+                                                    <td><strong><span th:text="${invoice.patientAmount}">  </span></strong>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+    </div>
+    <footer th:replace="common/header :: footer"></footer>
+</div>
+<div th:replace="common/header :: body-bottom-scripts"></div>
+<script>
+    $(function () {
+        $("#example1").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+        });
+    });
+</script>
+</body>
+
+</html>

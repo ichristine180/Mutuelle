@@ -8,21 +8,21 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.mutuelle.demo.model.security.Users;
+import com.mutuelle.demo.model.security.User;
 
 
 @Repository
-public interface UsersRepository extends CrudRepository<Users, Long>
+public interface UsersRepository extends CrudRepository<User, Long>
 {
 
-    Users findByuserName(String username);
+    User findByuserName(String username);
 
-    Users findByEmail(String email);
+    User findByEmail(String email);
 
     @Override
-    List<Users> findAll();
+    List<User> findAll();
 
     @Modifying
-    @Query("update Users u set u.password = :password where u.userName = :userName")
+    @Query("update User u set u.password = :password where u.userName = :userName")
     void updatePassword(@Param("password") String password, @Param("userName") String userName);
 }

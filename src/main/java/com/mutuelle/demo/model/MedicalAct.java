@@ -30,9 +30,6 @@ public class MedicalAct
     /** The date. */
     private LocalDate date;
 
-    /** The amount. */
-    private Double amount;
-
     /** The service. */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEDICAL_SERVICE_ID")
@@ -45,106 +42,68 @@ public class MedicalAct
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Patient patient;
 
-    /**
-     * @return the id
-     */
+    private long amount;
+
     public long getId()
     {
         return id;
     }
 
-    /**
-     * @param id the id to set
-     */
     public void setId(final long id)
     {
         this.id = id;
     }
 
-    /**
-     * @return the date
-     */
     public LocalDate getDate()
     {
         return date;
     }
 
-    /**
-     * @param date the date to set
-     */
     public void setDate(final LocalDate date)
     {
         this.date = date;
     }
 
-    /**
-     * @return the amount
-     */
-    public Double getAmount()
-    {
-        return amount;
-    }
-
-    /**
-     * @param d the amount to set
-     */
-    public void setAmount(final double d)
-    {
-        this.amount = d;
-    }
-
-    /**
-     * @return the service
-     */
     public MedicalService getService()
     {
         return service;
     }
 
-    /**
-     * @param service the service to set
-     */
     public void setService(final MedicalService service)
     {
         this.service = service;
     }
 
-    /**
-     * @return the patient
-     */
     public Patient getPatient()
     {
         return patient;
     }
 
-    /**
-     * @param patient the patient to set
-     */
     public void setPatient(final Patient patient)
     {
         this.patient = patient;
     }
 
-    /*
-     *
-     * @see java.lang.Object#toString()
-     */
+    public long getAmount()
+    {
+        return amount;
+    }
+
+    public void setAmount(final long amount)
+    {
+        this.amount = amount;
+    }
+
     @Override
     public String toString()
     {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("MedicalAct [id=");
-        builder.append(id);
-        builder.append(", date=");
-        builder.append(date);
-        builder.append(", amount=");
-        builder.append(amount);
-        builder.append(", service=");
-        builder.append(service);
-        builder.append(", patient=");
-        builder.append(patient);
-        builder.append("]");
-        return builder.toString();
+        final StringBuilder sb = new StringBuilder("MedicalAct{");
+        sb.append("id=").append(id);
+        sb.append(", date=").append(date);
+        sb.append(", service=").append(service);
+        sb.append(", patient=").append(patient);
+        sb.append(", amount=").append(amount);
+        sb.append('}');
+        return sb.toString();
     }
-
 }

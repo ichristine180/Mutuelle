@@ -4,16 +4,16 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mutuelle.demo.model.HealthFacility;
 import com.mutuelle.demo.model.Invoice;
 import com.mutuelle.demo.model.MedicalAct;
-import com.mutuelle.demo.model.MedicalService;
 import com.mutuelle.demo.model.Patient;
 import com.mutuelle.demo.model.PaymentLog;
-import com.mutuelle.demo.model.security.Users;
+import com.mutuelle.demo.model.security.User;
 import com.mutuelle.demo.repository.InvoiceRepository;
 import com.mutuelle.demo.utils.DetailedInvoice;
 
@@ -74,18 +74,18 @@ public class InvoiceService implements IInvoiceService
     }
 
     @Override
-    public DetailedInvoice savePatientTreatementTransaction(final List<MedicalAct> treatementList, final Patient patient, final Users processedBy)
+    public DetailedInvoice savePatientTreatementTransaction(final List<MedicalAct> treatementList, final Patient patient, final User processedBy)
     {
         final HealthFacility healthFacility = processedBy.getHealth_facility();
         final DetailedInvoice detailedInvoice = new DetailedInvoice();
-        final List<MedicalService> servedServiceList = new ArrayList<>();
+        final List<MedicalAct> servedServiceList = new ArrayList<>();
         long totalAmount = 0;
         //Save MedicalActs
         for (final MedicalAct medicalAct : treatementList)
         {
             final double actPrice = medicalAct.getAmount() * medicalAct.getService().getUnitPrice();
             totalAmount += actPrice;
-            servedServiceList.add(medicalActService.createMedicalAct(medicalAct).getService());
+            servedServiceList.add(medicalActService.createMedicalAct(medicalAct));
         }
         final long patientPercentage = (totalAmount * 15) / 100;
         final long rssbPercentage = totalAmount - patientPercentage;
@@ -99,6 +99,9 @@ public class InvoiceService implements IInvoiceService
         //Populated detailed invoice to be returned to the front end
         populateDetailedInvoice(patient, healthFacility, detailedInvoice, servedServiceList, totalAmount, patientPercentage, rssbPercentage);
 
+        detailedInvoice.setInvoiceNumber((patient.getIdnb().substring(patient.getIdnb().length() - 4)
+            + RandomStringUtils.randomAlphanumeric(5)).toUpperCase());
+
         return detailedInvoice;
     }
 
@@ -111,7 +114,7 @@ public class InvoiceService implements IInvoiceService
     private static void populateDetailedInvoice(final Patient patient,
                                                 final HealthFacility healthFacility,
                                                 final DetailedInvoice detailedInvoice,
-                                                final List<MedicalService> servedServiceList,
+                                                final List<MedicalAct> servedServiceList,
                                                 final long totalAmount,
                                                 final long patientPercentage,
                                                 final long rssbPercentage)
@@ -126,7 +129,7 @@ public class InvoiceService implements IInvoiceService
     }
 
     private void createPatientInvoice(final Patient patient,
-                                      final Users processedBy,
+                                      final User processedBy,
                                       final HealthFacility healthFacility,
                                       final long totalAmount,
                                       final long patientPercentage,

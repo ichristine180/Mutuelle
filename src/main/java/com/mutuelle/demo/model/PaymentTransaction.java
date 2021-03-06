@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.mutuelle.demo.model.security.Users;
+import com.mutuelle.demo.model.security.User;
 
 
 @Entity
@@ -35,7 +35,7 @@ public class PaymentTransaction
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Users processedBy;
+    private User processedBy;
 
     public long getTxtId()
     {
@@ -77,12 +77,12 @@ public class PaymentTransaction
         this.amountPaid = amountPaid;
     }
 
-    public Users getProcessedBy()
+    public User getProcessedBy()
     {
         return processedBy;
     }
 
-    public void setProcessedBy(final Users processedBy)
+    public void setProcessedBy(final User processedBy)
     {
         this.processedBy = processedBy;
     }

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mutuelle.demo.model.MedicalAct;
 import com.mutuelle.demo.model.Patient;
 import com.mutuelle.demo.model.PaymentLog;
-import com.mutuelle.demo.model.security.Users;
+import com.mutuelle.demo.model.security.User;
 import com.mutuelle.demo.service.IInvoiceService;
 import com.mutuelle.demo.service.IPatientService;
 import com.mutuelle.demo.service.IPaymentService;
@@ -61,7 +61,7 @@ public class ApiController
         LOG.info("Request coming successfully: {}", prescriptionData);
         final Patient patient = patientService.findPatientById(prescriptionData.getPatientId());
         LOG.info("Patient: {}", patient);
-        final Users processedBy = userService.findByUsername("muganga");
+        final User processedBy = userService.findByUsername("muganga");
 
         final List<MedicalAct> medicalActList = new ArrayList<>();
         for (final MedicalActDto medicalActDto : prescriptionData.getMedicalActDtoList())

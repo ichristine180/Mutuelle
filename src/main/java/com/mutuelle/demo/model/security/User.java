@@ -30,7 +30,7 @@ import com.mutuelle.demo.model.HealthFacility;
     @UniqueConstraint(columnNames = "userName"),
     @UniqueConstraint(columnNames = "email")
 })
-public class Users implements UserDetails
+public class User implements UserDetails
 {
     /**
      *
