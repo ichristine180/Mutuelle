@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.mutuelle.demo.model.HealthFacility;
 import com.mutuelle.demo.model.Invoice;
 import com.mutuelle.demo.model.MedicalAct;
@@ -15,7 +17,7 @@ import com.mutuelle.demo.model.PaymentLog;
 import com.mutuelle.demo.model.security.User;
 import com.mutuelle.demo.repository.InvoiceRepository;
 import com.mutuelle.demo.utils.DetailedInvoice;
-
+ @Service
 public class InvoiceService implements IInvoiceService
 {
     @Autowired
