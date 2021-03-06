@@ -1,9 +1,11 @@
 package com.mutuelle.demo.model.security;
 
 import java.util.Collection;
+
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,15 +13,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mutuelle.demo.model.HealthFacility;
 
 
@@ -51,9 +53,15 @@ public class User implements UserDetails
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "health_facility")
     private HealthFacility health_facility;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JsonIgnore
+	private Set<UserRole> userRoles = new HashSet<>();
+	private boolean enabled = true;
+
+	public Set<UserRole> getUserRoles() {
+		return userRoles;
+	}
+
 
     public Long getUser_id()
     {
@@ -126,30 +134,20 @@ public class User implements UserDetails
         this.health_facility = health_facility;
     }
 
-    public Set<Role> getRoles()
-    {
-        return roles;
-    }
-
-    public void setRoles(final Set<Role> roles)
-    {
-        this.roles = roles;
-    }
-
     @Override
     public String toString()
     {
         return "Users [user_id=" + user_id + ", fName=" + fName + ", lName=" + lName + ", email=" + email
             + ", userName=" + userName + ", password=" + password + ", health_facility=" + health_facility
-            + ", roles=" + roles + "]";
+            + "]";
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		Set<GrantedAuthority> authorities = new HashSet<>();
+		userRoles.forEach(ur -> authorities.add(new Authority(ur.getRole().getName())));
+		return authorities;
+	}
 
     @Override
     public String getUsername()

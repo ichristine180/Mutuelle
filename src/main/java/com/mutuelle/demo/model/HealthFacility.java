@@ -1,11 +1,14 @@
 package com.mutuelle.demo.model;
 
 import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 
 @Entity
@@ -15,8 +18,13 @@ public class HealthFacility
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    
     @Column(name = "facilityName")
+    @NotEmpty(message = "facility Name can not be null")
     private String facilityName;
+    
+    @NotEmpty(message = " adress can not be null")
     @Column(name = "adrress")
     private String adrress;
 
