@@ -31,7 +31,7 @@ public class MedicalService
     private String name;
 
     /** The unit price. */
-    private Double unitPrice;
+    private double unitPrice;
 
     /** The code. */
     @NotNull
@@ -47,121 +47,77 @@ public class MedicalService
     @OneToMany(mappedBy = "service")
     private List<MedicalAct> medicalActList = new ArrayList<>();
 
-    /**
-     * @return the id
-     */
     public long getId()
     {
         return id;
     }
 
-    /**
-     * @param id the id to set
-     */
     public void setId(final long id)
     {
         this.id = id;
     }
 
-    /**
-     * @return the medicalActList
-     */
-    public List<MedicalAct> getMedicalActList()
-    {
-        return medicalActList;
-    }
-
-    /**
-     * @param medicalActList the medicalActList to set
-     */
-    public void setMedicalActList(final List<MedicalAct> medicalActList)
-    {
-        this.medicalActList = medicalActList;
-    }
-
-    /**
-     * @return the name
-     */
     public String getName()
     {
         return name;
     }
 
-    /**
-     * @param name the name to set
-     */
     public void setName(final String name)
     {
         this.name = name;
     }
 
-    /**
-     * @return the unitPrice
-     */
-    public Double getUnitPrice()
+    public double getUnitPrice()
     {
         return unitPrice;
     }
 
-    /**
-     * @param unitPrice the unitPrice to set
-     */
-    public void setUnitPrice(final Double unitPrice)
+    public void setUnitPrice(final double unitPrice)
     {
         this.unitPrice = unitPrice;
     }
 
-    /**
-     * @return the code
-     */
     public String getCode()
     {
         return code;
     }
 
-    /**
-     * @param code the code to set
-     */
     public void setCode(final String code)
     {
         this.code = code;
     }
 
-    /**
-     * @return the type
-     */
     public EMedicalServiceType getType()
     {
         return type;
     }
 
-    /**
-     * @param type the type to set
-     */
     public void setType(final EMedicalServiceType type)
     {
         this.type = type;
     }
 
-    /*
-     *
-     * @see java.lang.Object#toString()
-     */
+    public List<MedicalAct> getMedicalActList()
+    {
+        return medicalActList;
+    }
+
+    public void setMedicalActList(final List<MedicalAct> medicalActList)
+    {
+        this.medicalActList = medicalActList;
+    }
+
     @Override
     public String toString()
     {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("MedicalService [id=");
-        builder.append(id);
-        builder.append(", name=");
-        builder.append(name);
-        builder.append(", unitPrice=");
-        builder.append(unitPrice);
-        builder.append(", code=");
-        builder.append(code);
-        builder.append(", type=");
-        builder.append(type);
-        return builder.toString();
+        final StringBuilder sb = new StringBuilder("MedicalService{");
+        sb.append("id=").append(id);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", unitPrice=").append(unitPrice);
+        sb.append(", code='").append(code).append('\'');
+        sb.append(", type=").append(type);
+        sb.append(", medicalActList=").append(medicalActList);
+        sb.append('}');
+        return sb.toString();
     }
-
 }

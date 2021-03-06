@@ -2,6 +2,7 @@ package com.mutuelle.demo.controller;
 
 import java.util.HashSet;
 
+
 import java.util.List;
 import java.util.Set;
 import javax.validation.Valid;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.mutuelle.demo.model.HealthFacility;
 import com.mutuelle.demo.model.security.Role;
 import com.mutuelle.demo.model.security.UserRole;
-import com.mutuelle.demo.model.security.Users;
+import com.mutuelle.demo.model.security.User;
 import com.mutuelle.demo.service.IUserService;
 import com.mutuelle.demo.service.IhealthFacility;
 
@@ -79,7 +80,7 @@ public class AdminController {
 
 	@GetMapping(value = "/user")
 	public String addUser(Model model) {
-		Users user = new Users();
+		User user = new User();
 		Iterable<Role> roles = userService.findAllRole();
 		Iterable<HealthFacility> healthFacility = healthService.findAllService();
 		model.addAttribute("healthFacility", healthFacility);
@@ -89,7 +90,7 @@ public class AdminController {
 	}
 
 	@PostMapping("/addUser")
-	public String addUser(@ModelAttribute("user") @Valid Users user, BindingResult results, Model model) {
+	public String addUser(@ModelAttribute("user") @Valid User user, BindingResult results, Model model) {
 		if (results.hasErrors()) {
 			Iterable<Role> roles = userService.findAllRole();
 			Iterable<HealthFacility> healthFacility = healthService.findAllService();
@@ -108,7 +109,7 @@ public class AdminController {
 			return "admin/user";
 		}
 
-		Users myuser = new Users();
+		User myuser = new User();
 		HealthFacility hf;
 		if (user.getUsername().equals("ROLE_ADMIN")) {
 			hf = healthService.findByName("MiniSante");
@@ -126,7 +127,7 @@ public class AdminController {
 		}
 		Set<UserRole> userRoles = new HashSet<>();
 		userRoles.add(new UserRole(myuser, userService.findByName(user.getUsername())));
-		final Users createdUser = userService.createUser(myuser, userRoles);
+		final User createdUser = userService.createUser(myuser, userRoles);
 		if (createdUser != null) {
 			model.addAttribute("successMessage", "User added Successfully");
 			model.addAttribute("users", userService.findUserList());
@@ -137,7 +138,7 @@ public class AdminController {
 	
 	@GetMapping("/delete/{id}")
 	public String deleteUser(@PathVariable("id") long id, Model model) {
-		Users user = userService.findById(id);
+		User user = userService.findById(id);
 		userService.delete(user);
 		model.addAttribute("successMessage", "User deleted Successfully");
 		model.addAttribute("users", userService.findUserList());

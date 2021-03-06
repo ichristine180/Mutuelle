@@ -24,91 +24,102 @@
         </div>
         <div class="content">
             <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title"><strong>Consultation Services</strong></h3>
-                            </div>
-                            <div class="card-body">
-                                <form class="form-horizontal">
-                                    <div class="card-body">
-                                        <div class="form-group row" th:each="service,count : ${medicalServiceList}"
-                                             th:if="${service.type.name() == 'CONSULTATION'}">
-                                            <label for=" inputEmail3" class="col-sm-2 col-form-label"><span th:text="${service.name}"> </span></label>
-                                            <div class="col-sm-10">
-                                                <input type="email" class="form-control" id="inputEmail3" placeholder="Email"/>
+                <form th:action="@{/healthcenter/patient/transaction/draft}" th:object="${medicalActDraft}"
+                      method="POST" role="login">
+                    <input type="hidden" th:value="${patient.id}" name="patientId"/>
+                    <div class="card card-success">
+                        <div class="card-header">
+                            <h3 class="box-title">Medical Services Selection Form</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title"><strong>Consultation</strong></h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group" data-select2-id="85">
+                                                <div class="select2-purple" data-select2-id="75">
+                                                    <select class="select2 select2-hidden-accessible" multiple=""
+                                                            data-placeholder="Select a Service"
+                                                            data-dropdown-css-class="select2-purple" style="width: 100%;" tabindex="-1"
+                                                            aria-hidden="true" th:field="*{consultationServiceList}">
+                                                        <option th:data-select2-id="${service.id}" th:each="service : ${medicalServiceList}"
+                                                                th:value="${service.id}"
+                                                                th:text="${service.name+'-'+service.unitPrice}"
+                                                                th:if="${service.type.name() == 'CONSULTATION'}">
+                                                        </option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- /.card-body -->
-                                    <div class="card-footer">
-                                        <button type="submit" class="btn btn-info">Sign in</button>
-                                        <button type="submit" class="btn btn-default float-right">Cancel</button>
-                                    </div>
-                                    <!-- /.card-footer -->
-                                </form>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title"><strong>Laboratory Services</strong></h3>
-                            </div>
-                            <div class="card-body">
-                                <form class="form-horizontal">
-                                    <div class="card-body">
-                                        <div class="form-group row" th:each="service,count : ${medicalServiceList}"
-                                             th:if="${service.type.name() == 'EXAM'}">
-                                            <label for=" inputEmail3" class="col-sm-2 col-form-label"><span th:text="${service.name}"> </span></label>
-                                            <div class="col-sm-10">
-                                                <input type="email" class="form-control" id="inputEmail3" placeholder="Email"/>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title"><strong>Laboratory</strong></h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group" data-select2-id="85">
+                                                <div class="select2-purple" data-select2-id="75">
+                                                    <select class="select2 select2-hidden-accessible" multiple=""
+                                                            data-placeholder="Select a Service"
+                                                            data-dropdown-css-class="select2-purple" style="width: 100%;" tabindex="-1"
+                                                            aria-hidden="true" th:field="*{laboratoryServiceList}">
+                                                        <option th:data-select2-id="${service.id}" th:each="service : ${medicalServiceList}"
+                                                                th:value="${service.id}"
+                                                                th:text="${service.name+'-'+service.unitPrice}"
+                                                                th:if="${service.type.name() == 'EXAM'}">
+                                                        </option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- /.card-body -->
-                                    <div class="card-footer">
-                                        <button type="submit" class="btn btn-info">Sign in</button>
-                                        <button type="submit" class="btn btn-default float-right">Cancel</button>
-                                    </div>
-                                    <!-- /.card-footer -->
-                                </form>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.row -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title"><strong>Prescriptions</strong></h3>
-                            </div>
-                            <div class="card-body">
-                                <form class="form-horizontal">
-                                    <div class="card-body">
-                                        <div class="form-group row" th:each="service,count : ${medicalServiceList}"
-                                             th:if="${service.type.name() == 'MEDICAMENT'}">
-                                            <label for=" inputEmail3" class="col-sm-2 col-form-label"><span th:text="${service.name}"> </span></label>
-                                            <div class="col-sm-10">
-                                                <input type="email" class="form-control" id="inputEmail3" placeholder="Email"/>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title"><strong>Prescriptions</strong></h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group" data-select2-id="85">
+                                                <div class="select2-purple" data-select2-id="75">
+                                                    <select class="select2 select2-hidden-accessible" multiple=""
+                                                            data-placeholder="Select a medicament"
+                                                            data-dropdown-css-class="select2-purple" style="width: 100%;" tabindex="-1"
+                                                            aria-hidden="true" th:field="*{drugList}">
+                                                        <option th:data-select2-id="${service.id}" th:each="service : ${medicalServiceList}"
+                                                                th:value="${service.id}"
+                                                                th:text="${service.name+'-'+service.unitPrice}"
+                                                                th:if="${service.type.name() == 'MEDICAMENT'}">
+                                                        </option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- /.card-body -->
-                                    <div class="card-footer">
-                                        <button type="submit" class="btn btn-info">Sign in</button>
-                                        <button type="submit" class="btn btn-default float-right">Cancel</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <button type="reset" class="btn btn-default float-left">Cancel</button>
+                                            <button type="submit" class="btn btn-info float-right">NEXT >></button>
+                                        </div>
                                     </div>
-                                    <!-- /.card-footer -->
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div><!-- /.container-fluid -->
         </div>
     </div>
@@ -121,6 +132,8 @@
             "responsive": true,
             "autoWidth": false,
         });
+        //Initialize Select2 Elements
+        $('.select2').select2()
     });
 </script>
 </body>

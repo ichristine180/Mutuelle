@@ -2,7 +2,6 @@ package com.mutuelle.demo.service;
 
 import java.util.List;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Set;
@@ -10,10 +9,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.mutuelle.demo.model.security.Role;
+import com.mutuelle.demo.model.security.User;
 import com.mutuelle.demo.model.security.UserRole;
-import com.mutuelle.demo.model.security.Users;
 import com.mutuelle.demo.repository.RoleRepository;
 import com.mutuelle.demo.repository.UsersRepository;
 
@@ -35,19 +33,19 @@ public class UserService implements IUserService
     @Autowired
 	private BCryptPasswordEncoder passwordEncoder;
     @Override
-    public void save(final Users user)
+    public void save(final User user)
     {
         usersRepository.save(user);
     }
 
     @Override
-    public Users findByUsername(final String username)
+    public User findByUsername(final String username)
     {
         return usersRepository.findByusername(username);
     }
 
     @Override
-    public Users findByEmail(final String email)
+    public User findByEmail(final String email)
     {
         return usersRepository.findByEmail(email);
     }
@@ -84,24 +82,24 @@ public class UserService implements IUserService
     }
 
     @Override
-    public Users saveUser(final Users user)
+    public User saveUser(final User user)
     {
         return usersRepository.save(user);
     }
 
     @Override
-    public List<Users> findUserList()
+    public List<User> findUserList()
     {
         return usersRepository.findAll();
     }
 
     @Override
-    public Users createUser(Users user, Set<UserRole> userRoles) {
+    public User createUser(User user, Set<UserRole> userRoles) {
 		for (UserRole ur : userRoles) {
 			roleRepository.save(ur.getRole());
 		}
 		user.getUserRoles().addAll(userRoles);
-		Users localUser = usersRepository.findByusername(user.getUsername());
+		User localUser = usersRepository.findByusername(user.getUsername());
 		if (localUser != null) {
 			LOG.info("Account with {} username, exists", user.getUsername());
 		} else {
@@ -118,7 +116,7 @@ public class UserService implements IUserService
 		return localUser;
     }
     @Override
-    public Users updateUser(Users user) {
+    public User updateUser(User user) {
 		try {
 
 			return usersRepository.save(user);
@@ -150,33 +148,15 @@ public class UserService implements IUserService
 			}
 	}
 	@Override
-	public Users encryptPass(Users password) {
+	public User encryptPass(User password) {
 		String encryptedPassword = passwordEncoder.encode(password.getPassword());
 		password.setPassword(encryptedPassword);
 
 		return password;
 	}
+	
 	@Override
-	public void enableUser(String username) {
-		Users user = findByUsername(username);
-		user.setEnabled(true);
-		usersRepository.save(user);
-	}
-
-	@Override
-	public void disableUser(String username) {
-		Users user = findByUsername(username);
-		user.setEnabled(false);
-		usersRepository.save(user);
-	}
-
-	@Override
-	public void updatePassword(String updatedPassword, String username) {
-		usersRepository.updatePassword(updatedPassword, username);
-	}
-
-	@Override
-	public Users findById(Long id) {
+	public User findById(Long id) {
 		try {
 			return usersRepository.findByUserId(id);
 			} catch (Exception e) {
@@ -196,7 +176,7 @@ public class UserService implements IUserService
 	}
 
 	@Override
-	public void delete(Users user) {
+	public void delete(User user) {
 		try {
 			 usersRepository.delete(user);
 			} catch (Exception e) {
@@ -204,4 +184,25 @@ public class UserService implements IUserService
 				throw e;
 			}
 	}
+    public void enableUser(final String username)
+    {
+        final User user = findByUsername(username);
+
+        usersRepository.save(user);
+    }
+
+    @Override
+    public void disableUser(final String username)
+    {
+        final User user = findByUsername(username);
+        usersRepository.save(user);
+    }
+
+    @Override
+    public void updatePassword(final String updatedPassword, final String userName)
+    {
+        usersRepository.updatePassword(updatedPassword, userName);
+    }
+
 }
+

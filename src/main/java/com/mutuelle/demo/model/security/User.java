@@ -3,6 +3,7 @@ package com.mutuelle.demo.model.security;
 import java.util.Collection;
 
 
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +20,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,38 +28,39 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mutuelle.demo.model.HealthFacility;
 
 @Entity
-@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = "username"),
-		@UniqueConstraint(columnNames = "email") })
-public class Users implements UserDetails {
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long userId;
-	@NotEmpty(message = " name is Required")
-	@Column(name = "fName")
-	private String fName;
-	@NotEmpty(message = " name is Required")
-	@Column(name = "lName")
-	private String lName;
+@Table(name = "users", uniqueConstraints = {
+    @UniqueConstraint(columnNames = "userName"),
+    @UniqueConstraint(columnNames = "email")
+})
+public class User implements UserDetails
+{
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long userId;
+    @NotEmpty(message="names is required")
+    @Column(name = "fName")
+    private String fName;
+    
+    @NotEmpty(message="names is required")
+    @Column(name = "lName")
+    private String lName;
+    
+    @NotEmpty(message="email is required")
+    @Column(name = "email")
+    private String email;
+    @Column(name = "username")
+    private String username;
+    @Column(name = "password")
+    private String password;
 
-	@NotEmpty(message = " email is Required")
-	@Email(message = "Valid email is Required")
-	@Column(name = "email")
-	private String email;
-	
-	@Column(name = "username")
-	private String username;
-	
-	@Column(name = "password")
-	private String password;
-
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "healthFacilityId")
-	private HealthFacility healthFacility;
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "healthFacility")
+    private HealthFacility healthFacility;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JsonIgnore
 	private Set<UserRole> userRoles = new HashSet<>();
 	private boolean enabled = true;
@@ -139,7 +140,7 @@ public class Users implements UserDetails {
 
 	@Override
 	public String toString() {
-		return "Users [userId=" + userId + ", fName=" + fName + ", lName=" + lName + ", email=" + email
+		return "User [userId=" + userId + ", fName=" + fName + ", lName=" + lName + ", email=" + email
 				+ ", username=" + username + ", password=" + password + ", healthFacility=" + healthFacility + "]";
 	}
 

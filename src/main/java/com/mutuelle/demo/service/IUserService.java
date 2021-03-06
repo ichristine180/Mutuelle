@@ -1,22 +1,20 @@
 package com.mutuelle.demo.service;
 
 import java.util.List;
-
-
 import java.util.Set;
 
 import com.mutuelle.demo.model.security.Role;
+import com.mutuelle.demo.model.security.User;
 import com.mutuelle.demo.model.security.UserRole;
-import com.mutuelle.demo.model.security.Users;
 
 
 
 public interface IUserService
 {
-    Users findByUsername(String username);
+    User findByUsername(String username);
 
-    Users findByEmail(String email);
-    Users findById(Long id);
+    User findByEmail(String email);
+    User findById(Long id);
 
     boolean checkUserExists(String username, String email);
 
@@ -24,13 +22,11 @@ public interface IUserService
     boolean checkExitsOnUpdate(String username,long id);
     boolean checkEmailExists(String email);
 
-    void save(Users user);
+    void save(User user);
 
-  //  Users createUser(Users user, Set<Erole> eroles);
+    User saveUser(User user);
 
-    Users saveUser(Users user);
-
-    List<Users> findUserList();
+    List<User> findUserList();
 
     void enableUser(String username);
 
@@ -38,14 +34,14 @@ public interface IUserService
 
     void updatePassword(String updatedPassword, String username);
 
-	Users createUser(Users user, Set<UserRole> userRoles);
+    User createUser(User user, Set<UserRole> userRoles);
 	Role findByName(String rolename);
 	Iterable<Role> findAllRole();
 
-	Users encryptPass(Users password);
+	User encryptPass(User password);
 
-	Users updateUser(Users user);
+	User updateUser(User user);
 
-	void delete(Users user);
+	void delete(User user);
 
 }

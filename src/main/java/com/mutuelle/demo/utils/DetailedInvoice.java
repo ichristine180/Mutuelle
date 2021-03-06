@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.mutuelle.demo.model.HealthFacility;
-import com.mutuelle.demo.model.MedicalService;
+import com.mutuelle.demo.model.MedicalAct;
 import com.mutuelle.demo.model.Patient;
 
 
@@ -13,9 +13,11 @@ public class DetailedInvoice
 
     private Patient patient;
 
+    private String invoiceNumber;
+
     private HealthFacility healthFacility;
 
-    private List<MedicalService> treatementList;
+    private List<MedicalAct> treatementList;
 
     private LocalDate treatedOn;
 
@@ -45,12 +47,22 @@ public class DetailedInvoice
         this.healthFacility = healthFacility;
     }
 
-    public List<MedicalService> getTreatementList()
+    public List<MedicalAct> getTreatementList()
     {
         return treatementList;
     }
 
-    public void setTreatementList(final List<MedicalService> treatementList)
+    public String getInvoiceNumber()
+    {
+        return invoiceNumber;
+    }
+
+    public void setInvoiceNumber(final String invoiceNumber)
+    {
+        this.invoiceNumber = invoiceNumber;
+    }
+
+    public void setTreatementList(final List<MedicalAct> treatementList)
     {
         this.treatementList = treatementList;
     }
@@ -100,6 +112,7 @@ public class DetailedInvoice
     {
         final StringBuilder sb = new StringBuilder("DetailedInvoice{");
         sb.append("patient=").append(patient);
+        sb.append(", invoiceNumber='").append(invoiceNumber).append('\'');
         sb.append(", healthFacility=").append(healthFacility);
         sb.append(", treatementList=").append(treatementList);
         sb.append(", treatedOn=").append(treatedOn);
