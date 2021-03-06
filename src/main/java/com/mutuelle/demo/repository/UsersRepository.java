@@ -2,6 +2,7 @@ package com.mutuelle.demo.repository;
 
 import java.util.List;
 
+
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -15,14 +16,18 @@ import com.mutuelle.demo.model.security.User;
 public interface UsersRepository extends CrudRepository<User, Long>
 {
 
-    User findByuserName(String username);
+	User findByusername(String username);
 
-    User findByEmail(String email);
+	User findByEmail(String email);
 
     @Override
     List<User> findAll();
 
     @Modifying
-    @Query("update User u set u.password = :password where u.userName = :userName")
-    void updatePassword(@Param("password") String password, @Param("userName") String userName);
+    @Query("update User u set u.password = :password where u.username = :username")
+    void updatePassword(@Param("password") String password, @Param("username") String username);
+
+    User findByUserId(Long id);
+	 @Query("select u from User u where u.username = :username and u.userId !=:userId")
+	 User findByUsernameAndUserId(@Param("username") String username, @Param("userId")long id);
 }

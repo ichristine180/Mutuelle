@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="common/header :: common-header"></head>
+<body class="hold-transition skin-blue fixed layout-top-nav">
+	<div class="wrapper">
+		<!-- Main Header -->
+		<header th:replace="common/header :: main-header"></header>
+		<div class="content-wrapper"
+			sec:authorize="hasRole('ROLE_ADMIN')">
+			<div class="container">
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<h1>
+						Dashboard <small>Admin Panel</small>
+					</h1>
+				</section>
+				
+				
+				<div class="card col-sm-6" style="margin-left:auto; margin-right:auto;">
+    <div class="card-body login-card-body">
+      <p class="login-box-msg">Update User</p>
+
+       <form th:action="@{/updateUser/{id}(id=${user.userId})}" th:object="${user}" method="post" role="login">
+       <span class="error text-danger" th:if="${message}" th:text="${message}"></span>
+        <span class="error text-danger" th:if="${#fields.hasErrors('fName')}" th:errors="*{fName}"></span>
+        <div class="input-group mb-3">
+         <input type="text" th:field="*{fName}" class="form-control" placeholder="first name" />
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-school"></span>
+            </div>
+          </div>
+        </div>
+         <span class="error text-danger" th:if="${#fields.hasErrors('lName')}" th:errors="*{lName}"></span>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" th:field="*{lName}"
+											placeholder="last name" />
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-address-card"></span>
+            </div>
+          </div>
+        </div>
+          <span class="error text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+        <div class="input-group mb-3">
+          <input type="email" class="form-control" th:field="*{email}"
+											placeholder="email(email@example.com)" />
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-address-card"></span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="input-group mb-3">
+          <select th:field="*{username}" class="form-control" id="role" onChange="handleChange()">
+	<option th:each="role: ${roles}" th:value="${role.name}" th:text="${role.name}"></option>
+			</select>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-address-card"></span>
+            </div>
+          </div>
+        </div>
+        <div id="health">
+        <div class="input-group mb-3">
+          <select th:field="*{healthFacility}" class="form-control">
+          
+	<option th:each="healthFacility: ${healthFacility}" th:value="${healthFacility.id}" th:text="${healthFacility.facilityName}"></option>
+											</select>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-address-card"></span>
+            </div>
+          </div>
+        </div>
+         </div>
+        <div class="row">
+          <div class="col-4">
+            <button type="submit" class="btn btn-primary btn-block">Save</button>
+          </div>
+          <div class="col-4" style="margin-left:auto;">
+            <a href="/admin" class="btn btn-default btn-block">Cancel</a>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+    </div>
+    
+    <!-- /.login-card-body -->
+  </div>
+				</div>
+				</div>
+				
+
+		<!-- Main Footer -->
+
+		<footer th:replace="common/header :: footer"></footer>
+	</div>
+	<div th:replace="common/header :: body-bottom-scripts"></div>
+
+	<Script>
+	function handleChange(){
+	var e = document.getElementById("role");
+    var role = e.options[e.selectedIndex].text;
+    if(role != 'ROLE_ADMIN'){
+    document.getElementById("health").style.display = 'block';
+    }else{
+    document.getElementById("health").style.display = 'none';
+    }
+	console.log(role)
+	
+	}
+	</Script>
+</body>
+</html>

@@ -20,7 +20,7 @@ public class HealthFacility
     private Long id;
     
     
-    @Column(name = "facilityName")
+    @Column(name = "facilityName",unique=true)
     @NotEmpty(message = "facility Name can not be null")
     private String facilityName;
     

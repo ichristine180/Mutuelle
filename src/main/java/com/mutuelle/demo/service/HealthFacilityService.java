@@ -50,4 +50,13 @@ public class HealthFacilityService implements IhealthFacility {
 
 	}
 
+	@Override
+	public HealthFacility findByName(String name) {
+		try {
+			return hRepo.findByFacilityName(name);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
 }

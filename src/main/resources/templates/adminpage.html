@@ -14,6 +14,84 @@
 						Dashboard <small>Admin Panel</small>
 					</h1>
 				</section>
+				
+				<div class="row">
+                    <div class="col-lg-12">
+                    <div class="alert alert-success alert-dismissible" th:if="${successMessage}">
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                  <h5><i class="icon fas fa-check"></i> success!</h5>
+                 <p th:text="${successMessage}"/>
+                </div>
+                    <div class="box" style="margin-bottom:10px;;">
+			
+							<div class="col-xs-12">
+								<a class="btn btn-info pull-left" href="/user">
+									<i class="fa fa-user"></i> Register New Users
+								</a>
+							</div>
+							</div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">List of All Users</h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid"
+                                                   aria-describedby="example1_info">
+                                                <thead>
+                                                <tr role="row">
+                                                    <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                        aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">
+                                                        #
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                        aria-label="Browser: activate to sort column ascending"> Names
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                        aria-label="Platform(s): activate to sort column ascending">Email
+                                                    </th>
+                                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                        aria-label="Platform(s): activate to sort column ascending">Health Facility
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                        aria-label="Engine version: activate to sort column ascending">Roles
+                                                    </th>
+                                                    
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                        aria-label="CSS grade: activate to sort column ascending">Action
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:if="${#lists.isEmpty(users)}" role="row" class="odd">
+                                                    <td colspan="6"> No users Available</td>
+                                                </tr>
+                                                <tr th:each="users,count : ${users}" role="row" class="odd">
+                                                    <td tabindex="0" class="sorting_1" th:text="${count.index+1}"></td>
+                                                   
+                                                    <td><span th:text="${users.fName}"> Title </span>
+                                                    <span th:text="${users.lName}"> Title </span></td>
+                                                    <td><span th:text="${users.email}"> Title </span></td>
+                                                   <td><span th:text="${users.healthFacility.facilityName}"> Title </span></td>
+                                                    <td th:each="roles : ${users.userRoles}"><span th:text="${roles.role.name}"> Title </span></td>
+                                                    
+                                                    <td><a class="btn btn-success" href="#"> <i
+													class="fa fa-edit"></i>
+											</a> <a class="btn btn-primary" th:href="@{/delete/{id}(id=${users.userId})}"> <i
+													class="fa fa-times"></i>
+											</a></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 				</div>
 				</div>
 				

@@ -2,6 +2,8 @@ package com.mutuelle.demo.model.security;
 
 import java.util.Collection;
 
+
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,12 +20,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mutuelle.demo.model.HealthFacility;
-
 
 @Entity
 @Table(name = "users", uniqueConstraints = {
@@ -38,21 +40,26 @@ public class User implements UserDetails
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long user_id;
+    private Long userId;
+    @NotEmpty(message="names is required")
     @Column(name = "fName")
     private String fName;
+    
+    @NotEmpty(message="names is required")
     @Column(name = "lName")
     private String lName;
+    
+    @NotEmpty(message="email is required")
     @Column(name = "email")
     private String email;
-    @Column(name = "userName")
-    private String userName;
+    @Column(name = "username")
+    private String username;
     @Column(name = "password")
     private String password;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "health_facility")
-    private HealthFacility health_facility;
+    @JoinColumn(name = "healthFacility")
+    private HealthFacility healthFacility;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JsonIgnore
 	private Set<UserRole> userRoles = new HashSet<>();
@@ -62,126 +69,118 @@ public class User implements UserDetails
 		return userRoles;
 	}
 
+	
 
-    public Long getUser_id()
-    {
-        return user_id;
-    }
+	public String getfName() {
+		return fName;
+	}
 
-    public void setUser_id(final Long user_id)
-    {
-        this.user_id = user_id;
-    }
+	public void setfName(final String fName) {
+		this.fName = fName;
+	}
 
-    public String getfName()
-    {
-        return fName;
-    }
+	public String getlName() {
+		return lName;
+	}
 
-    public void setfName(final String fName)
-    {
-        this.fName = fName;
-    }
+	public void setlName(final String lName) {
+		this.lName = lName;
+	}
 
-    public String getlName()
-    {
-        return lName;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setlName(final String lName)
-    {
-        this.lName = lName;
-    }
+	public void setEmail(final String email) {
+		this.email = email;
+	}
 
-    public String getEmail()
-    {
-        return email;
-    }
+	
 
-    public void setEmail(final String email)
-    {
-        this.email = email;
-    }
+	@Override
+	public String getPassword() {
+		return password;
+	}
 
-    public String getUserName()
-    {
-        return userName;
-    }
+	public void setPassword(final String password) {
+		this.password = password;
+	}
 
-    public void setUserName(final String userName)
-    {
-        this.userName = userName;
-    }
+	public HealthFacility getHealthFacility() {
+		return healthFacility;
+	}
 
-    @Override
-    public String getPassword()
-    {
-        return password;
-    }
+	public void setHealthFacility(HealthFacility healthFacility) {
+		this.healthFacility = healthFacility;
+	}
 
-    public void setPassword(final String password)
-    {
-        this.password = password;
-    }
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
-    public HealthFacility getHealth_facility()
-    {
-        return health_facility;
-    }
+	public void setUserRoles(Set<UserRole> userRoles) {
+		this.userRoles = userRoles;
+	}
 
-    public void setHealth_facility(final HealthFacility health_facility)
-    {
-        this.health_facility = health_facility;
-    }
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 
-    @Override
-    public String toString()
-    {
-        return "Users [user_id=" + user_id + ", fName=" + fName + ", lName=" + lName + ", email=" + email
-            + ", userName=" + userName + ", password=" + password + ", health_facility=" + health_facility
-            + "]";
-    }
+	public Long getUserId() {
+		return userId;
+	}
 
-    @Override
+
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", fName=" + fName + ", lName=" + lName + ", email=" + email
+				+ ", username=" + username + ", password=" + password + ", healthFacility=" + healthFacility + "]";
+	}
+
+	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Set<GrantedAuthority> authorities = new HashSet<>();
 		userRoles.forEach(ur -> authorities.add(new Authority(ur.getRole().getName())));
 		return authorities;
 	}
 
-    @Override
-    public String getUsername()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	@Override
+	public String getUsername() {
+		return username;
+	}
 
-    @Override
-    public boolean isAccountNonExpired()
-    {
-        // TODO Auto-generated method stub
-        return false;
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-    @Override
-    public boolean isAccountNonLocked()
-    {
-        // TODO Auto-generated method stub
-        return false;
-    }
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 
-    @Override
-    public boolean isCredentialsNonExpired()
-    {
-        // TODO Auto-generated method stub
-        return false;
-    }
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 
-    @Override
-    public boolean isEnabled()
-    {
-        // TODO Auto-generated method stub
-        return false;
-    }
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return enabled;
+	}
 
 }

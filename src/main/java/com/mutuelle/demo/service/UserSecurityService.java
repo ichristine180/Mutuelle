@@ -1,6 +1,7 @@
 package com.mutuelle.demo.service;
 
 import org.slf4j.Logger;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,7 +26,7 @@ public class UserSecurityService implements UserDetailsService
     @Override
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException
     {
-        final User user = userDao.findByuserName(username);
+        final User user = userDao.findByusername(username);
         if (null == user)
         {
             LOG.warn("Username {} not found", username);

@@ -8,4 +8,6 @@ import com.mutuelle.demo.model.HealthFacility;
 @Repository
 public interface IhealthFacilityRepository  extends JpaRepository<HealthFacility, Long>{
 
+	HealthFacility findByFacilityName(String name);
+
 }

@@ -21,6 +21,7 @@
       <p class="login-box-msg">Register Health Facility</p>
 
        <form th:action="@{/addfacility}" th:object="${healthFacility}" method="post" role="login">
+       <span class="error text-danger" th:if="${message}" th:text="${message}"></span>
         <span class="error text-danger" th:if="${#fields.hasErrors('facilityName')}" th:errors="*{facilityName}"></span>
         <div class="input-group mb-3">
          <input type="text" th:field="*{facilityName}" class="form-control" placeholder="facilityName" />

@@ -1,13 +1,12 @@
 package com.mutuelle.demo.service;
 
 import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.mutuelle.demo.model.HealthFacility;
 import com.mutuelle.demo.model.Invoice;
 import com.mutuelle.demo.model.MedicalAct;
@@ -17,11 +16,6 @@ import com.mutuelle.demo.model.security.User;
 import com.mutuelle.demo.repository.InvoiceRepository;
 import com.mutuelle.demo.utils.DetailedInvoice;
 
-
-/**
- * The type Invoice service.
- */
-@Service(IInvoiceService.NAME)
 public class InvoiceService implements IInvoiceService
 {
     @Autowired
@@ -76,7 +70,7 @@ public class InvoiceService implements IInvoiceService
     @Override
     public DetailedInvoice savePatientTreatementTransaction(final List<MedicalAct> treatementList, final Patient patient, final User processedBy)
     {
-        final HealthFacility healthFacility = processedBy.getHealth_facility();
+        final HealthFacility healthFacility = processedBy.getHealthFacility();
         final DetailedInvoice detailedInvoice = new DetailedInvoice();
         final List<MedicalAct> servedServiceList = new ArrayList<>();
         long totalAmount = 0;
