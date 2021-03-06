@@ -43,7 +43,7 @@ import com.mutuelle.demo.utils.SearchPatient;
 public class OfficerController
 {
     @Autowired
-    private IPatientService PatientService;
+    private IPatientService patientService;
     @Autowired
     private IMedicalServiceService mService;
     @Autowired
@@ -67,7 +67,7 @@ public class OfficerController
             return "healthOfficerpage";
         }
 
-        final Patient res = PatientService.findPatientByIdnbr(patient.getIdnb());
+        final Patient res = patientService.findPatientByIdnbr(patient.getIdnb());
         final List<MedicalService> exams = mService.findMedicaments(EMedicalServiceType.EXAM);
         final List<MedicalAct> examActs = mActs.findOneDateActByPatient(res, LocalDate.now());
         final List<MedicalAct> mActs = examActs.stream().filter(acts -> acts.getService().getType()
@@ -109,7 +109,7 @@ public class OfficerController
         {
             final MedicalAct mA = new MedicalAct();
             final MedicalService service = mService.findById(us.getService());
-            final Patient res = PatientService.findPatientByIdnbr(us.getIdnb());
+            final Patient res = patientService.findPatientByIdnbr(us.getIdnb());
             //mA.setDate(LocalDate.now());
             mA.setService(service);
             mA.setAmount((long) (us.getQuantity() * service.getUnitPrice()));
@@ -129,7 +129,7 @@ public class OfficerController
     @RequestMapping(value = "/getAll/{idnb}", method = RequestMethod.GET)
     public ModelAndView getAll(final Model model, @PathVariable final String idnb)
     {
-        final Patient res = PatientService.findPatientByIdnbr(idnb);
+        final Patient res = patientService.findPatientByIdnbr(idnb);
         final List<MedicalAct> examActs = mActs.findOneDateActByPatient(res, LocalDate.now());
         final List<MedicalAct> mActs = examActs.stream().filter(acts -> acts.getService().getType()
             .equals(EMedicalServiceType.MEDICAMENT)).collect(Collectors.toList());
@@ -144,7 +144,7 @@ public class OfficerController
     String addExams(@RequestBody final ExamData examData)
     {
         final String returnText;
-        final Patient res = PatientService.findPatientByIdnbr(examData.getIdnb());
+        final Patient res = patientService.findPatientByIdnbr(examData.getIdnb());
 
         for (final Exam exam : examData.getExam())
         {
@@ -166,7 +166,7 @@ public class OfficerController
     @RequestMapping(value = "/getExam/{idnb}", method = RequestMethod.GET)
     public ModelAndView getExam(final Model model, @PathVariable final String idnb)
     {
-        final Patient res = PatientService.findPatientByIdnbr(idnb);
+        final Patient res = patientService.findPatientByIdnbr(idnb);
         final List<MedicalAct> examActs = mActs.findOneDateActByPatient(res, LocalDate.now());
         final List<MedicalAct> eActs = examActs.stream().filter(acts -> acts.getService().getType()
             .equals(EMedicalServiceType.EXAM)).collect(Collectors.toList());
@@ -192,7 +192,7 @@ public class OfficerController
             }
 
         }
-        final Patient res = PatientService.findPatientByIdnbr(idnb);
+        final Patient res = patientService.findPatientByIdnbr(idnb);
         mA.setDate(LocalDate.now());
         mA.setService(service);
         mA.setAmount(1200);
