@@ -70,16 +70,16 @@
                                                 </tr>
                                                 <tr th:each="users,count : ${users}" role="row" class="odd">
                                                     <td tabindex="0" class="sorting_1" th:text="${count.index+1}"></td>
-                                                  
+                                                   
                                                     <td><span th:text="${users.fName}"> Title </span>
                                                     <span th:text="${users.lName}"> Title </span></td>
                                                     <td><span th:text="${users.email}"> Title </span></td>
-                                                    <td><span th:text="${users.healthFacility.facilityName}"> Title </span></td>
+                                                   <td><span th:text="${users.healthFacility.facilityName}"> Title </span></td>
                                                     <td th:each="roles : ${users.userRoles}"><span th:text="${roles.role.name}"> Title </span></td>
                                                     
                                                     <td><a class="btn btn-success" href="#"> <i
 													class="fa fa-edit"></i>
-											</a> <a class="btn btn-primary" href="#"> <i
+											</a> <a class="btn btn-primary" th:href="@{/delete/{id}(id=${users.userId})}"> <i
 													class="fa fa-times"></i>
 											</a></td>
                                                 </tr>

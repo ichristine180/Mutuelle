@@ -1,4 +1,4 @@
-package  com.mutuelle.demo.config;
+package com.mutuelle.demo.config;
 
 import java.io.IOException;
 

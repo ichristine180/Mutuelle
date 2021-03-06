@@ -16,11 +16,12 @@ public interface IUserService
     Users findByUsername(String username);
 
     Users findByEmail(String email);
+    Users findById(Long id);
 
     boolean checkUserExists(String username, String email);
 
     boolean checkUsernameExists(String username);
-
+    boolean checkExitsOnUpdate(String username,long id);
     boolean checkEmailExists(String email);
 
     void save(Users user);
@@ -42,5 +43,9 @@ public interface IUserService
 	Iterable<Role> findAllRole();
 
 	Users encryptPass(Users password);
+
+	Users updateUser(Users user);
+
+	void delete(Users user);
 
 }

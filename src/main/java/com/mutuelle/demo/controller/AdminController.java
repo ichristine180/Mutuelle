@@ -1,6 +1,7 @@
 package com.mutuelle.demo.controller;
 
 import java.util.HashSet;
+
 import java.util.List;
 import java.util.Set;
 import javax.validation.Valid;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.mutuelle.demo.model.HealthFacility;
 import com.mutuelle.demo.model.security.Role;
@@ -113,7 +115,7 @@ public class AdminController {
 		} else {
 			hf = healthService.findOne(user.getHealthFacility().getId());
 		}
-		//System.out.print(user.getUsername());
+		// System.out.print(user.getUsername());
 		myuser.setfName(user.getfName());
 		myuser.setPassword("pass");
 		myuser.setEmail(user.getEmail());
@@ -132,5 +134,13 @@ public class AdminController {
 		}
 		return "redirect:/admin";
 	}
-
+	
+	@GetMapping("/delete/{id}")
+	public String deleteUser(@PathVariable("id") long id, Model model) {
+		Users user = userService.findById(id);
+		userService.delete(user);
+		model.addAttribute("successMessage", "User deleted Successfully");
+		model.addAttribute("users", userService.findUserList());
+	    return "redirect:/admin";
+	}
 }

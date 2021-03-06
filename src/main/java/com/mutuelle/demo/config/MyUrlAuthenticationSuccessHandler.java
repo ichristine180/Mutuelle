@@ -1,6 +1,7 @@
-package  com.mutuelle.demo.config;
+package com.mutuelle.demo.config;
 
 import java.io.IOException;
+
 import java.util.Collection;
 
 import javax.servlet.ServletException;
@@ -77,7 +78,6 @@ public class MyUrlAuthenticationSuccessHandler implements AuthenticationSuccessH
 	        }
 	    
 	    }
-	 
 	    protected void clearAuthenticationAttributes(HttpServletRequest request) {
 	        HttpSession session = request.getSession(false);
 	        if (session == null) {

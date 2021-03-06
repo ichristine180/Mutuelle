@@ -37,7 +37,7 @@ public class Users implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long user_id;
+	private Long userId;
 	@NotEmpty(message = " name is Required")
 	@Column(name = "fName")
 	private String fName;
@@ -68,13 +68,7 @@ public class Users implements UserDetails {
 		return userRoles;
 	}
 
-	public Long getUser_id() {
-		return user_id;
-	}
-
-	public void setUser_id(final Long user_id) {
-		this.user_id = user_id;
-	}
+	
 
 	public String getfName() {
 		return fName;
@@ -131,9 +125,21 @@ public class Users implements UserDetails {
 		this.enabled = enabled;
 	}
 
+	public Long getUserId() {
+		return userId;
+	}
+
+
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+
+
 	@Override
 	public String toString() {
-		return "Users [user_id=" + user_id + ", fName=" + fName + ", lName=" + lName + ", email=" + email
+		return "Users [userId=" + userId + ", fName=" + fName + ", lName=" + lName + ", email=" + email
 				+ ", username=" + username + ", password=" + password + ", healthFacility=" + healthFacility + "]";
 	}
 
@@ -156,19 +162,19 @@ public class Users implements UserDetails {
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override

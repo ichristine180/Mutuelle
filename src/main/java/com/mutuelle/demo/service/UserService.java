@@ -2,6 +2,7 @@ package com.mutuelle.demo.service;
 
 import java.util.List;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Set;
@@ -116,6 +117,16 @@ public class UserService implements IUserService
 		}
 		return localUser;
     }
+    @Override
+    public Users updateUser(Users user) {
+		try {
+
+			return usersRepository.save(user);
+		} catch (Exception e) {
+			System.out.println(e.getMessage() + " JSJS");
+			throw e;
+		}
+    }
 
 	@Override
 	public Role findByName(String rolename) {
@@ -162,5 +173,35 @@ public class UserService implements IUserService
 	@Override
 	public void updatePassword(String updatedPassword, String username) {
 		usersRepository.updatePassword(updatedPassword, username);
+	}
+
+	@Override
+	public Users findById(Long id) {
+		try {
+			return usersRepository.findByUserId(id);
+			} catch (Exception e) {
+				System.out.println(e.getMessage() + " JSJS");
+				throw e;
+			}
+	}
+
+	@Override
+	public boolean checkExitsOnUpdate(String username, long id) {
+		System.out.println(usersRepository.findByUsernameAndUserId(username,id));
+		if (null != usersRepository.findByUsernameAndUserId(username,id))
+        {
+            return true;
+        }
+        return false;
+	}
+
+	@Override
+	public void delete(Users user) {
+		try {
+			 usersRepository.delete(user);
+			} catch (Exception e) {
+				System.out.println(e.getMessage() + " JSJS");
+				throw e;
+			}
 	}
 }
