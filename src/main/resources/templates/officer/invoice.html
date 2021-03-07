@@ -28,9 +28,9 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <table>
+                                <table class="table table bordered">
                                     <tr>
-                                        <td>Invoice Number</td>
+                                        <td class="w-25, p-3">Invoice Number</td>
                                         <td><span th:text="${invoice.invoiceNumber}"></span></td>
                                     </tr>
                                     <tr>
@@ -44,7 +44,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Names</td>
+                                        <td>Treated On</td>
                                         <td><span th:text="${invoice.treatedOn}"></span></td>
                                     </tr>
 
@@ -96,12 +96,12 @@
                                                 </tr>
                                                 <tr role="row" class="odd">
                                                     <td colspan="3"></td>
-                                                    <td>RSSB Amount[85%]</td>
+                                                    <td>RSSB Amount</td>
                                                     <td><span th:text="${invoice.insuranceAmount}">  </span></td>
                                                 </tr>
                                                 <tr role="row" class="odd">
                                                     <td colspan="3"></td>
-                                                    <td>Patient Amount[15%]</td>
+                                                    <td>Patient Amount</td>
                                                     <td><strong><span th:text="${invoice.patientAmount}">  </span></strong>
                                                     </td>
                                                 </tr>
