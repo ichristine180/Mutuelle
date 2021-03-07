@@ -116,7 +116,6 @@ public class MedicalService
         sb.append(", unitPrice=").append(unitPrice);
         sb.append(", code='").append(code).append('\'');
         sb.append(", type=").append(type);
-        sb.append(", medicalActList=").append(medicalActList);
         sb.append('}');
         return sb.toString();
     }
