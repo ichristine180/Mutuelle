@@ -1,6 +1,6 @@
 package com.mutuelle.demo.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,7 +28,7 @@ public class PaymentTransaction
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private HealthFacility healthFacility;
 
-    private LocalDateTime paymentDate;
+    private LocalDate paymentDate;
 
     private long amountPaid;
 
@@ -57,12 +57,12 @@ public class PaymentTransaction
         this.healthFacility = healthFacility;
     }
 
-    public LocalDateTime getPaymentDate()
+    public LocalDate getPaymentDate()
     {
         return paymentDate;
     }
 
-    public void setPaymentDate(final LocalDateTime paymentDate)
+    public void setPaymentDate(final LocalDate paymentDate)
     {
         this.paymentDate = paymentDate;
     }

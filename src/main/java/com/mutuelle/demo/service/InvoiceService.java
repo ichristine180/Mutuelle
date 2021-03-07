@@ -1,7 +1,6 @@
 package com.mutuelle.demo.service;
 
 import java.time.LocalDate;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +16,10 @@ import com.mutuelle.demo.model.PaymentLog;
 import com.mutuelle.demo.model.security.User;
 import com.mutuelle.demo.repository.InvoiceRepository;
 import com.mutuelle.demo.utils.DetailedInvoice;
- @Service
+import com.mutuelle.demo.utils.EUbudeheCategory;
+
+
+@Service
 public class InvoiceService implements IInvoiceService
 {
     @Autowired
@@ -83,7 +85,7 @@ public class InvoiceService implements IInvoiceService
             totalAmount += actPrice;
             servedServiceList.add(medicalActService.createMedicalAct(medicalAct));
         }
-        final long patientPercentage = (totalAmount * 15) / 100;
+        final long patientPercentage = calculatePatientPercentageAmount(totalAmount, patient);
         final long rssbPercentage = totalAmount - patientPercentage;
 
         //Create Invoice
@@ -99,6 +101,18 @@ public class InvoiceService implements IInvoiceService
             + RandomStringUtils.randomAlphanumeric(5)).toUpperCase());
 
         return detailedInvoice;
+    }
+
+    private static long calculatePatientPercentageAmount(final long totalAmount, final Patient patient)
+    {
+        if (patient.getCategory().equals(EUbudeheCategory.SECOND) || patient.getCategory().equals(EUbudeheCategory.THIRD)
+            || patient.getCategory().equals(EUbudeheCategory.FOURTH))
+        {
+            return 200;
+        }
+        {
+            return totalAmount;
+        }
     }
 
     @Override
