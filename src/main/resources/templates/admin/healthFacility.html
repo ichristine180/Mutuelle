@@ -3,19 +3,25 @@
 <head th:replace="common/header :: common-header"></head>
 <body class="hold-transition skin-blue fixed layout-top-nav">
 <div class="wrapper">
-    <header th:replace="common/header :: main-header"></header>
-    <div class="content-wrapper"
-         sec:authorize="hasRole('ROLE_ADMIN')">
+<!-- Main Header -->
+		<header th:replace="common/header :: main-header"></header>
+  <div class="content-wrapper"
+         sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_RSSB')">
         <div class="content-header">
             <div class="container">
                 <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0 text-dark"> Health Facility <small>Details</small></h1>
-                    </div><!-- /.col -->
+                    <section class="content-header">
+					<h1 sec:authorize="hasAnyRole('ROLE_RSSB')">
+						Dashboard <small>RSSB Panel</small>
+					</h1>
+					<h1 sec:authorize="hasAnyRole('ROLE_ADMIN')">
+						Dashboard <small>Admin Panel</small>
+					</h1>
+				</section>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item"><a href="#">healthFacility</a></li>
+                            <li class="breadcrumb-item"><a href="#">HealthFacility</a></li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -24,7 +30,7 @@
         <div class="content">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-8" style="margin-left:auto; margin-right:auto;">
+                    <div class="col-lg-12" style="margin-left:auto; margin-right:auto;">
                     <div class="alert alert-success alert-dismissible" th:if="${successMessage}">
                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                   <h5><i class="icon fas fa-check"></i> success!</h5>
@@ -32,7 +38,7 @@
                 </div>
                     <div class="box" style="margin-bottom:10px;;">
 			
-							<div class="col-xs-12">
+							<div class="col-xs-12"  sec:authorize="hasAnyRole('ROLE_ADMIN')">
 								<a class="btn btn-info pull-left" href="/addHealthFacility">
 									<i class="fa fa-user"></i> Register New Health Center
 								</a>
@@ -61,7 +67,7 @@
                                                         aria-label="Platform(s): activate to sort column ascending">Health Center Location
                                                     </th>
                                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
-                                                        aria-label="CSS grade: activate to sort column ascending">Action
+                                                        aria-label="CSS grade: activate to sort column ascending" sec:authorize="hasAnyRole('ROLE_ADMIN')">Action
                                                     </th>
                                                 </tr>
                                                 </thead>
@@ -74,7 +80,7 @@
                                                     <td><span th:text="${healthFacility.facilityName}">  </span></td>
                                                     <td><span th:text="${healthFacility.adrress}">  </span></td>
                                                     
-                                                   <td><a class="btn btn-success" href="#"> <i
+                                                   <td sec:authorize="hasAnyRole('ROLE_ADMIN')"><a class="btn btn-success" href="#"> <i
 													class="fa fa-edit"></i>
 											</a> <a class="btn btn-primary" href="#"> <i
 													class="fa fa-times"></i>
@@ -82,6 +88,8 @@
                                                 </tr>
                                                 </tbody>
                                             </table>
+                                              <a href="/rssb" class="btn btn-info float-left" sec:authorize="hasAnyRole('ROLE_RSSB')">Back</a>
+                                               <a href="/admin" class="btn btn-info float-left" sec:authorize="hasAnyRole('ROLE_ADMIN')">Back</a>
                                         </div>
                                     </div>
                                 </div>

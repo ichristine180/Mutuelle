@@ -111,7 +111,7 @@ public class InvoiceService implements IInvoiceService
             return 200;
         }
         {
-            return totalAmount;
+            return 0;
         }
     }
 

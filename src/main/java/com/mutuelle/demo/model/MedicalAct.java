@@ -35,7 +35,11 @@ public class MedicalAct
     @JoinColumn(name = "MEDICAL_SERVICE_ID")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private MedicalService service;
-
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "facility_ID")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private HealthFacility facility;
     /** The patient. */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PATIENT_ID")
@@ -44,7 +48,15 @@ public class MedicalAct
 
     private long amount;
 
-    public long getId()
+    public HealthFacility getFacility() {
+		return facility;
+	}
+
+	public void setFacility(HealthFacility facility) {
+		this.facility = facility;
+	}
+
+	public long getId()
     {
         return id;
     }

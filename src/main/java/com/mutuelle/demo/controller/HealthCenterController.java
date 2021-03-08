@@ -6,6 +6,7 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,14 +19,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.mutuelle.demo.model.HealthFacility;
 import com.mutuelle.demo.model.Invoice;
 import com.mutuelle.demo.model.MedicalAct;
 import com.mutuelle.demo.model.MedicalService;
 import com.mutuelle.demo.model.Patient;
+import com.mutuelle.demo.model.PaymentLog;
+import com.mutuelle.demo.model.PaymentTransaction;
 import com.mutuelle.demo.model.security.User;
 import com.mutuelle.demo.service.IInvoiceService;
 import com.mutuelle.demo.service.IMedicalServiceService;
 import com.mutuelle.demo.service.IPatientService;
+import com.mutuelle.demo.service.IPaymentService;
 import com.mutuelle.demo.service.IUserService;
 import com.mutuelle.demo.utils.DetailedInvoice;
 import com.mutuelle.demo.utils.InvoiceHelper;
@@ -50,12 +55,18 @@ public class HealthCenterController
 
     @Autowired
     private IInvoiceService invoiceService;
+    
+    @Autowired
+    private IPaymentService paymentService;
+    
 
     @GetMapping("/patient/details/{id}")
-    public String showPatientInformation(@PathVariable final long id, final Model model)
+    public String showPatientInformation(@PathVariable final long id, final Model model,Principal principal)
     {
         final Patient patient = patientService.findPatientById(id);
-        final List<Invoice> pastInvoiceList = invoiceService.findInvoice(patient);
+        final User user = userService.findByUsername(principal.getName());
+        final List<Invoice> pastInvoiceList = invoiceService.findInvoice(patient).stream().filter(invoice ->
+        		invoice.getHealthFacility() == user.getHealthFacility()).collect(Collectors.toList());
         LOG.info("{}", pastInvoiceList);
         model.addAttribute("patient", patient);
         model.addAttribute("treatementHistory", pastInvoiceList);
@@ -75,16 +86,18 @@ public class HealthCenterController
     }
 
     @PostMapping(value = "/patient/transaction/draft", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String processProvidedMedicalServices(final MedicalActDraft medicalActDraft, final Model model)
+    public String processProvidedMedicalServices(final MedicalActDraft medicalActDraft, final Model model,Principal principal)
     {
         final Patient patient = patientService.findPatientById(medicalActDraft.getPatientId());
         LOG.info("Draft Received: {}", medicalActDraft);
 
         final List<MedicalAct> medicalActList = new ArrayList<>();
-        saveDraft(medicalActList, medicalActDraft.getConsultationServiceList(), patient);
-        saveDraft(medicalActList, medicalActDraft.getLaboratoryServiceList(), patient);
-        saveDraft(medicalActList, medicalActDraft.getDrugList(), patient);
-
+        User user = userService.findByUsername(principal.getName());
+        saveDraft(medicalActList, medicalActDraft.getConsultationServiceList(), patient,user.getHealthFacility());
+        saveDraft(medicalActList, medicalActDraft.getLaboratoryServiceList(), patient,user.getHealthFacility());
+        saveDraft(medicalActList, medicalActDraft.getDrugList(), patient,user.getHealthFacility());
+       
+        model.addAttribute("facility", user.getHealthFacility());
         model.addAttribute("patient", patient);
         model.addAttribute("medicalActDraftList", medicalActList);
         model.addAttribute("invoiceHelper", new InvoiceHelper());
@@ -105,7 +118,7 @@ public class HealthCenterController
             medicalAct.setDate(LocalDate.now());
             medicalAct.setPatient(patient);
             medicalAct.setService(medicalActDto.getService());
-            medicalAct.setAmount(medicalActDto.getAmount());
+//            medicalAct.setAmount(medicalActDto.getAmount());
 
             treatementList.add(medicalAct);
         }
@@ -123,14 +136,29 @@ public class HealthCenterController
 
     private static void saveDraft(final List<MedicalAct> medicalActList,
                                   final List<MedicalService> medicalServiceList,
-                                  final Patient patient)
+                                  final Patient patient,HealthFacility healthFacility)
     {
         for (final MedicalService medicalService : medicalServiceList)
         {
             final MedicalAct medicalAct = new MedicalAct();
             medicalAct.setService(medicalService);
             medicalAct.setPatient(patient);
+            medicalAct.setFacility(healthFacility);
             medicalActList.add(medicalAct);
         }
+    }
+    
+    @GetMapping("/report")
+    public String payementReport(final Model model, final Principal principal)
+    {
+    	System.out.println("got here");
+    	User user = userService.findByUsername(principal.getName());
+        final List<PaymentLog> paymentLogList = paymentService.showPaymentStatus().stream().filter(log->log.getHealthFacility()==user.getHealthFacility()).
+        		collect(Collectors.toList());
+        final List<PaymentTransaction> paidAmmount = paymentService.showPaymentTransactionHistory(user.getHealthFacility());
+        model.addAttribute("paidAmmount", paidAmmount);
+        model.addAttribute("paymentLogList", paymentLogList);
+       // System.out.println(PaymentLog);
+        return "officer/report";
     }
 }
