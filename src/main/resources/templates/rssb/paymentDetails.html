@@ -5,18 +5,19 @@
 <div class="wrapper">
     <header th:replace="common/header :: main-header"></header>
     <div class="content-wrapper"
-         sec:authorize="hasRole('ROLE_HEALTH')">
+         sec:authorize="hasRole('ROLE_RSSB')">
         <div class="content-header">
             <div class="container">
                 <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Patient <small>Transactions</small></h1>
-                    </div><!-- /.col -->
+                    <section class="content-header">
+					<h1>
+						Dashboard <small>Admin Panel</small>
+					</h1>
+				</section>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item"><a href="#">Patient</a></li>
-                            <li class="breadcrumb-item active">Transactions</li>
+                            <li class="breadcrumb-item"><a href="#">Admin</a></li>
+                            <li class="breadcrumb-item"><a href="#">report</a></li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -27,14 +28,15 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Details for:<strong><span th:text="${patient.firstName}"></span> &nbsp;<span
-                                        th:text="${patient.lastName}"></span></strong></h3>
+                            <div class="card-header" th:each="paymentLogList,count : ${paymentLogList}" >
+                                <h3 class="card-title" th:text="${paymentLogList.healthFacility.facilityName}"></h3>&nbsp;&nbsp;
+                                <h6 >Amount to be paid: <strong th:text="${paymentLogList.totalBalance}"> </strong></h6>
                             </div>
                             <div class="card-body">
                                 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                     <div class="row">
                                         <div class="col-sm-12">
+                                        
                                             <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid"
                                                    aria-describedby="example1_info">
                                                 <thead>
@@ -47,40 +49,23 @@
                                                         aria-label="Browser: activate to sort column ascending">Date
                                                     </th>
                                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
-                                                        aria-label="Platform(s): activate to sort column ascending">Health Center
-                                                    </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
-                                                        aria-label="Engine version: activate to sort column ascending">Self Payment
-                                                    </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
-                                                        aria-label="CSS grade: activate to sort column ascending">RSSB Payment
-                                                    </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
-                                                        aria-label="CSS grade: activate to sort column ascending">Total Payment
-                                                    </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
-                                                        aria-label="CSS grade: activate to sort column ascending">Action
+                                                        aria-label="Platform(s): activate to sort column ascending">PAID AMOUNT
                                                     </th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr th:if="${#lists.isEmpty(treatementHistory)}" role="row" class="odd">
-                                                    <td colspan="6"> No Information Available</td>
+                                                <tr th:if="${#lists.isEmpty(paymentLogList)}" role="row" class="odd">
+                                                    <td colspan="6"> No Data Available</td>
                                                 </tr>
-                                                <tr th:each="invoice,count : ${treatementHistory}" role="row" class="odd">
+                                                <tr th:each="paidAmmount,count : ${paidAmmount}" role="row" class="odd">
                                                     <td tabindex="0" class="sorting_1" th:text="${count.index+1}"></td>
-                                                    <td><span th:text="${invoice.createdOn}">  </span></td>
-                                                    <td><span th:text="${invoice.healthFacility.facilityName}">  </span></td>
-                                                    <td><span th:text="${invoice.patientPayment}">  </span></td>
-                                                    <td><span th:text="${invoice.rssbPayment}">  </span></td>
-                                                    <td><span th:text="${invoice.total}">  </span></td>
-                                                    <td>
-                                                        <a th:href="@{/healthcenter/patient/invoice/{patientId}(patientId=${patient.id})}"><span> Invoice Details </span></a>
-                                                    </td>
+                                                    <td><span th:text="${paidAmmount.paymentDate}"> Title </span></td>
+                                                    <td><span th:text="${paidAmmount.amountPaid}"> Title </span></td>
+                                              
                                                 </tr>
                                                 </tbody>
                                             </table>
-                                            <a href="/healthcenter" class="btn btn-info float-left">Back</a>
+                                              <a href="/rssb" class="btn btn-info float-left">Back</a>
                                         </div>
                                     </div>
                                 </div>

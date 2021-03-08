@@ -101,6 +101,14 @@
 		<footer th:replace="common/header :: footer"></footer>
 	</div>
 	<div th:replace="common/header :: body-bottom-scripts"></div>
+<script>
+    $(function () {
+        $("#example1").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+        });
+    });
+</script>
 
 	
 </body>

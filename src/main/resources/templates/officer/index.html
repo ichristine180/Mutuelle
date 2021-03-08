@@ -18,9 +18,8 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item"><a href="#">Layout</a></li>
-                            <li class="breadcrumb-item active">Top Navigation</li>
-                        </ol>
+                            <li class="breadcrumb-item"><a href="#">patients</a></li>
+                           </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
@@ -75,8 +74,7 @@
                                                 <tr th:each="patient,count : ${patientList}" role="row" class="odd">
                                                     <td tabindex="0" class="sorting_1" th:text="${count.index+1}"></td>
                                                     <td>
-                                                        <a th:href="@{/healthcenter/patient/details/{id}(id=${patient.id})}"><span
-                                                                th:text="${patient.idnb}">  </span></a>
+                                                        <span th:text="${patient.idnb}">Title </span>
                                                     </td>
                                                     <td><span th:text="${patient.firstName}"> Title </span></td>
                                                     <td><span th:text="${patient.lastName}"> Title </span></td>

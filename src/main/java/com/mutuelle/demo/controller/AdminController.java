@@ -1,5 +1,6 @@
 package com.mutuelle.demo.controller;
 
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,10 +19,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.mutuelle.demo.model.HealthFacility;
+import com.mutuelle.demo.model.PaymentLog;
 import com.mutuelle.demo.model.security.Role;
 import com.mutuelle.demo.model.security.User;
 import com.mutuelle.demo.model.security.UserRole;
 import com.mutuelle.demo.service.IHealthFacilityService;
+import com.mutuelle.demo.service.IPaymentService;
 import com.mutuelle.demo.service.IUserService;
 
 
@@ -34,6 +37,8 @@ public class AdminController
     private IHealthFacilityService healthService;
     @Autowired
     private IUserService userService;
+    @Autowired
+    private IPaymentService paymentService;
 
     @GetMapping(value = "/addHealthFacility")
     public String addHealthFacility(final Model model)
@@ -162,5 +167,13 @@ public class AdminController
         model.addAttribute("successMessage", "User deleted Successfully");
         model.addAttribute("users", userService.findUserList());
         return "redirect:/admin";
+    }
+    
+    @GetMapping("/report")
+    public String Receptionist(final Model model, final Principal principal)
+    {
+        final List<PaymentLog> paymentLogList = paymentService.showPaymentStatus();
+        model.addAttribute("paymentLogList", paymentLogList);
+        return "admin/report";
     }
 }

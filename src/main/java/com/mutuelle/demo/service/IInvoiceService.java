@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
+import com.mutuelle.demo.model.HealthFacility;
 import com.mutuelle.demo.model.Invoice;
 import com.mutuelle.demo.model.MedicalAct;
 import com.mutuelle.demo.model.Patient;
@@ -58,4 +59,5 @@ public interface IInvoiceService
      * @return the list
      */
     List<Invoice> findInvoice(Patient patient);
+    List<Invoice> findInvoiceByFacility(HealthFacility hf);
 }
