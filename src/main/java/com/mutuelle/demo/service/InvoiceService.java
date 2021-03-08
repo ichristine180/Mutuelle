@@ -164,4 +164,10 @@ public class InvoiceService implements IInvoiceService
         paymentLog.setTotalBalance(paymentLog.getTotalBalance() + rssbPercentage);
         paymentService.updatePaymentLog(paymentLog);
     }
+
+	@Override
+	public List<Invoice> findInvoiceByFacility(HealthFacility hf) {
+		// TODO Auto-generated method stub
+		return iRepository.findByHealthFacility(hf);
+	}
 }

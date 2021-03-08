@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="common/header :: common-header"></head>
+<body class="hold-transition skin-blue fixed layout-top-nav">
+<div class="wrapper">
+    <header th:replace="common/header :: main-header"></header>
+    <div class="content-wrapper"
+         sec:authorize="hasRole('ROLE_RSSB')">
+        <div class="content-header">
+            <div class="container">
+                <div class="row mb-2">
+                    <section class="content-header">
+					<h1>
+						Dashboard <small>RSSB Panel</small>
+					</h1>
+				</section>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Rssb</a></li>
+                            <li class="breadcrumb-item"><a href="#">report</a></li>
+                             <li class="breadcrumb-item"><a href="#">details</a></li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                            <h3 class="card-title" th:text="${hf.facilityName}"></h3>&nbsp;&nbsp;
+                                <h3 class="card-title">Invoice Report</h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid"
+                                                   aria-describedby="example1_info">
+                                                <thead>
+                                                <tr role="row">
+                                                    <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                        aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">
+                                                        #
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                        aria-label="Browser: activate to sort column ascending">Patient Identification Number
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                        aria-label="Platform(s): activate to sort column ascending">Total amount
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                        aria-label="Platform(s): activate to sort column ascending">Patient percentage
+                                                    </th>
+                                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                        aria-label="Platform(s): activate to sort column ascending">Rssb percentage
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:if="${#lists.isEmpty(invoice)}" role="row" class="odd">
+                                                    <td colspan="6"> No Data Available</td>
+                                                </tr>
+                                                <tr th:each="invoice,count : ${invoice}" role="row" class="odd">
+                                                    <td tabindex="0" class="sorting_1" th:text="${count.index+1}"></td>
+                                                    <td><span th:text="${invoice.patient.idnb}"> Title </span></td>
+                                                    <td><span th:text="${invoice.total}"> Title </span></td>
+                                                    <td><span th:text="${invoice.patientPayment}"> Title </span></td>
+                                                    <td><span th:text="${invoice.rssbPayment}"> Title </span></td>
+                                  
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            <a href="/rssb" class="btn btn-info float-left">Back</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+    </div>
+    <footer th:replace="common/header :: footer"></footer>
+</div>
+<div th:replace="common/header :: body-bottom-scripts"></div>
+<script>
+    $(function () {
+        $("#example1").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+        });
+    });
+</script>
+</body>
+
+</html>
