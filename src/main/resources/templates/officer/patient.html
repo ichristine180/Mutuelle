@@ -58,9 +58,7 @@
                                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                                                         aria-label="CSS grade: activate to sort column ascending">Total Payment
                                                     </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
-                                                        aria-label="CSS grade: activate to sort column ascending">Action
-                                                    </th>
+                                                   
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -74,9 +72,7 @@
                                                     <td><span th:text="${invoice.patientPayment}">  </span></td>
                                                     <td><span th:text="${invoice.rssbPayment}">  </span></td>
                                                     <td><span th:text="${invoice.total}">  </span></td>
-                                                    <td>
-                                                        <a th:href="@{/healthcenter/patient/invoice/{patientId}(patientId=${patient.id})}"><span> Invoice Details </span></a>
-                                                    </td>
+                                                   
                                                 </tr>
                                                 </tbody>
                                             </table>

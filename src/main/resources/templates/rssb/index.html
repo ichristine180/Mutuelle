@@ -67,7 +67,7 @@
                                                     <td>
                                                         <a th:href="@{/rssb/invoice/details/{centerId}(centerId=${paymentLog.healthFacility.id})}"><span> View</span></a>
                                                     </td>
-                                                    <td>
+                                                    <td th:if="${paymentLog.totalBalance} != 0">
                                                         <a th:href="@{/rssb/healthcenter/pay/{centerId}(centerId=${paymentLog.healthFacility.id})}"><span> Pay </span></a>
                                                     </td>
                                                 </tr>

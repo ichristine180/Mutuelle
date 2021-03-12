@@ -39,18 +39,12 @@ public class PaymentService implements IPaymentService
     {
         try
         {
-            long totalPaidAmount = 0;
-            final List<PaymentTransaction> existingTransactions =
-                paymentTransactionRepository.findByHealthFacility(paymentTransaction.getHealthFacility());
-            for (final PaymentTransaction transaction : existingTransactions)
-            {
-                totalPaidAmount += transaction.getAmountPaid();
-            }
+            
+       
+           
             final long balance = paymentLogRepository.findByHealthFacility(paymentTransaction.getHealthFacility()).getTotalBalance();
-
-            if (totalPaidAmount + paymentTransaction.getAmountPaid() > balance)
+            if (paymentTransaction.getAmountPaid() > balance)
             {
-                //Do nothing. RSSB is paying more than it should
                 return null;
             }
             else
