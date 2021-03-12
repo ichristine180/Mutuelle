@@ -230,6 +230,7 @@ public class UserService implements IUserService
     public void disableUser(final String username)
     {
         final User user = findByUsername(username);
+        user.setEnabled(false);
         usersRepository.save(user);
     }
 

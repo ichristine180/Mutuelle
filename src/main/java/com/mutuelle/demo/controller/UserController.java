@@ -2,6 +2,7 @@ package com.mutuelle.demo.controller;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.mutuelle.demo.model.Patient;
 import com.mutuelle.demo.model.PaymentLog;
+import com.mutuelle.demo.model.security.User;
 import com.mutuelle.demo.service.IPatientService;
 import com.mutuelle.demo.service.IPaymentService;
 import com.mutuelle.demo.service.UserService;
@@ -29,10 +31,11 @@ public class UserController
     private UserService userService;
 
     @GetMapping("/admin")
-    public String homepage(final Model model)
+    public String homepage(final Model model,Principal principal)
     {
-    	model.addAttribute("users", userService.findUserList());
-
+    	List<User> users = userService.findUserList().stream().filter(user->user.isEnabled()== true).collect(Collectors.toList());
+    	model.addAttribute("users", users);
+    	model.addAttribute("username", principal.getName());
         return "adminpage";
     }
 

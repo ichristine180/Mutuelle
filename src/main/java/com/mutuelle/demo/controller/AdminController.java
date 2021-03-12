@@ -163,7 +163,7 @@ public class AdminController
     public String deleteUser(@PathVariable("id") final long id, final Model model)
     {
         final User user = userService.findById(id);
-        userService.delete(user);
+        userService.disableUser(user.getUsername());
         model.addAttribute("successMessage", "User deleted Successfully");
         model.addAttribute("users", userService.findUserList());
         return "redirect:/admin";

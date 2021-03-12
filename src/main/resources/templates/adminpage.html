@@ -79,7 +79,7 @@
                                                     
                                                     <td><a class="btn btn-success" href="#"> <i
 													class="fa fa-edit"></i>
-											</a> <a class="btn btn-primary" th:href="@{/delete/{id}(id=${users.userId})}"> <i
+											</a> <a class="btn btn-primary" th:href="@{/delete/{id}(id=${users.userId})}" th:if="${username != users.username}"> <i
 													class="fa fa-times"></i>
 											</a></td>
                                                 </tr>
