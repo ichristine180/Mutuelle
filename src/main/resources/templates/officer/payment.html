@@ -22,9 +22,10 @@
             </div><!-- /.container-fluid -->
         </div>
         <div class="content">
+       
             <div class="container">
                 <form th:action="@{/healthcenter/patient/transaction/draft}" th:object="${medicalActDraft}"
-                      method="POST" role="login">
+                      method="POST" role="login" name="theform">
                     <input type="hidden" th:value="${patient.id}" name="patientId"/>
                     <div class="card card-success">
                         <div class="card-header">
@@ -43,7 +44,7 @@
                                                     <select class="select2 select2-hidden-accessible" multiple=""
                                                             data-placeholder="Select a Service"
                                                             data-dropdown-css-class="select2-purple" style="width: 100%;" tabindex="-1"
-                                                            aria-hidden="true" th:field="*{consultationServiceList}">
+                                                            aria-hidden="true" th:field="*{consultationServiceList}" id="consultation">
                                                         <option th:data-select2-id="${service.id}" th:each="service : ${medicalServiceList}"
                                                                 th:value="${service.id}"
                                                                 th:text="${service.name+'-'+service.unitPrice}"
@@ -68,7 +69,7 @@
                                                     <select class="select2 select2-hidden-accessible" multiple=""
                                                             data-placeholder="Select a Service"
                                                             data-dropdown-css-class="select2-purple" style="width: 100%;" tabindex="-1"
-                                                            aria-hidden="true" th:field="*{laboratoryServiceList}">
+                                                            aria-hidden="true" th:field="*{laboratoryServiceList}" id="exam">
                                                         <option th:data-select2-id="${service.id}" th:each="service : ${medicalServiceList}"
                                                                 th:value="${service.id}"
                                                                 th:text="${service.name+'-'+service.unitPrice}"
@@ -93,7 +94,7 @@
                                                     <select class="select2 select2-hidden-accessible" multiple=""
                                                             data-placeholder="Select a medicament"
                                                             data-dropdown-css-class="select2-purple" style="width: 100%;" tabindex="-1"
-                                                            aria-hidden="true" th:field="*{drugList}">
+                                                            aria-hidden="true" th:field="*{drugList}" id="medicine" onchange="showbtn()">
                                                         <option th:data-select2-id="${service.id}" th:each="service : ${medicalServiceList}"
                                                                 th:value="${service.id}"
                                                                 th:text="${service.name+'-'+service.unitPrice}"
@@ -112,7 +113,7 @@
                                         <div class="card-body">
                             
                                              <a href="/healthcenter" class="btn btn-default float-left">Cancel</a>
-                                            <button type="submit" class="btn btn-info float-right">NEXT >></button>
+                                            <button id="submitbutton" type="submit" disabled="disabled" class="btn btn-info float-right">NEXT >></button>
                                         </div>
                                     </div>
                                 </div>
@@ -135,6 +136,28 @@
         //Initialize Select2 Elements
         $('.select2').select2()
     });
+    
+   function showbtn(){
+   var cons = document.getElementById("consultation");
+     var medicine = document.getElementById("consultation");
+     var medicineValue = medicine.value;
+     var consValue = cons.value;
+     var exam = document.getElementById("consultation");
+     var examValue = exam.value;
+   
+     var bt = document.getElementById('submitbutton');
+     if(medicineValue.length >0){
+     if(consValue.length >0){
+      bt.disabled = "";
+      console.log('not')
+        }else
+         bt.disabled = "disabled"; 
+   }
+   else {
+            bt.disabled = "disabled"; 
+            console.log('disabled')
+   }
+   }
 </script>
 </body>
 

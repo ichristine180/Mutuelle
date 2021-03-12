@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="common/header :: common-header"></head>
+<body class="hold-transition skin-blue fixed layout-top-nav">
+<div class="wrapper">
+    <header th:replace="common/header :: main-header"></header>
+    <div class="content-wrapper"
+         sec:authorize="hasRole('ROLE_HEALTH')">
+        <div class="content-header">
+            <div class="container">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark"> Payment <small> Information Details</small></h1>
+                    </div><!-- /.col -->
+                   <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#">Payment</a></li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Health Center:<strong><span th:text="${facility.facilityName}"></span></strong></h3><br/>
+                                <h3 class="card-title">Patient:<strong><span th:text="${patient.firstName}"></span> &nbsp;<span
+                                        th:text="${patient.lastName}"></span></strong></h3><br/>
+                                <h3 class="card-title">Date:<strong><span th:text="${#calendars.format(#calendars.createNow(), 'dd MMM yyyy')}"></span></strong></h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <form th:action="@{/healthcenter/patient/transaction/invoice}" th:object="${invoiceHelper}" method="POST">
+                                                <input type="hidden" th:value="${patient.id}" name="patientId"/>
+                                                <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid"
+                                                       aria-describedby="example1_info">
+                                                    <thead>
+                                                    <tr role="row">
+                                                        <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                            aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">#
+                                                        </th>
+                                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                            aria-label="Platform(s): activate to sort column ascending">Service Name
+                                                        </th>
+                                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                            aria-label="Engine version: activate to sort column ascending">Unit Price
+                                                        </th>
+                                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                            aria-label="CSS grade: activate to sort column ascending">Amount
+                                                        </th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr th:each="medicalAct,count : ${medicalActDraftList}"
+                                                        role="row" class="odd" th:field="*{medicalActList}">
+                                                        <td tabindex="0" class="sorting_1" th:text="${count.index+1}"></td>
+                                                        <td>
+                                                            <span th:text=" ${medicalAct.service.name}"> </span>
+                                                        </td>
+                                                        <td>
+                                                            <span th:text="${medicalAct.service.unitPrice}">  </span>
+                                                        </td>
+                                                        <td>
+                                                            <input type="hidden" th:name="|medicalActList[__${count.index}__].service|"
+                                                                   th:value="${medicalAct.service.id}"/>
+                                                            <input type="number" th:field="*{medicalActList[__${count.index}__].amount}"
+                                                                   class="form-control" style="width: 6em" min="1"
+                                                                   max="1000"/>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                             <a href="/healthcenter" class="btn btn-default float-left">Cancel</a>
+                                                                <button type="submit" class="btn btn-info float-right">Generate Invoice >></button>
+                                                            </div>
+                                                           
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+    </div>
+    <footer th:replace="common/header :: footer"></footer>
+</div>
+<div th:replace="common/header :: body-bottom-scripts"></div>
+<script>
+    $(function () {
+        $("#example1").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+        });
+    });
+</script>
+</body>
+
+</html>

@@ -51,6 +51,9 @@
                                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                                                         aria-label="Platform(s): activate to sort column ascending">PAID AMOUNT
                                                     </th>
+                                                      <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                        aria-label="Platform(s): activate to sort column ascending">Payed By
+                                                    </th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -61,6 +64,7 @@
                                                     <td tabindex="0" class="sorting_1" th:text="${count.index+1}"></td>
                                                     <td><span th:text="${paidAmmount.paymentDate}"> Title </span></td>
                                                     <td><span th:text="${paidAmmount.amountPaid}"> Title </span></td>
+                                                    <td><span th:text="${paidAmmount.processedBy.fName}"> Title </span></td>
                                               
                                                 </tr>
                                                 </tbody>
