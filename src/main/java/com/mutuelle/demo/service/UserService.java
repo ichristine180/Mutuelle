@@ -240,5 +240,16 @@ public class UserService implements IUserService
         usersRepository.updatePassword(updatedPassword, userName);
     }
 
+
+	  @Override
+	    public boolean checkIfValidOldPassword(final User user, final String oldPassword) {
+	        return passwordEncoder.matches(oldPassword, user.getPassword());
+	  }
+	  @Override
+	    public void changeUserPassword(final User user, final String password) {
+	        user.setPassword(passwordEncoder.encode(password));
+	        usersRepository.save(user);
+	    }
+
 }
 

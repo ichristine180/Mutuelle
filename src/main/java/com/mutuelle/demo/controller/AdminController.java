@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -152,8 +153,9 @@ public class AdminController
         final User createdUser = userService.createUser(myuser, userRoles);
         if (createdUser != null)
         {
+        	List<User> users = userService.findUserList().stream().filter(userd->userd.isEnabled()== true).collect(Collectors.toList());
             model.addAttribute("successMessage", "User added Successfully");
-            model.addAttribute("users", userService.findUserList());
+            model.addAttribute("users", users);
             return "adminpage";
         }
         return "redirect:/admin";

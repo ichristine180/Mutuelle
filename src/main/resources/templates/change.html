@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/header :: common-header"></head>
+<body class="hold-transition skin-blue fixed layout-top-nav">
+	<div class="wrapper">
+		<!-- Main Header -->
+		<header th:replace="common/header :: main-header"></header>
+<div class="login-box" style="margin-left:auto; margin-right:auto;margin-top:20px;">
+  <!-- /.login-logo -->
+ <div class="card" >
+    <div class="card-body login-card-body">
+      <p class="login-box-msg">Change Password</p>
+
+       <form action="#">
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" placeholder="old password" id="oldpass" name="oldPassword"/>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" placeholder="Password" id="pass" name="password"/>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" placeholder="Confirm Password" id="passConfirm"/>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        <span id="error" class="error text-danger" style="display:none">Password mismatch</span>
+      </form>
+      </div>
+        <div class="row">
+          <div class="col-4">
+              <button type="submit" class="btn btn-primary btn-block" onclick="savePass()">Change</button>
+          </div>
+          <div class="col-4" style="margin-left:auto;">
+            <a href="/logout" class="btn btn-default btn-block">Cancel</a>
+          </div>
+          <!-- /.col -->
+        </div>
+      </div>
+      </div>
+     
+      
+	</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+function savePass(){
+    var pass = $("#pass").val();
+    var valid = pass == $("#passConfirm").val();
+    if(!valid) {
+      $("#error").show();
+      return;
+    }
+    $.post("user/updatePassword",
+      {password: pass, oldpassword: $("#oldpass").val()} ,function(data){
+        window.location.href = "/logout?message="+data.message;
+    })
+    .fail(function(data) {
+        $("#errormsg").show().html(data.responseJSON.message);
+    });
+}
+</script> 
+</body>
+</html>
